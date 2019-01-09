@@ -1,0 +1,104 @@
+package com.suji.ish.suji.adapter;
+
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+
+import com.suji.ish.suji.R;
+import com.suji.ish.suji.bean.NoteBook;
+import com.suji.ish.suji.databinding.ItemNotebookBinding;
+
+import java.util.List;
+
+public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHolder> {
+
+    private List<NoteBook> list;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
+    private static ViewDataBinding headerBinding;
+
+
+    public NoteBookAdapter(List<NoteBook> list) {
+        this.list = list;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //如果头部头部存在
+        if (viewType == TYPE_HEADER && headerBinding != null) {
+            return new ViewHolder(headerBinding);
+        }
+        ItemNotebookBinding itemNotebookBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.item_notebook, parent, false);
+        return new ViewHolder(itemNotebookBinding);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        if (getItemViewType(position) == TYPE_HEADER) {
+            return;
+        }
+        int pos = getRealPosition(holder);
+        NoteBook noteBook = list.get(pos);
+        ((ItemNotebookBinding)holder.getBinding()).setBook(noteBook);
+        holder.getBinding().executePendingBindings();
+    }
+
+
+    public int getRealPosition(RecyclerView.ViewHolder holder) {
+        int position = holder.getLayoutPosition();
+        return headerBinding == null ? position : position - 1;
+    }
+
+    /**
+     * 重写获取位置的类型
+     *
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        if (headerBinding== null) {
+            return TYPE_ITEM;
+        }
+        if (position == 0) {
+            return TYPE_HEADER;
+        }
+        return TYPE_ITEM;
+    }
+
+    /**
+     * 插入头部
+     *
+     */
+    public void setHeaderView(ViewDataBinding binding) {
+        NoteBookAdapter.headerBinding = binding;
+        notifyItemInserted(0);
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return headerBinding == null ? list.size() : list.size() + 1;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private ViewDataBinding binding;
+
+        public ViewHolder(ViewDataBinding binding) {
+            super(binding.getRoot());
+            if (binding == headerBinding) {
+                return;
+            }
+            this.binding = binding;
+        }
+
+        public ViewDataBinding getBinding() {
+            return this.binding;
+        }
+    }
+}
+
