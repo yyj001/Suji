@@ -1,13 +1,20 @@
 package com.suji.ish.suji.adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.suji.ish.suji.R;
+import com.suji.ish.suji.activity.HomeActivity;
+import com.suji.ish.suji.activity.SearchActivity;
 import com.suji.ish.suji.bean.NoteBook;
+import com.suji.ish.suji.databinding.HeaderSearchBinding;
 import com.suji.ish.suji.databinding.ItemNotebookBinding;
 
 import java.util.List;
@@ -15,13 +22,15 @@ import java.util.List;
 public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHolder> {
 
     private List<NoteBook> list;
+    private Activity mActivity;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static ViewDataBinding headerBinding;
 
 
-    public NoteBookAdapter(List<NoteBook> list) {
+    public NoteBookAdapter(List<NoteBook> list, Activity activity) {
         this.list = list;
+        this.mActivity = activity;
     }
 
     @Override
@@ -35,14 +44,27 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         return new ViewHolder(itemNotebookBinding);
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_HEADER) {
+            ((HeaderSearchBinding) holder.getBinding()).notebookSearchbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    ActivityOptions transitionActivityOptions = ActivityOptions
+                            .makeSceneTransitionAnimation(mActivity, view, "searchbar");
+
+                    mActivity.startActivity(new Intent(mActivity, SearchActivity.class),
+                            transitionActivityOptions.toBundle());
+                }
+            });
+
             return;
         }
         int pos = getRealPosition(holder);
         NoteBook noteBook = list.get(pos);
-        ((ItemNotebookBinding)holder.getBinding()).setBook(noteBook);
+        ((ItemNotebookBinding) holder.getBinding()).setBook(noteBook);
         holder.getBinding().executePendingBindings();
     }
 
@@ -60,7 +82,7 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
      */
     @Override
     public int getItemViewType(int position) {
-        if (headerBinding== null) {
+        if (headerBinding == null) {
             return TYPE_ITEM;
         }
         if (position == 0) {
@@ -71,7 +93,6 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
 
     /**
      * 插入头部
-     *
      */
     public void setHeaderView(ViewDataBinding binding) {
         NoteBookAdapter.headerBinding = binding;
@@ -90,9 +111,9 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
 
         public ViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
-            if (binding == headerBinding) {
-                return;
-            }
+//            if (binding == headerBinding) {
+//                return;
+//            }
             this.binding = binding;
         }
 

@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SearchActivity">
+    tools:context=".activity.SearchActivity"
+    android:background="@color/themeColor">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/search_searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:transitionName="searchbar"
+            app:floatingSearch_backgroundColor="@color/themeColorDark"
+            app:floatingSearch_searchBarMarginLeft="10dp"
+            app:floatingSearch_searchBarMarginRight="10dp"
+            app:floatingSearch_searchInputTextSize="5sp"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

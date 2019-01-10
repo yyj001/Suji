@@ -11,7 +11,7 @@
 
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragment.NoteBookFragment">
@@ -26,6 +26,14 @@
                 android:layout_height="match_parent"
                 app:adapter="@{adapter}" />
         </android.support.v4.widget.SwipeRefreshLayout>
-    </FrameLayout>
+
+        <ViewStub
+            android:id="@+id/notebook_viewstub"
+            android:layout="@layout/empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
 </layout>
