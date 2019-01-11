@@ -11,29 +11,100 @@
 
     </data>
 
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:context=".fragment.NoteBookFragment">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/notebook_recyclerview"
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:elevation="0dp"
+            app:layout_behavior="com.yuruiyin.appbarlayoutbehavior.AppBarLayoutBehavior"
+            >
+            <!--app:layout_behavior="com.yuruiyin.appbarlayoutbehavior.AppBarLayoutBehavior"-->
+
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:adapter="@{adapter}" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+                android:layout_height="130dp"
+                android:minHeight="50dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:expandedTitleMarginBottom="100dp">
+
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.suji.ish.suji.view.TitleBehavior"
+            >
+            <TextView
+                android:id="@+id/notebook_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="笔记"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <ImageView
+                android:id="@+id/notebook_more_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/more" />
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/notebook_searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_searchbar_maxheight"
+            android:layout_marginLeft="@dimen/fragment_searchbar_minmargin_left"
+            android:layout_marginRight="@dimen/fragment_searchbar_minmargin_right"
+            android:layout_marginTop="@dimen/fragment_searchbar_max_margintop"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:transitionName="searchbar"
+            app:cardBackgroundColor="@color/themeColorDark"
+            app:cardCornerRadius="5dp"
+            app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="搜索..."
+                android:textColor="@color/grey8"
+                android:textSize="15sp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/notebook_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adapter="@{adapter}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
         <ViewStub
             android:id="@+id/notebook_viewstub"
-            android:layout="@layout/empty_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:layout="@layout/empty_view" />
 
-    </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>

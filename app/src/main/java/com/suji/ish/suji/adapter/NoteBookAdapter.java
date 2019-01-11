@@ -1,20 +1,14 @@
 package com.suji.ish.suji.adapter;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.suji.ish.suji.R;
-import com.suji.ish.suji.activity.HomeActivity;
-import com.suji.ish.suji.activity.SearchActivity;
 import com.suji.ish.suji.bean.NoteBook;
-import com.suji.ish.suji.databinding.HeaderSearchBinding;
 import com.suji.ish.suji.databinding.ItemNotebookBinding;
 
 import java.util.List;
@@ -48,18 +42,17 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_HEADER) {
-            ((HeaderSearchBinding) holder.getBinding()).notebookSearchbar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    ActivityOptions transitionActivityOptions = ActivityOptions
-                            .makeSceneTransitionAnimation(mActivity, view, "searchbar");
-
-                    mActivity.startActivity(new Intent(mActivity, SearchActivity.class),
-                            transitionActivityOptions.toBundle());
-                }
-            });
-
+//            ((HeaderSearchBinding) holder.getBinding()).notebookSearchbar.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    ActivityOptions transitionActivityOptions = ActivityOptions
+//                            .makeSceneTransitionAnimation(mActivity, view, "searchbar");
+//
+//                    mActivity.startActivity(new Intent(mActivity, SearchActivity.class),
+//                            transitionActivityOptions.toBundle());
+//                }
+//            });
             return;
         }
         int pos = getRealPosition(holder);

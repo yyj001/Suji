@@ -33,6 +33,8 @@ dependencies {
     implementation 'org.litepal.android:java:3.0.0'
     implementation 'com.loopeer.lib:shadow:0.0.4-beta3'
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    implementation 'com.github.yuruiyin:AppbarLayoutBehavior:v1.0.1'
+
 
 
 
