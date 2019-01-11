@@ -3,8 +3,11 @@ package com.suji.ish.suji.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,4 +106,5 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             default:
         }
     }
+
 }

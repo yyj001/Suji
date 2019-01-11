@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/option_update"
+        android:title="按更新时间排列(默认)" />
+
+    <item android:id="@+id/option_create"
+        android:title="按创建时间排列" />
+
+    <item android:id="@+id/option_name"
+        android:title="按笔记本名排列" />
+
+    <item android:id="@+id/option_number"
+        android:title="按笔记数目排列" />
+
+</menu>

@@ -7,10 +7,9 @@
     tools:context=".activity.SearchActivity"
     android:background="@color/themeColor">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <com.arlib.floatingsearchview.FloatingSearchView
             android:id="@+id/search_searchbar"
@@ -25,6 +24,14 @@
             />
 
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/test"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_margin="30dp"
+            android:layout_gravity="center"
+            android:background="@color/grey8"></LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

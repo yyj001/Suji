@@ -102,7 +102,7 @@
             android:id="@+id/notebook_viewstub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:layout="@layout/empty_view" />
 
     </android.support.design.widget.CoordinatorLayout>

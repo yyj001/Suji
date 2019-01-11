@@ -6,8 +6,18 @@
         <item name="android:windowContentTransitions">true</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="popupMenuStyle">@style/NoPopupAnimation</item>-->
+    </style>
+
+    <style name="SearchActivity" parent="AppTheme">
+        <item name="android:colorBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="NoPopupAnimation" parent="Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupAnimationStyle">@null</item>
+        <item name="android:duration">0</item>
     </style>
 
 </resources>
