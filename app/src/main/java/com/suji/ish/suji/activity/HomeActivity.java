@@ -1,20 +1,26 @@
 package com.suji.ish.suji.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.adapter.TabPageIndicatorAdapter;
+import com.suji.ish.suji.utils.SizeUtils;
 import com.suji.ish.suji.view.HomeViewPager;
+import com.suji.ish.suji.view.MenuPopupWindow;
+import com.zyyoona7.popup.BasePopup;
+import com.zyyoona7.popup.EasyPopup;
+import com.zyyoona7.popup.XGravity;
+import com.zyyoona7.popup.YGravity;
 
 /**
  * @author ish
@@ -37,6 +43,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private int mSelectBtnNum = 0;
 
     private HomeViewPager mViewPager;
+
+    private EasyPopup mCirclePop;
+
+    private MenuPopupWindow mMenuPopupWindow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +92,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.navbtn1:
-                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
                 setSelectBtn(0);
                 mViewPager.setCurrentItem(0);
                 break;
@@ -101,10 +111,30 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mViewPager.setCurrentItem(3);
                 break;
             case R.id.navbtn5:
-                Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
+                showPopupMenu(view);
                 break;
             default:
         }
+    }
+
+    public void showPopupMenu(View view){
+
+//        mCirclePop = EasyPopup.create()
+//                .setContentView(this, R.layout.popup_menu_window)
+//                //是否允许点击PopupWindow之外的地方消失
+//                .setFocusAndOutsideEnable(true)
+//                //变暗的透明度(0-1)，0为完全透明
+//                .setBackgroundDimEnable(true)
+//                .setDimValue(0.8f)
+//                //变暗的背景颜色
+//                .setDimColor(Color.BLACK)
+//                .apply();
+//        mCirclePop.showAtAnchorView(view, YGravity.ABOVE, XGravity.CENTER, 0,0);
+
+        mMenuPopupWindow = MenuPopupWindow.create(this)
+                .apply();
+        mMenuPopupWindow.showAtAnchorView(view, YGravity.ABOVE, XGravity.CENTER, 0,0);
+
     }
 
 }

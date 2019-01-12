@@ -20,42 +20,16 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        searchView = (FloatingSearchView)findViewById(R.id.search_searchbar);
         //延迟弹出键盘
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                searchView = (FloatingSearchView)findViewById(R.id.search_searchbar);
                 searchView.setSearchFocused(true);
             }
         },500);
 
-        LinearLayout i = (LinearLayout)findViewById(R.id.test);
-        i.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(SearchActivity.this, view, Gravity.RIGHT);
-                // 获取布局文件
-                popupMenu.getMenuInflater().inflate(R.menu.notebook_menu, popupMenu.getMenu());
-
-
-                // 通过上面这几行代码，就可以把控件显示出来了
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        // 控件每一个item的点击事件
-                        return true;
-                    }
-                });
-                popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
-                    @Override
-                    public void onDismiss(PopupMenu menu) {
-                        // 控件消失时的事件
-                    }
-                });
-                popupMenu.show();
-            }
-        });
-
     }
+
 }

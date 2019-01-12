@@ -21,16 +21,9 @@
             app:floatingSearch_searchBarMarginRight="10dp"
             app:floatingSearch_searchInputTextSize="5sp"
             app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            android:focusable="false"
             />
 
-
-        <LinearLayout
-            android:id="@+id/test"
-            android:layout_width="300dp"
-            android:layout_height="30dp"
-            android:layout_margin="30dp"
-            android:layout_gravity="center"
-            android:background="@color/grey8"></LinearLayout>
 
     </FrameLayout>
 

@@ -57,6 +57,8 @@ public class NoteBookViewModel implements View.OnClickListener {
             mNoteBooks.add(noteBook);
         }
 
+        //按编辑时间排序
+        Collections.sort(mNoteBooks, new SortByEdittime());
         mNoteBookAdapter = new NoteBookAdapter(mNoteBooks, mActivity);
         ViewDataBinding headerSearchBinding = DataBindingUtil.inflate(LayoutInflater.from(mBinding.getRoot().getContext()),
                 R.layout.header_rv_notebook, mParent, false);

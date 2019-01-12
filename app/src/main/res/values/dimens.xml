@@ -10,4 +10,5 @@
     <dimen name="fragment_searchbar_maxheight">45dp</dimen>
     <dimen name="fragment_searchbar_min_margintop">7dp</dimen>
     <dimen name="fragment_searchbar_max_margintop">70dp</dimen>
+
 </resources>
