@@ -20,7 +20,7 @@ public class SearchBarBehavior extends CoordinatorLayout.Behavior<CardView> {
     private float mMaxMarginRight;
     private float mMinMarginTop;
     private float mMaxMarginTop;
-    private float maxScrollY = 150;
+    private float maxScrollY = 153;
 
     public SearchBarBehavior(Context context, AttributeSet attributes) {
         super(context, attributes);

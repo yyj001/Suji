@@ -23,7 +23,7 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/add_notebook"
-                app:rippleColor="@color/themeColor"
+                app:rippleColor="@color/textDarkColor"
                 android:clickable="true"/>
 
             <TextView
@@ -32,7 +32,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="添加笔记本"
-                android:textColor="@color/greya" />
+                android:textColor="@color/textDarkColor" />
         </LinearLayout>
 
 
@@ -50,7 +50,7 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/add_word"
-                app:rippleColor="@color/themeColor"
+                app:rippleColor="@color/textDarkColor"
                 android:clickable="true"/>
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="添加单词"
-                android:textColor="@color/greya" />
+                android:textColor="@color/textDarkColor" />
         </LinearLayout>
 
     </LinearLayout>

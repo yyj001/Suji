@@ -81,11 +81,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private void setSelectBtn(int i) {
         //将之前选中的变没有选中
         mImaheViews[mSelectBtnNum].setImageResource(imageUnSelect[mSelectBtnNum]);
-        mTextViews[mSelectBtnNum].setTextColor(getResources().getColor(R.color.greya));
+        mTextViews[mSelectBtnNum].setTextColor(getResources().getColor(R.color.grey8));
         //设置新的按钮
         mSelectBtnNum = i;
         mImaheViews[i].setImageResource(imageSelected[i]);
-        mTextViews[i].setTextColor(getResources().getColor(R.color.white));
+        mTextViews[i].setTextColor(getResources().getColor(R.color.black));
     }
 
     @Override
@@ -118,19 +118,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void showPopupMenu(View view){
-
-//        mCirclePop = EasyPopup.create()
-//                .setContentView(this, R.layout.popup_menu_window)
-//                //是否允许点击PopupWindow之外的地方消失
-//                .setFocusAndOutsideEnable(true)
-//                //变暗的透明度(0-1)，0为完全透明
-//                .setBackgroundDimEnable(true)
-//                .setDimValue(0.8f)
-//                //变暗的背景颜色
-//                .setDimColor(Color.BLACK)
-//                .apply();
-//        mCirclePop.showAtAnchorView(view, YGravity.ABOVE, XGravity.CENTER, 0,0);
-
         mMenuPopupWindow = MenuPopupWindow.create(this)
                 .apply();
         mMenuPopupWindow.showAtAnchorView(view, YGravity.ABOVE, XGravity.CENTER, 0,0);

@@ -1,5 +1,6 @@
 package com.suji.ish.suji.activity;
 
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -29,7 +30,6 @@ public class SearchActivity extends BaseActivity {
                 searchView.setSearchFocused(true);
             }
         },500);
-
     }
 
 }

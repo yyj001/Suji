@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="所有笔记本"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
 
         <View
             android:layout_width="0dp"
@@ -23,7 +23,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:background="@color/grey8" />
+            android:background="@color/greya" />
 
     </LinearLayout>
 </layout>

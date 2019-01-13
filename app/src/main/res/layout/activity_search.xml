@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:transitionName="searchbar"
-            app:floatingSearch_backgroundColor="@color/themeColorDark"
+            app:floatingSearch_backgroundColor="@color/colorPrimaryDark"
             app:floatingSearch_searchBarMarginLeft="10dp"
             app:floatingSearch_searchBarMarginRight="10dp"
             app:floatingSearch_searchInputTextSize="5sp"

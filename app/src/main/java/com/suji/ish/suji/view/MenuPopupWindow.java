@@ -1,15 +1,15 @@
 package com.suji.ish.suji.view;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.suji.ish.suji.R;
-import com.suji.ish.suji.utils.SizeUtils;
 import com.zyyoona7.popup.BasePopup;
 
 /**
@@ -36,6 +36,7 @@ public class MenuPopupWindow extends BasePopup<MenuPopupWindow> implements View.
         setFocusAndOutsideEnable(false)
                 .setBackgroundDimEnable(true)
                 .setFocusAndOutsideEnable(true)
+                .setDimColor(Color.parseColor("#dfe0d1"))
                 .setDimValue(0.8f);
     }
 

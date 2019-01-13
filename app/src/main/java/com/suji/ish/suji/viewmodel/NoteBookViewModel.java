@@ -62,7 +62,7 @@ public class NoteBookViewModel implements View.OnClickListener {
         mNoteBookAdapter = new NoteBookAdapter(mNoteBooks, mActivity);
         ViewDataBinding headerSearchBinding = DataBindingUtil.inflate(LayoutInflater.from(mBinding.getRoot().getContext()),
                 R.layout.header_rv_notebook, mParent, false);
-        mNoteBookAdapter.setHeaderView(headerSearchBinding);
+//        mNoteBookAdapter.setHeaderView(headerSearchBinding);
         mBinding.setAdapter(mNoteBookAdapter);
         showViewStub();
     }

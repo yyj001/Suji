@@ -55,7 +55,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:text='@{"(" + String.valueOf((Integer)book.noteNumber) + ")"}' />
+                    android:text='@{"(" + String.valueOf((Integer)book.noteNumber) + ")"}'
+                    android:textColor="@color/grey8"/>
             </LinearLayout>
 
             <LinearLayout
@@ -69,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{String.valueOf((Integer)book.createTime)}"
-                    android:textColor="@color/greyb" />
+                    android:textColor="@color/grey8" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -18,22 +18,19 @@
         tools:context=".fragment.NoteBookFragment">
 
 
-
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:elevation="0dp"
-            app:layout_behavior="com.yuruiyin.appbarlayoutbehavior.AppBarLayoutBehavior"
-            >
-            <!--app:layout_behavior="com.yuruiyin.appbarlayoutbehavior.AppBarLayoutBehavior"-->
+            app:layout_behavior="com.yuruiyin.appbarlayoutbehavior.AppBarLayoutBehavior">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:minHeight="50dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:expandedTitleMarginBottom="100dp">
+                android:layout_height="160dp"
+                android:minHeight="51dp"
+                app:expandedTitleMarginBottom="100dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -42,8 +39,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_behavior="com.suji.ish.suji.view.TitleBehavior"
-            >
+            app:layout_behavior="com.suji.ish.suji.view.TitleBehavior">
+
             <TextView
                 android:id="@+id/notebook_title"
                 android:layout_width="0dp"
@@ -52,7 +49,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="笔记"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="32sp" />
 
             <ImageView
@@ -76,8 +73,9 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:transitionName="searchbar"
-            app:cardBackgroundColor="@color/themeColorDark"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardCornerRadius="5dp"
+            app:cardElevation="0dp"
             app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior">
 
             <TextView
@@ -89,6 +87,46 @@
                 android:textColor="@color/grey8"
                 android:textSize="15sp" />
         </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            app:layout_behavior="com.suji.ish.suji.view.LineBehavior">
+
+            <View
+                android:id="@+id/header_line"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/greya"
+                android:alpha="0"/>
+
+            <LinearLayout
+                android:id="@+id/header_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="所有笔记本"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/greya" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/notebook_recyclerview"
