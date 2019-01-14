@@ -11,11 +11,12 @@ import android.widget.LinearLayout;
 
 import com.suji.ish.suji.R;
 import com.zyyoona7.popup.BasePopup;
+import com.zyyoona7.popup.EasyPopup;
 
 /**
  * @author ish
  */
-public class MenuPopupWindow extends BasePopup<MenuPopupWindow> implements View.OnClickListener{
+public class MenuPopupWindow extends BasePopup<MenuPopupWindow>{
 
     ObjectAnimator mAnimator1;
     ObjectAnimator mAnimator2;
@@ -37,7 +38,7 @@ public class MenuPopupWindow extends BasePopup<MenuPopupWindow> implements View.
                 .setBackgroundDimEnable(true)
                 .setFocusAndOutsideEnable(true)
                 .setDimColor(Color.parseColor("#dfe0d1"))
-                .setDimValue(0.8f);
+                .setDimValue(0.9f);
     }
 
     @Override
@@ -55,8 +56,6 @@ public class MenuPopupWindow extends BasePopup<MenuPopupWindow> implements View.
                 1000f, 200f, -100f, 50f, -20f, 0f);
         mAnimator2.setDuration(800);
         mAnimator2.start();
-
-
     }
 
     @Override
@@ -64,18 +63,5 @@ public class MenuPopupWindow extends BasePopup<MenuPopupWindow> implements View.
         mAnimator1.cancel();
         mAnimator2.cancel();
         super.onDismiss();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.add_notebook_btn:{
-                break;
-            }
-            case R.id.add_word_btn:{
-                break;
-            }
-            default:
-        }
     }
 }

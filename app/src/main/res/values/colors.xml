@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#edeee7</color>
     <color name="colorPrimaryDark">#dfe0d1</color>
+    <color name="AlphaColorPrimaryDark">#ccdfe0d1</color>
     <color name="colorAccent">#66aaa6</color>
     <color name="greenPress">#5b9793</color>
     <color name="grey8">#888888</color>
@@ -13,5 +14,9 @@
     <color name="textDarkColor">#333333</color>
     <color name="blue">#6eb6dc</color>
     <color name="darkBlue">#2e4053</color>
+    <color name="red">#CD5C5C</color>
+
+    <color name="green">#71C177</color>
+    <color name="oringe">#FF9D00</color>
 
 </resources>

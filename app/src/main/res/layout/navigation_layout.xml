@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="笔记"
-                    android:textColor="@color/greya"
+                    android:textColor="@color/grey8"
                     android:textSize="10sp" />
             </LinearLayout>
 
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="记忆"
-                    android:textColor="@color/greya"
+                    android:textColor="@color/grey8"
                     android:textSize="10sp" />
             </LinearLayout>
 
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="统计"
-                    android:textColor="@color/greya"
+                    android:textColor="@color/grey8"
                     android:textSize="10sp" />
             </LinearLayout>
 
@@ -146,7 +146,7 @@
                 <ImageView
                     android:id="@+id/iv4"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_height="33dp"
                     android:layout_gravity="center"
                     android:src="@drawable/user" />
 
@@ -156,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="我的"
-                    android:textColor="@color/greya"
+                    android:textColor="@color/grey8"
                     android:textSize="10sp" />
             </LinearLayout>
 

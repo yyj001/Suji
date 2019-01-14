@@ -1,5 +1,7 @@
 package com.suji.ish.suji.activity;//package com.suji.ish.sujinotebook.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -58,6 +60,10 @@ public class BaseActivity extends AppCompatActivity {
             res.updateConfiguration(newConfig, res.getDisplayMetrics());
         }
         return res;
+    }
+
+    public void goTo(Activity target){
+        startActivity(new Intent(this,target.getClass()));
     }
 }
 

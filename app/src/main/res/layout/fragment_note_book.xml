@@ -100,7 +100,7 @@
                 android:id="@+id/header_line"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/greya"
+                android:background="#cccccc"
                 android:alpha="0"/>
 
             <LinearLayout

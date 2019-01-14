@@ -1,11 +1,9 @@
 package com.suji.ish.suji.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,10 +12,8 @@ import android.widget.Toast;
 
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.adapter.TabPageIndicatorAdapter;
-import com.suji.ish.suji.utils.SizeUtils;
 import com.suji.ish.suji.view.HomeViewPager;
 import com.suji.ish.suji.view.MenuPopupWindow;
-import com.zyyoona7.popup.BasePopup;
 import com.zyyoona7.popup.EasyPopup;
 import com.zyyoona7.popup.XGravity;
 import com.zyyoona7.popup.YGravity;
@@ -47,6 +43,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private EasyPopup mCirclePop;
 
     private MenuPopupWindow mMenuPopupWindow;
+
+    LinearLayout mAddNoteBtn;
+    LinearLayout mAddNoteBookBtn;
+
+
 
 
     @Override
@@ -113,6 +114,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             case R.id.navbtn5:
                 showPopupMenu(view);
                 break;
+            case R.id.popup_add_notebook:
+                break;
+            case R.id.popup_add_note:
+                break;
             default:
         }
     }
@@ -121,7 +126,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mMenuPopupWindow = MenuPopupWindow.create(this)
                 .apply();
         mMenuPopupWindow.showAtAnchorView(view, YGravity.ABOVE, XGravity.CENTER, 0,0);
+        FloatingActionButton addNotebookFbtn = mMenuPopupWindow.findViewById(R.id.add_notebook_btn);
+        FloatingActionButton addWordFbtn = mMenuPopupWindow.findViewById(R.id.add_word_btn);
 
-    }
+        addNotebookFbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMenuPopupWindow.dismiss();
+
+                goTo(new AddNoteBookActivity());
+            }
+        });
+  }
 
 }

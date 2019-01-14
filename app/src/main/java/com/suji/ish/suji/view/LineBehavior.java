@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.suji.ish.suji.R;
 
@@ -46,7 +44,7 @@ public class LineBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
         child.setLayoutParams(lp);
         LinearLayout headerNotice = child.findViewById(R.id.header_notice);
         View line = child.findViewById(R.id.header_line);
-        headerNotice.setAlpha(percent);
+        headerNotice.setAlpha((float) (percent-0.3));
         //线到顶才显示
         if (percent==0){
             line.setAlpha(1);

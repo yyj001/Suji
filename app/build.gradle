@@ -35,7 +35,11 @@ dependencies {
     implementation 'com.loopeer.lib:shadow:0.0.4-beta3'
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
     implementation 'com.github.yuruiyin:AppbarLayoutBehavior:v1.0.1'
+    //该库有问题，以后有空将其移除
     implementation 'com.github.zyyoona7:EasyPopup:1.1.2'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+//    implementation 'com.github.yyj001:ResultView:v1.0'
+    implementation 'com.github.razerdp:BasePopup:2.1.6'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
