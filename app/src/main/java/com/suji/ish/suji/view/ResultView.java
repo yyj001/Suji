@@ -152,7 +152,7 @@ public class ResultView extends View {
         if(themeColor==-1){
             switch (type) {
                 case TYPE_SUCESS:
-                    themeColor = getResources().getColor(R.color.green);
+                    themeColor = getResources().getColor(R.color.colorAccent);
                     break;
                 case TYPE_FAILD:
                     themeColor = getResources().getColor(R.color.red);
@@ -284,33 +284,8 @@ public class ResultView extends View {
         canvas.drawCircle((mWidth) / 2 + padding, (mHeight) / 2 + padding, innerRadius, innerCirclePaint);
         //缩小白色圆圈
         canvas.drawCircle((mWidth) / 2 + padding, (mHeight) / 2 + padding, whiteRadius, whiteCirclePaint);
-//        float centerX = (mWidth) / 2 + padding;
-//        float centerY = (mHeight) / 2 + padding;
-//        float signalWidth = recLength / 8;
-//        Path path = new Path();
         if (flag) {
             canvas.drawPath(mPath, signalPaint);
-//            switch (type) {
-//                case TYPE_SUCESS:
-//                    canvas.drawLines(new float[]{               // 绘制一组线 每四数字(两个点的坐标)确定一条线
-//                            centerX - offset - signalWidth, centerY, centerX - offset, centerY + signalWidth,
-//                            centerX - offset, centerY + signalWidth, centerX - offset + 2 * signalWidth, centerY - signalWidth
-//                    }, signalPaint);
-//                    break;
-//                case TYPE_FAILD:
-//                    canvas.drawLines(new float[]{               // 绘制一组线 每四数字(两个点的坐标)确定一条线
-//                            centerX - signalWidth, centerY - signalWidth, centerX + signalWidth, centerY + signalWidth,
-//                            centerX + signalWidth, centerY - signalWidth, centerX - signalWidth, centerY + signalWidth,
-//                    }, signalPaint);
-//                    break;
-//                case TYPE_WARN:
-//                    canvas.drawLines(new float[]{               // 绘制一组线 每四数字(两个点的坐标)确定一条线
-//                            centerX, centerY - 2*signalWidth, centerX, centerY + 0.8f*signalWidth,
-//                            centerX, centerY + 1.8f*signalWidth, centerX, centerY + 2f*signalWidth,
-//                    }, signalPaint);
-//                    break;
-//                default:
-//            }
         }
     }
 

@@ -5,12 +5,23 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-    <com.suji.ish.suji.view.ResultView
-        android:id="@+id/create_notebook_resultview"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        app:mType="TYPE_SUCESS"
-        app:duration="700"
-        app:theme_color="@color/colorAccent"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <com.suji.ish.suji.view.ResultView
+            android:id="@+id/create_notebook_resultview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:mType="TYPE_SUCESS"
+            app:duration="700"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/create_notebook_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
 </FrameLayout>
