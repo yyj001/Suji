@@ -5,6 +5,8 @@ import android.content.res.Resources;
 
 import com.suji.ish.suji.R;
 
+import java.text.SimpleDateFormat;
+
 /**
  * 各种工具集合类
  * @author ish
@@ -47,6 +49,21 @@ public class ToolsUtils {
         Resources resources = context.getResources();
         float dim = resources.getDimension(dimId);
         return dim;
+    }
+
+    /**
+     * 获取时间戳
+     */
+    public long getInstanceTime(){
+        return System.currentTimeMillis();
+    }
+
+    /**
+     * 时间戳转string日期
+     */
+    public String getDateFormat(long time){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(time);
     }
 
 }

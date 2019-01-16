@@ -1,23 +1,33 @@
 package com.suji.ish.suji.bean;
 
-import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.Observable;
+import android.databinding.PropertyChangeRegistry;
+
+import com.android.databinding.library.baseAdapters.BR;
 
 import org.litepal.crud.LitePalSupport;
 
-public class NoteBook extends BaseObservable {
+/**
+ * @author ish
+ */
+public class NoteBook extends LitePalSupport implements Observable {
+    private PropertyChangeRegistry mRegistry = new PropertyChangeRegistry();
     private int id;
     private int noteNumber;
-    private int createTime;
-    private int editTime;
+    private long createTime;
+    private long editTime;
     private String bookName;
+    private String editTimeString;
+    private String createTimeString;
 
-    public NoteBook(int id, int noteNumber, int createTime, int editTime, String bookName) {
-        this.id = id;
+    public NoteBook(int noteNumber, long createTime, long editTime, String bookName,String editTimeString,String createTimeString) {
         this.noteNumber = noteNumber;
         this.bookName = bookName;
         this.createTime = createTime;
         this.editTime = editTime;
+        this.editTimeString = editTimeString;
+        this.createTimeString = createTimeString;
     }
 
     @Bindable
@@ -27,6 +37,7 @@ public class NoteBook extends BaseObservable {
 
     public void setId(int id) {
         this.id = id;
+        mRegistry.notifyChange(this, BR.id);
     }
 
     @Bindable
@@ -36,6 +47,7 @@ public class NoteBook extends BaseObservable {
 
     public void setNoteNumber(int noteNumber) {
         this.noteNumber = noteNumber;
+        mRegistry.notifyChange(this, BR.noteNumber);
     }
 
     @Bindable
@@ -45,23 +57,59 @@ public class NoteBook extends BaseObservable {
 
     public void setBookName(String bookName) {
         this.bookName = bookName;
+        mRegistry.notifyChange(this, BR.bookName);
+
     }
 
     @Bindable
-    public int getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(int createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
+        mRegistry.notifyChange(this, BR.createTime);
+
     }
 
     @Bindable
-    public int getEditTime() {
+    public long getEditTime() {
         return editTime;
     }
 
-    public void setEditTime(int editTime) {
+    public void setEditTime(long editTime) {
         this.editTime = editTime;
+        mRegistry.notifyChange(this, BR.editTime);
+
+    }
+
+    @Bindable
+    public String getEditTimeString() {
+        return editTimeString;
+    }
+
+    public void setEditTimeString(String editTimeString) {
+        this.editTimeString = editTimeString;
+        mRegistry.notifyChange(this, BR.editTimeString);
+    }
+
+    @Bindable
+    public String getCreateTimeString() {
+        return createTimeString;
+    }
+
+    public void setCreateTimeString(String createTimeString) {
+        this.createTimeString = createTimeString;
+        mRegistry.notifyChange(this, BR.createTimeString);
+    }
+
+    @Override
+    public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+        mRegistry.add(callback);
+    }
+
+    @Override
+    public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+        mRegistry.remove(callback);
     }
 }

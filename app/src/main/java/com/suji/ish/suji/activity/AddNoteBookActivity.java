@@ -2,6 +2,7 @@ package com.suji.ish.suji.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.suji.ish.suji.R;
+import com.suji.ish.suji.bean.NoteBook;
+import com.suji.ish.suji.model.NoteBookModel;
 import com.suji.ish.suji.utils.ToolsUtils;
 import com.suji.ish.suji.view.ResultPopupWindow;
 import com.suji.ish.suji.view.ResultView;
@@ -25,6 +28,8 @@ public class AddNoteBookActivity extends BaseActivity implements View.OnClickLis
     private int maxWordNum = 30;
 
     private ResultPopupWindow mResultPopupWindow;
+    private Handler mHandler;
+    private NoteBookModel mNoteBookModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,8 @@ public class AddNoteBookActivity extends BaseActivity implements View.OnClickLis
         mCreateTx.setOnClickListener(this);
         mCreateTx.setClickable(false);
 
+        mHandler = new Handler();
+        mNoteBookModel = new NoteBookModel();
     }
 
     /**
@@ -100,6 +107,8 @@ public class AddNoteBookActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void createNoteBook(View view) {
+        mNoteBookModel.createNotebook(mEditText.getText().toString());
+
         mResultPopupWindow = new ResultPopupWindow(this);
         mResultPopupWindow.setBackground(0);
         mResultPopupWindow.setBlurBackgroundEnable(true);
@@ -108,5 +117,18 @@ public class AddNoteBookActivity extends BaseActivity implements View.OnClickLis
 
         ResultView resultView = mResultPopupWindow.findViewById(R.id.create_notebook_resultview);
         resultView.play();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mResultPopupWindow.dismiss();
+            }
+        },800);
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },1100);
     }
 }

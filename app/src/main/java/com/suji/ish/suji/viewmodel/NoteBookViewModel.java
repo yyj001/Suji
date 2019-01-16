@@ -53,7 +53,8 @@ public class NoteBookViewModel implements View.OnClickListener {
     public void initRecyclerViewData() {
         mNoteBooks = new ArrayList<NoteBook>();
         for (int i = 0; i < 20; ++i) {
-            NoteBook noteBook = new NoteBook(i, i * i + 1, 100-i, i+0, "name " + i);
+            NoteBook noteBook = new NoteBook(i * i + 1, 100-i,
+                    i+0, "name " + i,"2012-1-1","2014-1-2");
             mNoteBooks.add(noteBook);
         }
 

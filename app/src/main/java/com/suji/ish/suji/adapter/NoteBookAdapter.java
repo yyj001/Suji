@@ -42,17 +42,6 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_HEADER) {
-//            ((HeaderSearchBinding) holder.getBinding()).notebookSearchbar.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    ActivityOptions transitionActivityOptions = ActivityOptions
-//                            .makeSceneTransitionAnimation(mActivity, view, "searchbar");
-//
-//                    mActivity.startActivity(new Intent(mActivity, SearchActivity.class),
-//                            transitionActivityOptions.toBundle());
-//                }
-//            });
             return;
         }
         int pos = getRealPosition(holder);
