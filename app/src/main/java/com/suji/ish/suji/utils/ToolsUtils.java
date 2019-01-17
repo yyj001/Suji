@@ -1,7 +1,10 @@
 package com.suji.ish.suji.utils;
 
+import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Vibrator;
 
 import com.suji.ish.suji.R;
 
@@ -64,6 +67,12 @@ public class ToolsUtils {
     public String getDateFormat(long time){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(time);
+    }
+
+    public void viberate(Context context,int time){
+        Vibrator vibrator = (Vibrator)context.getSystemService(Service.VIBRATOR_SERVICE);
+        long [] pattern = {0,time};   // 停止 开启 停止 开启
+        vibrator.vibrate(pattern,-1);
     }
 
 }

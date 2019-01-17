@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.adapter.TabPageIndicatorAdapter;
+import com.suji.ish.suji.utils.ToolsUtils;
 import com.suji.ish.suji.view.HomeViewPager;
 import com.suji.ish.suji.view.MenuPopupWindow;
 import com.zyyoona7.popup.EasyPopup;
@@ -112,6 +113,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mViewPager.setCurrentItem(3);
                 break;
             case R.id.navbtn5:
+                ToolsUtils.getInstance().viberate(this,5);
                 showPopupMenu(view);
                 break;
             case R.id.popup_add_notebook:
