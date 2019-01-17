@@ -7,6 +7,8 @@ import com.suji.ish.suji.utils.ToolsUtils;
 
 import org.litepal.LitePal;
 
+import java.util.List;
+
 /**
  * @author ish
  */
@@ -32,7 +34,7 @@ public class NoteBookModel {
         long editTime = createTime;
         String createTimeString = ToolsUtils.getInstance().getDateFormat(createTime);
         String editTimeString = ToolsUtils.getInstance().getDateFormat(editTime);
-        NoteBook noteBook = new NoteBook(0, createTime, editTime, bookName, editTimeString, createTimeString);
+        final NoteBook noteBook = new NoteBook(0, createTime, editTime, bookName, editTimeString, createTimeString);
 
         //在子线程插入，监听插入结果
         noteBook.saveAsync().listen(new org.litepal.crud.callback.SaveCallback() {
@@ -42,6 +44,7 @@ public class NoteBookModel {
                 if (success) {
                     eventMsg.setEventCode(DataBaseEvent.INSERT_SUCCESS);
                     eventMsg.setMsg("创建成功");
+                    eventMsg.setNoteBook(noteBook);
                 } else {
                     eventMsg.setEventCode(DataBaseEvent.INSERT_FAIL);
                     eventMsg.setMsg("创建失败");
@@ -49,5 +52,13 @@ public class NoteBookModel {
                 RxBus.getInstance().post(eventMsg);
             }
         });
+    }
+
+    /**
+    * 笔记本不会很多，直接在主线程操作
+     */
+    public List<NoteBook> getAllNoteBooks(){
+        List<NoteBook> list = LitePal.findAll(NoteBook.class);
+        return list;
     }
 }

@@ -81,6 +81,13 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         notifyItemInserted(0);
     }
 
+    public boolean hasHeader(){
+        if(headerBinding!=null){
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public int getItemCount() {

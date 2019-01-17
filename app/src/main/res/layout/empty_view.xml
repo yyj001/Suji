@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notebook_viewstub"
     android:layout_width="150dp"
     android:layout_height="120dp"
     android:layout_marginTop="50dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
     <ImageView
         android:layout_width="80dp"

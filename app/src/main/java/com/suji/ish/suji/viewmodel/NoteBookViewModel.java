@@ -21,12 +21,18 @@ import com.suji.ish.suji.activity.SearchActivity;
 import com.suji.ish.suji.adapter.NoteBookAdapter;
 import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.databinding.FragmentNoteBookBinding;
+import com.suji.ish.suji.model.NoteBookModel;
+import com.suji.ish.suji.rxjava.DataBaseEvent;
+import com.suji.ish.suji.rxjava.RxBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * @author ish
@@ -38,6 +44,9 @@ public class NoteBookViewModel implements View.OnClickListener {
     private List<NoteBook> mNoteBooks;
     private NoteBookAdapter mNoteBookAdapter;
     private Activity mActivity;
+    private NoteBookModel mNoteBookModel;
+    //记录stubView是否已经被inflate
+    private boolean mInflateVb = false;
 
 
     public NoteBookViewModel(FragmentNoteBookBinding mBinding, ViewGroup parent, Activity activity) {
@@ -51,12 +60,8 @@ public class NoteBookViewModel implements View.OnClickListener {
 
 
     public void initRecyclerViewData() {
-        mNoteBooks = new ArrayList<NoteBook>();
-        for (int i = 0; i < 20; ++i) {
-            NoteBook noteBook = new NoteBook(i * i + 1, 100-i,
-                    i+0, "name " + i,"2012-1-1","2014-1-2");
-            mNoteBooks.add(noteBook);
-        }
+        mNoteBookModel = new NoteBookModel();
+        mNoteBooks = mNoteBookModel.getAllNoteBooks();
 
         //按编辑时间排序
         Collections.sort(mNoteBooks, new SortByEdittime());
@@ -66,6 +71,45 @@ public class NoteBookViewModel implements View.OnClickListener {
 //        mNoteBookAdapter.setHeaderView(headerSearchBinding);
         mBinding.setAdapter(mNoteBookAdapter);
         showViewStub();
+
+        //监听数据库是否变化
+        RxBus.getInstance()
+                .toObservable()
+                .map(new Function<Object, DataBaseEvent>() {
+                    @Override
+                    public DataBaseEvent apply(Object o) throws Exception {
+                        return (DataBaseEvent) o;
+                    }
+                })
+                .subscribe(new Consumer<DataBaseEvent>() {
+                    @Override
+                    public void accept(DataBaseEvent eventMsg) throws Exception {
+                        if (eventMsg != null) {
+                            changeWithDataBaseChange(eventMsg);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 根据数据库变化刷新列表
+     */
+    private void changeWithDataBaseChange(DataBaseEvent event) {
+        switch (event.getEventCode()) {
+            case DataBaseEvent.INSERT_SUCCESS: {
+                NoteBook newNoteBook = event.getNoteBook();
+                int pos = 0;
+                if (mNoteBookAdapter.hasHeader()) {
+                    pos = 1;
+                }
+                mNoteBooks.add(0, newNoteBook);
+                mNoteBookAdapter.notifyItemChanged(pos);
+                //别忘了刷新stubView
+                showViewStub();
+                break;
+            }
+            default:
+        }
     }
 
     /**
@@ -73,7 +117,9 @@ public class NoteBookViewModel implements View.OnClickListener {
      **/
     public void showViewStub() {
         if (mNoteBooks.size() == 0) {
-            mBinding.notebookViewstub.getViewStub().inflate();
+            mBinding.notebookViewstub.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.notebookViewstub.setVisibility(View.GONE);
         }
     }
 
@@ -107,7 +153,7 @@ public class NoteBookViewModel implements View.OnClickListener {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 // 控件每一个item的点击事件
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.option_update:
                         Collections.sort(mNoteBooks, new SortByEdittime());
                         mNoteBookAdapter.notifyDataSetChanged();
@@ -185,7 +231,6 @@ public class NoteBookViewModel implements View.OnClickListener {
             return b1.getBookName().compareTo(b2.getBookName());
         }
     }
-
 
 
 }

@@ -1,4 +1,4 @@
-package com.suji.ish.suji.activity;//package com.suji.ish.sujinotebook.activity;
+package com.suji.ish.suji.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.suji.ish.suji.R;
