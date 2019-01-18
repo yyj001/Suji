@@ -43,7 +43,7 @@ public class NoteBookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_book, container, false);
-        mNoteBookAdapter = new NoteBookViewModel(mBinding,container,getActivity());
+        mNoteBookAdapter = new NoteBookViewModel(mBinding,container,getActivity(),this);
         initView();
         return mBinding.getRoot();
     }

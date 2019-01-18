@@ -1,6 +1,7 @@
 package com.suji.ish.suji.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
@@ -18,6 +19,10 @@ import com.suji.ish.suji.view.MenuPopupWindow;
 import com.zyyoona7.popup.EasyPopup;
 import com.zyyoona7.popup.XGravity;
 import com.zyyoona7.popup.YGravity;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 /**
  * @author ish
@@ -44,10 +49,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private EasyPopup mCirclePop;
 
     private MenuPopupWindow mMenuPopupWindow;
+    //navigation fragment id 默认是笔记本页面;
+    private int mNavgraphId = R.id.nav_host_notebook;
 
     LinearLayout mAddNoteBtn;
     LinearLayout mAddNoteBookBtn;
-
 
 
 
@@ -96,6 +102,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             case R.id.navbtn1:
                 setSelectBtn(0);
                 mViewPager.setCurrentItem(0);
+                mNavgraphId = R.id.nav_host_notebook;
                 break;
             case R.id.navbtn2:
                 Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
@@ -135,10 +142,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 mMenuPopupWindow.dismiss();
-
                 goTo(new AddNoteBookActivity());
             }
         });
   }
 
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        NavController navController = (NavController) Navigation
+                .findNavController(HomeActivity.this, mNavgraphId);
+        if(!navController.popBackStack()){
+            super.onBackPressed();
+        }
+    }
 }

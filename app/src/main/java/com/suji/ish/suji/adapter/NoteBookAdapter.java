@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.suji.ish.suji.R;
@@ -12,6 +13,8 @@ import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.databinding.ItemNotebookBinding;
 
 import java.util.List;
+
+import androidx.navigation.Navigation;
 
 public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHolder> {
 
@@ -48,6 +51,13 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         NoteBook noteBook = list.get(pos);
         ((ItemNotebookBinding) holder.getBinding()).setBook(noteBook);
         holder.getBinding().executePendingBindings();
+
+        holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_noteBookFragment_to_bookPageFragment);
+            }
+        });
     }
 
 
@@ -81,8 +91,8 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         notifyItemInserted(0);
     }
 
-    public boolean hasHeader(){
-        if(headerBinding!=null){
+    public boolean hasHeader() {
+        if (headerBinding != null) {
             return true;
         }
         return false;

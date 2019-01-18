@@ -6,15 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v4.app.Fragment;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.activity.SearchActivity;
@@ -25,11 +24,9 @@ import com.suji.ish.suji.model.NoteBookModel;
 import com.suji.ish.suji.rxjava.DataBaseEvent;
 import com.suji.ish.suji.rxjava.RxBus;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -47,12 +44,14 @@ public class NoteBookViewModel implements View.OnClickListener {
     private NoteBookModel mNoteBookModel;
     //记录stubView是否已经被inflate
     private boolean mInflateVb = false;
+    private Fragment mFragment;
 
 
-    public NoteBookViewModel(FragmentNoteBookBinding mBinding, ViewGroup parent, Activity activity) {
+    public NoteBookViewModel(FragmentNoteBookBinding mBinding, ViewGroup parent, Activity activity, Fragment fragment) {
         this.mBinding = mBinding;
         this.mParent = parent;
         this.mActivity = activity;
+        this.mFragment = fragment;
 
         mBinding.notebookSearchbar.setOnClickListener(this);
         mBinding.notebookMoreBtn.setOnClickListener(this);
