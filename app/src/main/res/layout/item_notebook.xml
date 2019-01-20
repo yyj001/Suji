@@ -41,12 +41,13 @@
 
                 <TextView
                     android:id="@+id/notebook_name"
+                    android:transitionName="notebook_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:maxLength="23"
                     android:text="@{book.bookName}"
                     android:textColor="@color/textDarkColor"
+                    android:maxLines="1"
                     android:textSize="20sp" />
 
                 <TextView

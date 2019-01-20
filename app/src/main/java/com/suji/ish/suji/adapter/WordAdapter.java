@@ -1,34 +1,27 @@
 package com.suji.ish.suji.adapter;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.suji.ish.suji.R;
-import com.suji.ish.suji.bean.NoteBook;
-import com.suji.ish.suji.databinding.ItemNotebookBinding;
-import com.suji.ish.suji.utils.ToolsUtils;
+import com.suji.ish.suji.bean.Word;
+import com.suji.ish.suji.databinding.ItemWordBinding;
 
 import java.util.List;
 
-import androidx.navigation.Navigation;
+public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
-public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHolder> {
-
-    private List<NoteBook> list;
-    private Activity mActivity;
+    private List<Word> list;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static ViewDataBinding headerBinding;
 
 
-    public NoteBookAdapter(List<NoteBook> list, Activity activity) {
+    public WordAdapter(List<Word> list) {
         this.list = list;
-        this.mActivity = activity;
     }
 
     @Override
@@ -37,8 +30,8 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         if (viewType == TYPE_HEADER && headerBinding != null) {
             return new ViewHolder(headerBinding);
         }
-        ItemNotebookBinding itemNotebookBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.item_notebook, parent, false);
+        ItemWordBinding itemNotebookBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.item_word, parent, false);
         return new ViewHolder(itemNotebookBinding);
     }
 
@@ -49,20 +42,18 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
             return;
         }
         int pos = getRealPosition(holder);
-        NoteBook noteBook = list.get(pos);
-        ((ItemNotebookBinding) holder.getBinding()).setBook(noteBook);
+        Word word = list.get(pos);
+        ((ItemWordBinding) holder.getBinding()).setWord(word);
         holder.getBinding().executePendingBindings();
-        String name = ToolsUtils.getInstance().handleText(noteBook.getBookName(),22);
-        ((ItemNotebookBinding) holder.getBinding()).notebookName.setText(name);
 
         //跳转笔记本页面
-        Bundle bundle = new Bundle();
-        bundle.putString("bookName", noteBook.getBookName());
-        bundle.putInt("bookId", noteBook.getId());
-        holder.getBinding().getRoot()
-                .setOnClickListener(Navigation.createNavigateOnClickListener(
-                        R.id.action_noteBookFragment_to_noteBookPageFragment,bundle)
-                );
+//        Bundle bundle = new Bundle();
+//        bundle.putString("bookName", noteBook.getBookName());
+//        bundle.putInt("bookId", noteBook.getId());
+//        holder.getBinding().getRoot()
+//                .setOnClickListener(Navigation.createNavigateOnClickListener(
+//                        R.id.action_noteBookFragment_to_noteBookPageFragment,bundle)
+//                );
     }
 
 
@@ -92,7 +83,7 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
      * 插入头部
      */
     public void setHeaderView(ViewDataBinding binding) {
-        NoteBookAdapter.headerBinding = binding;
+        WordAdapter.headerBinding = binding;
         notifyItemInserted(0);
     }
 
@@ -103,10 +94,21 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         return false;
     }
 
+    public List getList(){
+        return this.list;
+    }
+
+    public void setList(List list){
+        this.list = list;
+    }
+
 
     @Override
     public int getItemCount() {
-        return headerBinding == null ? list.size() : list.size() + 1;
+        if(list!=null){
+            return headerBinding == null ? list.size() : list.size() + 1;
+        }
+        return 0;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -115,9 +117,6 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
 
         public ViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
-//            if (binding == headerBinding) {
-//                return;
-//            }
             this.binding = binding;
         }
 
@@ -125,5 +124,7 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
             return this.binding;
         }
     }
+
 }
+
 

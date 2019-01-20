@@ -32,6 +32,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
+ * 这个类没有按照规范来写，后面的会按照jetpack标准来
  * @author ish
  */
 public class NoteBookViewModel implements View.OnClickListener {

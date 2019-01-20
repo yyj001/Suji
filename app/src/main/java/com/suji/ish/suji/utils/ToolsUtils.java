@@ -1,12 +1,10 @@
 package com.suji.ish.suji.utils;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Vibrator;
-
-import com.suji.ish.suji.R;
+import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
 
@@ -73,6 +71,38 @@ public class ToolsUtils {
         Vibrator vibrator = (Vibrator)context.getSystemService(Service.VIBRATOR_SERVICE);
         long [] pattern = {0,time};   // 停止 开启 停止 开启
         vibrator.vibrate(pattern,-1);
+    }
+
+    /**
+     * 限制字长
+     * @param str
+     * @param maxLen
+     * @return
+     */
+    public String handleText(String str, int maxLen) {
+        if (TextUtils.isEmpty(str)) {
+            return str;
+        }
+        int count = 0;
+        int endIndex=0;
+        for (int i = 0; i < str.length(); i++) {
+            char item = str.charAt(i);
+            if (item < 128) {
+                count = count + 1;
+            } else {
+                count = count + 2;
+            }
+            if(maxLen==count || (item>=128 && maxLen+1==count)){
+                endIndex=i;
+            }
+        }
+        if (count <= maxLen) {
+            return str;
+        } else {
+
+            return str.substring(0, endIndex) + "...";
+        }
+
     }
 
 }

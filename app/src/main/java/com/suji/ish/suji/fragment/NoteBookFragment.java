@@ -1,28 +1,18 @@
 package com.suji.ish.suji.fragment;
 
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.suji.ish.suji.R;
-import com.suji.ish.suji.activity.SearchActivity;
-import com.suji.ish.suji.adapter.NoteBookAdapter;
-import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.databinding.FragmentNoteBookBinding;
 import com.suji.ish.suji.viewmodel.NoteBookViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +21,7 @@ import java.util.List;
 public class NoteBookFragment extends Fragment {
 
     private FragmentNoteBookBinding mBinding;
-    private NoteBookViewModel mNoteBookAdapter;
+    private NoteBookViewModel mNoteBookViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +36,7 @@ public class NoteBookFragment extends Fragment {
         if(mBinding==null){
             mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_book, container, false);
         }
-        mNoteBookAdapter = new NoteBookViewModel(mBinding,container,getActivity(),this);
+        mNoteBookViewModel = new NoteBookViewModel(mBinding,container,getActivity(),this);
         initView();
         return mBinding.getRoot();
     }
@@ -56,7 +46,7 @@ public class NoteBookFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.notebookRecyclerview.setLayoutManager(linearLayoutManager);
-        mNoteBookAdapter.initRecyclerViewData();
+        mNoteBookViewModel.initRecyclerViewData();
     }
 
 }

@@ -1,7 +1,6 @@
 package com.suji.ish.suji.activity;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.zyyoona7.popup.YGravity;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 /**
  * @author ish
@@ -120,7 +118,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mViewPager.setCurrentItem(3);
                 break;
             case R.id.navbtn5:
-                ToolsUtils.getInstance().viberate(this,5);
+                ToolsUtils.getInstance().viberate(this,10);
                 showPopupMenu(view);
                 break;
             case R.id.popup_add_notebook:

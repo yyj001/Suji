@@ -48,7 +48,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="笔记"
+                android:text="单词"
                 android:textColor="@color/black"
                 android:textSize="32sp" />
 
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="所有笔记本"
+                    android:text="所有单词本"
                     android:textColor="@color/black" />
 
                 <View

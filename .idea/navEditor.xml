@@ -53,18 +53,6 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="bookPageFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-120" />
-                            <option name="y" value="397" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="noteBookFragment">
                     <value>
                       <LayoutPositions>
@@ -72,6 +60,27 @@
                           <Point>
                             <option name="x" value="-331" />
                             <option name="y" value="395" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_noteBookFragment_to_noteBookPageFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="noteBookPageFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-128" />
+                            <option name="y" value="397" />
                           </Point>
                         </option>
                       </LayoutPositions>

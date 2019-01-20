@@ -41,6 +41,7 @@ dependencies {
 //    implementation 'com.github.yyj001:ResultView:v1.0'
     implementation 'com.github.razerdp:BasePopup:2.1.6'
     implementation 'org.litepal.android:java:3.0.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     //引入rxJava
@@ -57,6 +58,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
     // optional - Test helpers
     androidTestImplementation "android.arch.navigation:navigation-testing:$nav_version"
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
