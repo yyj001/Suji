@@ -3,14 +3,14 @@ package com.suji.ish.suji.view;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.loopeer.shadow.ShadowView;
 import com.suji.ish.suji.R;
 
-public class SearchBarBehavior extends CoordinatorLayout.Behavior<CardView> {
+public class SearchBarBehavior extends CoordinatorLayout.Behavior<ShadowView> {
     private int mStartY;
     private float mPreHeight;
     private float mMinHeight;
@@ -27,7 +27,7 @@ public class SearchBarBehavior extends CoordinatorLayout.Behavior<CardView> {
     }
 
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, CardView child, View dependency) {
+    public boolean layoutDependsOn(CoordinatorLayout parent, ShadowView child, View dependency) {
         if (dependency.getId() == R.id.notebook_recyclerview) {
             Resources resources = dependency.getResources();
             mMinHeight = resources.getDimension(R.dimen.fragment_searchbar_minheight);
@@ -47,12 +47,15 @@ public class SearchBarBehavior extends CoordinatorLayout.Behavior<CardView> {
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, CardView child, View dependency) {
+    public boolean onDependentViewChanged(CoordinatorLayout parent, ShadowView child, View dependency) {
 
         if (mStartY == 0) {
             mStartY = (int) dependency.getY();
         }
         float percent = (dependency.getY() - maxScrollY) / (mStartY - maxScrollY);
+
+        //设置搜索框的阴影
+        child.setShadowRadius(percent * 10f);
 
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
         int spanLeft = (int) (mMaxMarginLeft - mMinMarginLeft);

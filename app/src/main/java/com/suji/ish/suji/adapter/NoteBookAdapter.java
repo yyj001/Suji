@@ -5,9 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.loopeer.shadow.ShadowView;
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.databinding.ItemNotebookBinding;
@@ -49,6 +51,40 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
             return;
         }
         int pos = getRealPosition(holder);
+        //设置首尾的样式
+        int marginLength = ToolsUtils.getInstance().dp2px(mActivity,20);
+        if(pos==0 && headerBinding==null && list.size()>1){
+            Log.d("cdcdfcece", "onBindViewHolder: 1");
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,marginLength,marginLength,0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(0);
+        }else if(pos==list.size()-1 && list.size()>1){
+            Log.d("cdcdfcece", "onBindViewHolder: 2");
+
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,0,marginLength,marginLength);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(0);
+        }else if(list.size()==1) {
+            Log.d("cdcdfcece", "onBindViewHolder: 3");
+
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,marginLength,marginLength,marginLength);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/2);
+        }else{
+            Log.d("cdcdfcece", "onBindViewHolder: 4");
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,0,marginLength,0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(0);
+        }
+
         NoteBook noteBook = list.get(pos);
         ((ItemNotebookBinding) holder.getBinding()).setBook(noteBook);
         holder.getBinding().executePendingBindings();

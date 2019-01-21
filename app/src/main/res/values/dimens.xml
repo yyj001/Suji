@@ -2,16 +2,16 @@
 <resources>
     <dimen name="fragment_title_size_origin">32sp</dimen>
     <dimen name="fragment_title_size_min">20sp</dimen>
-    <dimen name="fragment_searchbar_minmargin_left">20dp</dimen>
+    <dimen name="fragment_searchbar_minmargin_left">10dp</dimen>
     <dimen name="fragment_searchbar_maxmargin_left">70dp</dimen>
-    <dimen name="fragment_searchbar_minmargin_right">20dp</dimen>
+    <dimen name="fragment_searchbar_minmargin_right">10dp</dimen>
     <dimen name="fragment_searchbar_maxmargin_right">45dp</dimen>
-    <dimen name="fragment_searchbar_minheight">35dp</dimen>
-    <dimen name="fragment_searchbar_maxheight">45dp</dimen>
-    <dimen name="fragment_searchbar_min_margintop">7dp</dimen>
+    <dimen name="fragment_searchbar_minheight">55dp</dimen>
+    <dimen name="fragment_searchbar_maxheight">60dp</dimen>
+    <dimen name="fragment_searchbar_min_margintop">-3dp</dimen>
     <dimen name="fragment_searchbar_max_margintop">70dp</dimen>
 
     <dimen name="fragment_headerline_min_margintop">50dp</dimen>
-    <dimen name="fragment_headerline_max_margintop">130dp</dimen>
+    <dimen name="fragment_headerline_max_margintop">140dp</dimen>
 
 </resources>

@@ -40,8 +40,7 @@ dependencies {
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 //    implementation 'com.github.yyj001:ResultView:v1.0'
     implementation 'com.github.razerdp:BasePopup:2.1.6'
-    implementation 'org.litepal.android:java:3.0.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    //数据库
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     //引入rxJava
@@ -53,6 +52,7 @@ dependencies {
     //引入J神的rxrelay2，出现异常仍然可以处理
     implementation 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
     //jetpack部分
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
     def nav_version = "1.0.0-alpha01"
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin

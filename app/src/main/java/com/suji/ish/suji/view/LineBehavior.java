@@ -44,7 +44,7 @@ public class LineBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
         child.setLayoutParams(lp);
         LinearLayout headerNotice = child.findViewById(R.id.header_notice);
         View line = child.findViewById(R.id.header_line);
-        headerNotice.setAlpha((float) (percent-0.3));
+        headerNotice.setAlpha((float) (percent-0.1));
         //线到顶才显示
         if (percent==0){
             line.setAlpha(1);

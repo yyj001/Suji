@@ -103,7 +103,7 @@ public class NoteBookViewModel implements View.OnClickListener {
                     pos = 1;
                 }
                 mNoteBooks.add(0, newNoteBook);
-                mNoteBookAdapter.notifyItemChanged(pos);
+                mNoteBookAdapter.notifyDataSetChanged();
                 //别忘了刷新stubView
                 showViewStub();
                 break;
