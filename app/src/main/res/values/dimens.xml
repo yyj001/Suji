@@ -14,4 +14,7 @@
     <dimen name="fragment_headerline_min_margintop">50dp</dimen>
     <dimen name="fragment_headerline_max_margintop">140dp</dimen>
 
+    <dimen name="behavior_recycler_scroll">51dp</dimen>
+
+
 </resources>

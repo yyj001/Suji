@@ -17,7 +17,7 @@ public class TitleBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
     private int mStartY;
     private float mPreTextSize;
     private float mMinTextSize;
-    private float maxScrollY = 150;
+    private float maxScrollY;
 
     public TitleBehavior(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -29,6 +29,7 @@ public class TitleBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
             Resources resources = dependency.getResources();
             mPreTextSize = resources.getDimension(R.dimen.fragment_title_size_origin);
             mMinTextSize = resources.getDimension(R.dimen.fragment_title_size_min);
+            maxScrollY = resources.getDimension(R.dimen.behavior_recycler_scroll);
             return true;
         }
         return false;

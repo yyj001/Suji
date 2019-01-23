@@ -12,7 +12,7 @@ import com.suji.ish.suji.R;
 public class LineBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
 
     private int mStartY;
-    private float maxScrollY = 153;
+    private float maxScrollY;
     private float mMinMarginTop;
     private float mMaxMarginTop;
 
@@ -26,6 +26,7 @@ public class LineBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
             Resources resources = dependency.getResources();
             mMinMarginTop = resources.getDimension(R.dimen.fragment_headerline_min_margintop);
             mMaxMarginTop = resources.getDimension(R.dimen.fragment_headerline_max_margintop);
+            maxScrollY = resources.getDimension(R.dimen.behavior_recycler_scroll);
 
             return true;
         }

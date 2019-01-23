@@ -20,7 +20,7 @@ public class SearchBarBehavior extends CoordinatorLayout.Behavior<ShadowView> {
     private float mMaxMarginRight;
     private float mMinMarginTop;
     private float mMaxMarginTop;
-    private float maxScrollY = 153;
+    private float maxScrollY ;
 
     public SearchBarBehavior(Context context, AttributeSet attributes) {
         super(context, attributes);
@@ -41,6 +41,9 @@ public class SearchBarBehavior extends CoordinatorLayout.Behavior<ShadowView> {
 
             mMinMarginTop = resources.getDimension(R.dimen.fragment_searchbar_min_margintop);
             mMaxMarginTop = resources.getDimension(R.dimen.fragment_searchbar_max_margintop);
+
+            maxScrollY = resources.getDimension(R.dimen.behavior_recycler_scroll);
+
             return true;
         }
         return false;

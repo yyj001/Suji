@@ -75,7 +75,6 @@
             android:transitionName="searchbar"
             app:backgroundColor="@color/colorPrimaryDark"
             app:cornerRadius="5dp"
-            android:elevation="10dp"
             app:shadowColor="#bbbbbb"
             app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior"
             app:shadowMargin="10dp"
