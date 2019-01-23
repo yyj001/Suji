@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.loopeer.shadow.ShadowView;
@@ -69,7 +68,6 @@ public class SearchBarBehavior extends CoordinatorLayout.Behavior<ShadowView> {
                 0);
         lp.height = (int) (mMinHeight + percent * (mPreHeight - mMinHeight));
         child.setLayoutParams(lp);
-        Log.d("ccccc", dependency.getY() + " ");
         return true;
     }
 }
