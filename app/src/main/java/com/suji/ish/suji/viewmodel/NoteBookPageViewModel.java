@@ -37,8 +37,8 @@ public class NoteBookPageViewModel extends AndroidViewModel {
         for(int i=0;i<20;++i){
             Word word = new Word();
             word.setSpell("apple");
-            word.setWordType("n;");
-            word.setTranslation("行为的魏晨魏晨魏晨魏晨魏晨；曹魏洧长城网");
+//            word.setWordType("n;");
+//            word.setTranslation("行为的魏晨魏晨魏晨魏晨魏晨；曹魏洧长城网");
             list.add(word);
         }
         mWords.setValue(list);

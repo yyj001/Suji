@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/greya"
             android:textSize="16sp"
-            android:text="@{word.wordType}"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/word_translation"
@@ -41,7 +41,7 @@
             android:lines="1"
             android:textColor="@color/greya"
             android:textSize="16sp"
-            android:text="@{word.translation}"/>
+            android:text=""/>
     </LinearLayout>
 
 </layout>
