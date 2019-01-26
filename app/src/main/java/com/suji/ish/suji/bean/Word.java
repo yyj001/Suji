@@ -19,6 +19,7 @@ public class Word extends LitePalSupport implements Observable {
     private int dbId;
     private long addTime;
     private String addTimeString;
+    private int bookId; //对应单词本id
     private int addType; // 是否为词库里面的单词
     private String spell;
     private String wordPl; //复数
@@ -38,7 +39,7 @@ public class Word extends LitePalSupport implements Observable {
 
     private String parts; // 词义，json字符串拼接，用 \n 分割数组
 
-    private String sentence;
+    private String sentence; // 例句
 
 
     @Column(ignore = true)
@@ -95,12 +96,22 @@ public class Word extends LitePalSupport implements Observable {
                 meaning += part.getPart();
                 for (String m : part.getMeans()) {
                     meaning += m;
+                    meaning += " ";
                 }
-                meaning += "\n";
+                meaning += ";\n";
             }
+            this.parts = meaning;
         }
+    }
 
+    @Bindable
+    public int getBookId() {
+        return bookId;
+    }
 
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+        mRegistry.notifyChange(this, BR.bookId);
     }
 
     @Bindable

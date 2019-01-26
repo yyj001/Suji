@@ -61,4 +61,5 @@ public class NoteBookModel {
         List<NoteBook> list = LitePal.findAll(NoteBook.class);
         return list;
     }
+
 }
