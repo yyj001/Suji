@@ -1,5 +1,9 @@
 package com.suji.ish.suji.json;
 
+/**
+ * 转化自己接口返回的json
+ * @param <T>
+ */
 public class SujiJsonBean<T> {
     private int code;
     private String message;

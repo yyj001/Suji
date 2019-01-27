@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Auto-generated: 2019-01-25 18:24:13
+ * 转化金山接口的返回的json
  */
 public class WordJson {
 

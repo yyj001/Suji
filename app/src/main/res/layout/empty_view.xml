@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="当前还没有笔记"
+        android:text="当前还没有单词本"
         android:textColor="@color/grey8"
         android:textSize="16sp" />
 </LinearLayout>

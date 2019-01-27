@@ -18,7 +18,7 @@ public class MemoryViewModel extends ViewModel {
 
     public void loadData(){
         mWordModel = new WordModel();
-        mWordModel.getWordFromInternet("apple");
+        mWordModel.getWordFromInternet("she's");
         InternetRxBus.getInstance()
                 .toObservable()
                 .map(new Function<Object, InternetEvent>() {

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.global.Api;
@@ -18,8 +19,6 @@ import com.suji.ish.suji.json.SujiJsonBean;
 import com.suji.ish.suji.json.WordJson;
 import com.suji.ish.suji.network.WordService;
 import com.suji.ish.suji.viewmodel.MemoryViewModel;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +57,7 @@ public class MemoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                mViewModel.loadData();
+//                toJson();
             }
         });
     }
@@ -65,9 +65,9 @@ public class MemoryFragment extends Fragment {
     private void toJson() {
         String jsonStr = Api.json;
         Gson gson = new Gson();
-        WordJson wordJson = gson.fromJson(jsonStr, WordJson.class);
-        Word word = new Word(wordJson);
-        Log.d(TAG, "toJson: " + word.getSpell() + "\n" + word.getWordEr() + "\n" + word.getWordIng() + "\n" + word.getPhEn() + "\n" + word.getSentence());
+        SujiJsonBean<Word> wordSujiJsonBean = gson.fromJson(jsonStr, new TypeToken<SujiJsonBean<Word>>() {}.getType());
+        Word word = wordSujiJsonBean.getResult();
+        Log.d(TAG, "toJson: "+ word.getParts()) ;
     }
 
 //    public void post(){
@@ -99,34 +99,34 @@ public class MemoryFragment extends Fragment {
 //    }
 
 
-    public void searchnSujiDb() {
-        final String word = "super";
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(Api.sujiApi)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                WordService wordService = retrofit.create(WordService.class);
-                Call<SujiJsonBean> call = wordService.getInSujiDb(word);
-                try {
-                    //第一次请求
-                    Response<SujiJsonBean> response = call.execute();
-                    if(response.body().getCode()==1){
-                    }else{
-                        getJinShanWord(word);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-
-        new Thread(runnable).start();
-    }
+//    public void searchnSujiDb() {
+//        final String word = "super";
+//
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                Retrofit retrofit = new Retrofit.Builder()
+//                        .baseUrl(Api.sujiApi)
+//                        .addConverterFactory(GsonConverterFactory.create())
+//                        .build();
+//                WordService wordService = retrofit.create(WordService.class);
+//                Call<SujiJsonBean> call = wordService.getInSujiDb(word);
+//                try {
+//                    //第一次请求
+//                    Response<SujiJsonBean> response = call.execute();
+//                    if(response.body().getCode()==1){
+//                    }else{
+//                        getJinShanWord(word);
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        };
+//
+//        new Thread(runnable).start();
+//    }
 
     public void getJinShanWord(String word) {
         String BASE_URL = Api.jinShanSearch;
