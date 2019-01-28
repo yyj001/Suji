@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
-                android:text="添加笔记本"
+                android:text="添加单词本"
                 android:textColor="@color/textDarkColor" />
         </LinearLayout>
 

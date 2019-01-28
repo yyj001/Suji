@@ -121,10 +121,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 ToolsUtils.getInstance().viberate(this,10);
                 showPopupMenu(view);
                 break;
-            case R.id.popup_add_notebook:
-                break;
-            case R.id.popup_add_note:
-                break;
             default:
         }
     }
@@ -141,6 +137,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             public void onClick(View view) {
                 mMenuPopupWindow.dismiss();
                 goTo(new AddNoteBookActivity());
+            }
+        });
+        addWordFbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMenuPopupWindow.dismiss();
+                goTo(new AddWordActivity());
             }
         });
   }

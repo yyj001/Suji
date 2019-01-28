@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.suji.ish.suji">
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".SujiApplication"
@@ -15,17 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.HomeActivity">
+        <activity android:name=".activity.AddWordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.HomeActivity">
+
+        </activity>
         <activity
             android:name=".activity.SearchActivity"
             android:theme="@style/SearchActivity" />
-        <activity android:name=".activity.AddNoteBookActivity" />
+
+        <activity android:name=".activity.AddNoteBookActivity"></activity>
     </application>
 
 </manifest>

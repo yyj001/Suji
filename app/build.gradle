@@ -42,6 +42,9 @@ dependencies {
     implementation 'com.github.razerdp:BasePopup:2.1.6'
     //数据库
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+    //按钮
+//    implementation 'com.github.niniloveyou:StateButton:v1.0.0'
+
 
     //引入rxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
