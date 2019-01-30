@@ -9,6 +9,7 @@ import android.databinding.ViewDataBinding;
 import android.support.v4.app.Fragment;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,10 +34,12 @@ import io.reactivex.functions.Function;
 
 /**
  * 这个类没有按照规范来写，后面的会按照jetpack标准来
+ *
  * @author ish
  */
 public class NoteBookViewModel implements View.OnClickListener {
 
+    private static final String TAG = "NoteBookViewModel";
     private FragmentNoteBookBinding mBinding;
     private ViewGroup mParent;
     private List<NoteBook> mNoteBooks;
@@ -95,6 +98,7 @@ public class NoteBookViewModel implements View.OnClickListener {
      * 根据数据库变化刷新列表
      */
     private void changeWithDataBaseChange(DataBaseEvent event) {
+        Log.d(TAG, "changeWithDataBaseChange: ");
         switch (event.getEventCode()) {
             case DataBaseEvent.INSERT_SUCCESS: {
                 NoteBook newNoteBook = event.getNoteBook();
@@ -106,6 +110,22 @@ public class NoteBookViewModel implements View.OnClickListener {
                 mNoteBookAdapter.notifyDataSetChanged();
                 //别忘了刷新stubView
                 showViewStub();
+                break;
+            }
+            //新建笔记更新
+            case DataBaseEvent.ADD_WORD_SUCCESS: {
+                NoteBook changedNoteBook = event.getNoteBook();
+                Log.d(TAG, "changeWithDataBaseChange: " + changedNoteBook.getId());
+                for (int i = 0; i < mNoteBooks.size(); ++i) {
+                    if(mNoteBooks.get(i).getId() == changedNoteBook.getId()){
+                        mNoteBooks.get(i).setNoteNumber(changedNoteBook.getNoteNumber());
+                        mNoteBooks.get(i).setEditTimeString(changedNoteBook.getEditTimeString());
+                        mNoteBooks.get(i).setEditTime(changedNoteBook.getEditTime());
+                        Log.d(TAG, "changeWithDataBaseChange: " + i);
+                        mNoteBookAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
                 break;
             }
             default:

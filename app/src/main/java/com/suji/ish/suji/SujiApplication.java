@@ -11,6 +11,5 @@ public class SujiApplication extends Application{
         super.onCreate();
         LitePal.initialize(this);
         SQLiteDatabase db = LitePal.getDatabase();
-
     }
 }

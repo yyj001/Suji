@@ -16,11 +16,12 @@ import java.util.List;
 public class Word extends LitePalSupport implements Observable {
     private PropertyChangeRegistry mRegistry = new PropertyChangeRegistry();
     private int id;
-    private int dbId;
+    private int dbId; //网络id
+    private int bookId;
     private long addTime;
     private String addTimeString;
-    private int bookId; //对应单词本id
-    private int addType; // 是否为词库里面的单词
+    private int addType; // 是否为词库里面的单词 1是，0，不是
+    private float rate;//设置记忆度
     private String spell;
     private String wordPl; //复数
     private String wordPast; //过去式
@@ -43,9 +44,9 @@ public class Word extends LitePalSupport implements Observable {
 
 
     @Column(ignore = true)
-    private static final int TYPE_PERSONAL = 0;
+    public static final int TYPE_PERSONAL = 0;
     @Column(ignore = true)
-    private static final int TYPE_AUTHORITY = 1;
+    public static final int TYPE_AUTHORITY = 1;
 
     public Word() {
     }
@@ -90,8 +91,11 @@ public class Word extends LitePalSupport implements Observable {
             this.phEnMp3 = wordJson.getSymbols().get(0).getPh_en_mp3();
             this.phAmMp3 = wordJson.getSymbols().get(0).getPh_am_mp3();
             this.phTtsMp3 = wordJson.getSymbols().get(0).getPh_tts_mp3();
-            String meaning = "";
+            String meaning = null;
             List<WordJson.SymbolsBean.PartsBean> parts = wordJson.getSymbols().get(0).getParts();
+            if(parts.size()>0){
+                meaning = "";
+            }
             for (WordJson.SymbolsBean.PartsBean part : parts) {
                 meaning += part.getPart();
                 for (String m : part.getMeans()) {
@@ -155,6 +159,16 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     @Bindable
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+        mRegistry.notifyChange(this, BR.rate);
+    }
+
+    @Bindable
     public int getDbId() {
         return dbId;
     }
@@ -170,6 +184,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setSpell(String spell) {
+        if(spell!=null && spell.length()==0){
+            return;
+        }
         this.spell = spell;
         mRegistry.notifyChange(this, BR.spell);
     }
@@ -180,6 +197,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setWordPl(String wordPl) {
+        if(wordPl!=null && wordPl.length()==0){
+            return;
+        }
         this.wordPl = wordPl;
         mRegistry.notifyChange(this, BR.wordPl);
     }
@@ -190,6 +210,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setWordPast(String wordPast) {
+        if(wordPast!=null && wordPast.length()==0){
+            return;
+        }
         this.wordPast = wordPast;
         mRegistry.notifyChange(this, BR.wordPast);
     }
@@ -200,6 +223,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setWordDone(String wordDone) {
+        if(wordDone!=null && wordDone.length()==0){
+            return;
+        }
         this.wordDone = wordDone;
         mRegistry.notifyChange(this, BR.wordDone);
     }
@@ -210,6 +236,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setWordIng(String wordIng) {
+        if(wordIng!=null && wordIng.length()==0){
+            return;
+        }
         this.wordIng = wordIng;
         mRegistry.notifyChange(this, BR.wordIng);
     }
@@ -220,6 +249,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setWordThird(String wordThird) {
+        if(wordThird!=null && wordThird.length()==0){
+            return;
+        }
         this.wordThird = wordThird;
         mRegistry.notifyChange(this, BR.wordThird);
     }
@@ -230,6 +262,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setWordEr(String wordEr) {
+        if(wordEr!=null && wordEr.length()==0){
+            return;
+        }
         this.wordEr = wordEr;
         mRegistry.notifyChange(this, BR.wordEr);
     }
@@ -240,6 +275,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setWordEst(String wordEst) {
+        if(wordEst!=null && wordEst.length()==0){
+            return;
+        }
         this.wordEst = wordEst;
         mRegistry.notifyChange(this, BR.wordEst);
     }
@@ -250,6 +288,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setPhEn(String phEn) {
+        if(phEn!=null && phEn.length()==0){
+            return;
+        }
         this.phEn = phEn;
         mRegistry.notifyChange(this, BR.phEn);
     }
@@ -260,6 +301,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setPhAm(String phAm) {
+        if(phAm!=null && phAm.length()==0){
+            return;
+        }
         this.phAm = phAm;
         mRegistry.notifyChange(this, BR.phAm);
     }
@@ -270,6 +314,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setPhOther(String phOther) {
+        if(phOther!=null && phOther.length()==0){
+            return;
+        }
         this.phOther = phOther;
         mRegistry.notifyChange(this, BR.phOther);
     }
@@ -280,6 +327,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setPhEnMp3(String phEnMp3) {
+        if(phEnMp3!=null && phEnMp3.length()==0){
+            return;
+        }
         this.phEnMp3 = phEnMp3;
         mRegistry.notifyChange(this, BR.phEnMp3);
     }
@@ -290,6 +340,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setPhAmMp3(String phAmMp3) {
+        if(phAmMp3!=null && phAmMp3.length()==0){
+            return;
+        }
         this.phAmMp3 = phAmMp3;
         mRegistry.notifyChange(this, BR.phAmMp3);
     }
@@ -300,6 +353,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setPhTtsMp3(String phTtsMp3) {
+        if(phTtsMp3!=null && phTtsMp3.length()==0){
+            return;
+        }
         this.phTtsMp3 = phTtsMp3;
         mRegistry.notifyChange(this, BR.phTtsMp3);
     }
@@ -310,6 +366,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setParts(String parts) {
+        if(parts!=null && parts.length()==0){
+            return;
+        }
         this.parts = parts;
         mRegistry.notifyChange(this, BR.parts);
     }
@@ -320,6 +379,9 @@ public class Word extends LitePalSupport implements Observable {
     }
 
     public void setSentence(String sentence) {
+        if(sentence!=null && sentence.length()==0){
+            return;
+        }
         this.sentence = sentence;
         mRegistry.notifyChange(this, BR.sentence);
     }

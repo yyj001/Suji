@@ -1,0 +1,20 @@
+package com.suji.ish.suji.utils;
+
+//对databinding数据进行准换
+public class Converter {
+
+    public static String enPhToText(String phEn) {
+        if (phEn == null ) {
+            return null;
+        }
+        return "英[" + phEn + "]";
+    }
+
+    public static String amPhToText(String phEn) {
+        if (phEn == null ) {
+            return null;
+        }
+        return "美[" + phEn + "]";
+    }
+
+}

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragment.WordDetailFragment">
 
     <data>
+
+        <import type="com.suji.ish.suji.utils.Converter" />
+
+        <import type="android.view.View" />
 
         <variable
             name="word"
@@ -14,9 +19,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.WordDetailFragment"
-        android:background="@color/colorPrimary"
-        >
+        android:background="@color/colorPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,40 +58,54 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingRight="20dp"
+                android:visibility="@{word.parts.length()!=0 ? View.VISIBLE : View.GONE}">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加至：" />
+
+                <TextView
+                    android:id="@+id/word_detail_notebook_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新建单词本"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/word_detail_modify_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:text="修改"
-                    android:textColor="@color/colorAccent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="notebook name"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginLeft="5dp"/>
             </LinearLayout>
 
             <com.loopeer.shadow.ShadowView
+                android:id="@+id/word_detail_parts_shadowview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"
                 app:cornerRadius="5dp"
-                app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior"
                 app:shadowColor="@color/trans_grey"
-                app:shadowMargin="12dp"
+                app:shadowMarginLeft="12dp"
+                app:shadowMarginRight="12dp"
+                app:shadowMarginTop="12dp"
                 app:shadowRadius="12dp">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="5dp">
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -99,7 +116,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="spell"
+                            android:text="@{word.spell}"
                             android:textColor="@color/black"
                             android:textSize="25sp" />
 
@@ -123,7 +140,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="英[ecercrevc]"
+                            android:text="@{Converter.enPhToText(word.phEn)}"
                             android:textColor="@color/grey8" />
 
                         <ImageView
@@ -131,15 +148,16 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginRight="20dp"
-                            android:src="@drawable/systemprompt" />
+                            android:src="@drawable/systemprompt"
+                            android:visibility="@{word.phEnMp3!=null ? View.VISIBLE : View.GONE}" />
 
                         <TextView
                             android:id="@+id/word_detail_am"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="美[ededw'evc]"
+                            android:layout_marginLeft="20dp"
+                            android:text="@{Converter.amPhToText(word.phAm)}"
                             android:textColor="@color/grey8" />
 
                         <ImageView
@@ -148,7 +166,9 @@
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="20dp"
-                            android:src="@drawable/systemprompt" />
+                            android:src="@drawable/systemprompt"
+                            android:visibility="@{word.phAmMp3!=null ? View.VISIBLE : View.GONE}" />
+
 
                     </LinearLayout>
 
@@ -158,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:lineSpacingExtra="5dp"
-                        android:text="n.  剥夺,访问服务我的娃，的味道 \nadj.  的味道翁，未得到翁等我"
+                        android:text="@{word.parts}"
                         android:textColor="@color/black" />
                 </LinearLayout>
             </com.loopeer.shadow.ShadowView>
@@ -171,10 +191,13 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 android:padding="10dp"
+                android:visibility="gone"
                 app:cornerRadius="5dp"
                 app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior"
                 app:shadowColor="@color/trans_grey"
-                app:shadowMargin="12dp"
+                app:shadowMarginLeft="12dp"
+                app:shadowMarginRight="12dp"
+                app:shadowMarginTop="12dp"
                 app:shadowRadius="12dp">
 
                 <LinearLayout
@@ -191,9 +214,11 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
+                    <!--pl-->
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{word.wordPl.length()!=0 ? View.VISIBLE : View.GONE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -205,31 +230,33 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="wedwedwef"
-                            android:textColor="@color/black" />
+                            android:text="@{word.wordPl}"
+                            android:textColor="@color/colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{word.wordThird.length()!=0 ? View.VISIBLE : View.GONE}">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="最高级： "
+                            android:text="第三人称单数： "
                             android:textColor="@color/grey8" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="wewd"
-                            android:textColor="@color/black" />
+                            android:text="@{word.wordThird}"
+                            android:textColor="@color/colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{word.wordPast.length()!=0 ? View.VISIBLE : View.GONE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -241,9 +268,87 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="weddwedw"
-                            android:textColor="@color/black" />
+                            android:text="@{word.wordPast}"
+                            android:textColor="@color/colorAccent" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{word.wordDone.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="过去分词： "
+                            android:textColor="@color/grey8" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="@{word.wordDone}"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{word.wordIng.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="现在分词： "
+                            android:textColor="@color/grey8" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="@{word.wordIng}"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{word.wordEr.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="比较级： "
+                            android:textColor="@color/grey8" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="@{word.wordEr}"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{word.wordEst.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="最高级： "
+                            android:textColor="@color/grey8" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="@{word.wordEst}"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
             </com.loopeer.shadow.ShadowView>
 
@@ -254,14 +359,21 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"
                 app:cornerRadius="5dp"
-                app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior"
                 app:shadowColor="@color/trans_grey"
-                app:shadowMargin="12dp"
+                app:shadowMarginBottom="12dp"
+                app:shadowMarginLeft="12dp"
+                app:shadowMarginRight="12dp"
+                app:shadowMarginTop="12dp"
                 app:shadowRadius="12dp">
 
+
                 <LinearLayout
+                    android:id="@+id/word_detail_sentence_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -275,29 +387,6 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="wed dwed wedwedw wdedwed wedwed weffr rtgt erf grtg grt grtg grtg e dwew ."
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="为单位范围分为侧问得我，为.\n"
-                        android:textColor="@color/grey8" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="wedwe de vrtg grtg e dwew ."
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="而非开菲尔可我，为.\n"
-                        android:textColor="@color/grey8" />
                 </LinearLayout>
             </com.loopeer.shadow.ShadowView>
         </LinearLayout>

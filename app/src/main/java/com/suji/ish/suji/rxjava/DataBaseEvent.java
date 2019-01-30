@@ -9,6 +9,7 @@ public class DataBaseEvent<T> {
 
     public static final int INSERT_FAIL = 0;
     public static final int INSERT_SUCCESS = 1;
+    public static final int ADD_WORD_SUCCESS = 2;
 
     public T getMsg() {
         return msg;

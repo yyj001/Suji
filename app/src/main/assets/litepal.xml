@@ -4,6 +4,7 @@
     <version value="1" />
     <list>
         <mapping class="com.suji.ish.suji.bean.NoteBook" />
+        <mapping class="com.suji.ish.suji.bean.Word" />
     </list>
 
 </litepal>

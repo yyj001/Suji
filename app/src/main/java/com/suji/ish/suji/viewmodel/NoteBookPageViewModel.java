@@ -24,7 +24,6 @@ public class NoteBookPageViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Word>> getCurrentName() {
-
         if (mWords == null) {
             mWords = new MutableLiveData<List<Word>>();
             loadWodrs();

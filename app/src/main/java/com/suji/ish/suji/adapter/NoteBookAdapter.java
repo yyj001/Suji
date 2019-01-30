@@ -51,26 +51,25 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         }
         int pos = getRealPosition(holder);
         //设置首尾的样式
-        int marginLength = ToolsUtils.getInstance().dp2px(mActivity,20);
+        int marginLength = ToolsUtils.getInstance().dp2px(mActivity,15);
         if(pos==0 && headerBinding==null && list.size()>1){
             ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,marginLength,marginLength,0);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/2);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/3);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/3);
             ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(0);
             ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(0);
         }else if(pos==list.size()-1 && list.size()>1){
-
             ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,0,marginLength,marginLength);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/2);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/3);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/3);
             ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(0);
             ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(0);
         }else if(list.size()==1) {
             ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,marginLength,marginLength,marginLength);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/2);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/2);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/2);
-            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/3);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/3);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/3);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/3);
         }else{
             ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,0,marginLength,0);
             ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(0);
@@ -82,7 +81,7 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         NoteBook noteBook = list.get(pos);
         ((ItemNotebookBinding) holder.getBinding()).setBook(noteBook);
         holder.getBinding().executePendingBindings();
-        String name = ToolsUtils.getInstance().handleText(noteBook.getBookName(),22);
+        String name = ToolsUtils.getInstance().handleText(noteBook.getBookName(),21);
         ((ItemNotebookBinding) holder.getBinding()).notebookName.setText(name);
 
         //跳转笔记本页面

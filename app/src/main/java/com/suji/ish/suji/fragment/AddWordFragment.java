@@ -28,6 +28,8 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
     private TextView mCancelTv;
     private TextView mSearchTv;
     private int maxWordNum = 40;
+    private View mWiew;
+
     public static AddWordFragment newInstance() {
         return new AddWordFragment();
     }
@@ -36,21 +38,22 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_word_fragment, container, false);
-        materialEditText = view.findViewById(R.id.add_word_edittext);
-        materialEditText.addTextChangedListener(this);
+        if (mWiew == null) {
+            mWiew = inflater.inflate(R.layout.add_word_fragment, container, false);
+            materialEditText = mWiew.findViewById(R.id.add_word_edittext);
+            materialEditText.addTextChangedListener(this);
 
-        mCancelTv =view.findViewById(R.id.add_word_cancel);
-        mCancelTv.setOnClickListener(this);
+            mCancelTv = mWiew.findViewById(R.id.add_word_cancel);
+            mCancelTv.setOnClickListener(this);
 
-        mSearchTv = view.findViewById(R.id.add_word_search);
-        mSearchTv.setOnClickListener(this);
-        mSearchTv.setClickable(false);
+            mSearchTv = mWiew.findViewById(R.id.add_word_search);
+            mSearchTv.setOnClickListener(this);
+            mSearchTv.setClickable(false);
 
-        mOCRView = view.findViewById(R.id.add_word_ocr);
-        mOCRView.setOnClickListener(this);
-
-        return view;
+            mOCRView = mWiew.findViewById(R.id.add_word_ocr);
+            mOCRView.setOnClickListener(this);
+        }
+        return mWiew;
     }
 
     @Override
@@ -70,11 +73,11 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
                 hideKeyboard(view);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("word", materialEditText.getText().toString());
-                Navigation.findNavController(view).navigate(R.id.action_addWordFragment_to_wordDetailFragment,bundle);
+                bundle.putString("spell", materialEditText.getText().toString());
+                Navigation.findNavController(view).navigate(R.id.action_addWordFragment_to_wordDetailFragment, bundle);
                 break;
             }
-            case R.id.add_word_ocr:{
+            case R.id.add_word_ocr: {
                 break;
             }
             default:
@@ -99,27 +102,28 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
 
         //检查是否含有中文
         boolean flag = true;
-        for(int num = 0;num<size;++num){
-            if(!judgeLegal(charSequence.toString().charAt(num))){
+        for (int num = 0; num < size; ++num) {
+            if (!judgeLegal(charSequence.toString().charAt(num))) {
                 createNoteDisable();
                 flag = false;
                 break;
             }
         }
         //todo 应该给这里添加错误提示，还没有时间做
-        if(!flag){
+        if (!flag) {
             createNoteDisable();
         }
     }
 
     /**
      * 判断是否含有中文
+     *
      * @param c
      * @return
      */
-    private boolean judgeLegal(char c){
-        if((int)c>0 && (int)c <256){
-            Log.d("dwdwed", "judgeLegal: legal" );
+    private boolean judgeLegal(char c) {
+        if ((int) c > 0 && (int) c < 256) {
+            Log.d("dwdwed", "judgeLegal: legal");
             return true;
         }
         return false;

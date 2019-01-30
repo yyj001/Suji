@@ -2,13 +2,18 @@ package com.suji.ish.suji.model;
 
 import android.util.Log;
 
+import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.global.Api;
 import com.suji.ish.suji.json.SujiJsonBean;
 import com.suji.ish.suji.json.WordJson;
 import com.suji.ish.suji.network.WordService;
+import com.suji.ish.suji.rxjava.DataBaseEvent;
 import com.suji.ish.suji.rxjava.InternetEvent;
 import com.suji.ish.suji.rxjava.InternetRxBus;
+import com.suji.ish.suji.utils.ToolsUtils;
+
+import org.litepal.LitePal;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -105,10 +110,10 @@ public class WordModel {
         WordService wordService = retrofit.create(WordService.class);
 
         //搜索例句
-        Call<SujiJsonBean> call = wordService.getSentenceInSujiDb(mWord.getSpell());
-        call.enqueue(new Callback<SujiJsonBean>() {
+        Call<SujiJsonBean<String>> call = wordService.getSentenceInSujiDb(mWord.getSpell());
+        call.enqueue(new Callback<SujiJsonBean<String>>() {
             @Override
-            public void onResponse(Call<SujiJsonBean> call, Response<SujiJsonBean> response) {
+            public void onResponse(Call<SujiJsonBean<String>> call, Response<SujiJsonBean<String>> response) {
                 SujiJsonBean<String> sentenceResult = response.body();
                 String sentence = sentenceResult.getResult();
                 //例句查不到就为空
@@ -123,9 +128,10 @@ public class WordModel {
             }
 
             @Override
-            public void onFailure(Call<SujiJsonBean> call, Throwable t) {
-                t.printStackTrace();
+            public void onFailure(Call<SujiJsonBean<String>> call, Throwable t) {
+
             }
+
         });
     }
 
@@ -139,15 +145,12 @@ public class WordModel {
                 .build();
         WordService wordService = retrofit.create(WordService.class);
 
-//        Call<SujiJsonBean<Integer>> call = wordService.insertInDb(mWord.getSpell(), mWord.getWordPast(),
-//                mWord.getWordDone(), mWord.getWordIng(), mWord.getWordPl(), mWord.getWordThird(),
-//                mWord.getWordEr(), mWord.getWordEst(), mWord.getPhEn(), mWord.getPhAm(), mWord.getPhOther(),
-//                mWord.getPhEnMp3(), mWord.getPhAmMp3(), mWord.getPhTtsMp3(), mWord.getParts(),
-//                mWord.getSentence());
+        Call<SujiJsonBean<Integer>> call = wordService.insertInDb(mWord.getSpell(), mWord.getWordPast(),
+                mWord.getWordDone(), mWord.getWordIng(), mWord.getWordPl(), mWord.getWordThird(),
+                mWord.getWordEr(), mWord.getWordEst(), mWord.getPhEn(), mWord.getPhAm(), mWord.getPhOther(),
+                mWord.getPhEnMp3(), mWord.getPhAmMp3(), mWord.getPhTtsMp3(), mWord.getParts(),
+                mWord.getSentence());
 
-        Call<SujiJsonBean<Integer>> call = wordService.insertInDb(mWord.getSpell(), "", "","","",
-                "","","","","","","","","",mWord.getParts(),
-                "");
 
         Log.d(TAG, "insertInSujiDb: " + mWord.getParts());
         call.enqueue(new Callback<SujiJsonBean<Integer>>() {
@@ -157,7 +160,7 @@ public class WordModel {
                 if(result.getCode()==1){
                     int dbId = result.getResult();
                     mWord.setDbId(dbId);
-                    Log.d(TAG, "insertInSujiDb: sucess!" + dbId);
+                    Log.d(TAG, "insertInSujiDb: sucess!, dId=" + dbId);
                 }else{
                     Log.d(TAG, "insertInSujiDb: fail!" + result.getMessage());
                 }
@@ -168,5 +171,22 @@ public class WordModel {
 
             }
         });
+    }
+
+    public void insertWordToDb(Word word){
+        long time = ToolsUtils.getInstance().getInstanceTime();
+        String timeStr = ToolsUtils.getInstance().getDateFormat(time);
+        word.setAddTime(time);
+        word.setAddTimeString(timeStr);
+
+        word.save();
+        Log.d(TAG, "insertWordToDb: " + word.getId());
+
+        //将笔记本数目+1
+        NoteBook noteBook = LitePal.find(NoteBook.class,word.getBookId());
+        noteBook.setEditTime(time);
+        noteBook.setEditTimeString(timeStr);
+        noteBook.setNoteNumber(noteBook.getNoteNumber()+1);
+        new NoteBookModel().saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS);
     }
 }

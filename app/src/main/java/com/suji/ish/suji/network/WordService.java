@@ -25,7 +25,7 @@ public interface WordService {
 
     @FormUrlEncoded
     @POST("get_sentence.php")
-    Call<SujiJsonBean> getSentenceInSujiDb(@Field("word") String word);
+    Call<SujiJsonBean<String>> getSentenceInSujiDb(@Field("word") String word);
 
     @FormUrlEncoded
     @POST("insert_to_dic.php")
