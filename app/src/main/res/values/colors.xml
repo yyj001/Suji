@@ -20,4 +20,7 @@
     <color name="trans_grey">#cccccc</color>
     <color name="oringe">#FF9D00</color>
 
+    <color name="darkBrown">#5C4f56</color>
+    <color name="brown">#B8AA9E</color>
+
 </resources>

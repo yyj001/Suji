@@ -16,6 +16,7 @@ import com.suji.ish.suji.R;
 import com.suji.ish.suji.adapter.WordAdapter;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.NoteBookPageFragmentBinding;
+import com.suji.ish.suji.global.SujiData;
 import com.suji.ish.suji.utils.ToolsUtils;
 import com.suji.ish.suji.viewmodel.NoteBookPageViewModel;
 
@@ -54,6 +55,8 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
 
         mBookName = (String) getArguments().get("bookName");
         mBookId = (int) getArguments().get("bookId");
+        SujiData.getInstance().setBookId(mBookId);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -99,5 +102,11 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SujiData.getInstance().setBookId(0);
     }
 }

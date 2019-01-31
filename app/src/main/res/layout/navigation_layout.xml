@@ -29,10 +29,11 @@
 
                 <ImageView
                     android:id="@+id/iv1"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/notebook" />
+                    android:src="@drawable/notebook"
+                    android:layout_margin="2.5dp"/>
 
                 <TextView
                     android:id="@+id/txview1"
@@ -60,10 +61,12 @@
 
                 <ImageView
                     android:id="@+id/iv2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/memo" />
+                    android:src="@drawable/memo"
+                    android:layout_margin="2.5dp"
+                    />
 
                 <TextView
                     android:id="@+id/txview2"
@@ -114,10 +117,12 @@
 
                 <ImageView
                     android:id="@+id/iv3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/rank" />
+                    android:src="@drawable/rank"
+                    android:layout_margin="2.5dp"
+                    />
 
                 <TextView
                     android:id="@+id/txview3"
@@ -145,10 +150,12 @@
 
                 <ImageView
                     android:id="@+id/iv4"
-                    android:layout_width="30dp"
-                    android:layout_height="33dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/user"
+                    android:layout_margin="2.5dp"
+                    />
 
                 <TextView
                     android:id="@+id/txview4"
