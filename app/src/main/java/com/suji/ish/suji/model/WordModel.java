@@ -14,6 +14,7 @@ import com.suji.ish.suji.rxjava.InternetRxBus;
 import com.suji.ish.suji.utils.ToolsUtils;
 
 import org.litepal.LitePal;
+import org.litepal.crud.callback.FindMultiCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -157,11 +158,11 @@ public class WordModel {
             @Override
             public void onResponse(Call<SujiJsonBean<Integer>> call, Response<SujiJsonBean<Integer>> response) {
                 SujiJsonBean<Integer> result = response.body();
-                if(result.getCode()==1){
+                if (result.getCode() == 1) {
                     int dbId = result.getResult();
                     mWord.setDbId(dbId);
                     Log.d(TAG, "insertInSujiDb: sucess!, dId=" + dbId);
-                }else{
+                } else {
                     Log.d(TAG, "insertInSujiDb: fail!" + result.getMessage());
                 }
             }
@@ -173,7 +174,7 @@ public class WordModel {
         });
     }
 
-    public void insertWordToDb(Word word){
+    public void insertWordToDb(Word word) {
         long time = ToolsUtils.getInstance().getInstanceTime();
         String timeStr = ToolsUtils.getInstance().getDateFormat(time);
         word.setAddTime(time);
@@ -183,10 +184,20 @@ public class WordModel {
         Log.d(TAG, "insertWordToDb: " + word.getId());
 
         //将笔记本数目+1
-        NoteBook noteBook = LitePal.find(NoteBook.class,word.getBookId());
+        NoteBook noteBook = LitePal.find(NoteBook.class, word.getBookId());
         noteBook.setEditTime(time);
         noteBook.setEditTimeString(timeStr);
-        noteBook.setNoteNumber(noteBook.getNoteNumber()+1);
+        noteBook.setNoteNumber(noteBook.getNoteNumber() + 1);
         new NoteBookModel().saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS);
+    }
+
+    /**
+     * 获取该单词本所有单词
+     *
+     * @param bookId
+     * @param callback
+     */
+    public void getAllWordForBook(int bookId, FindMultiCallback<Word> callback) {
+        LitePal.where("bookId = ?", "" + bookId).findAsync(Word.class).listen(callback);
     }
 }

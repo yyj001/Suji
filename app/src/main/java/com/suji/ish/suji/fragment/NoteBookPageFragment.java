@@ -51,6 +51,10 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mBookName = (String) getArguments().get("bookName");
+        mBookId = (int) getArguments().get("bookId");
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.wordRecyclerview.setLayoutManager(linearLayoutManager);
@@ -58,6 +62,7 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
         mAdapter = new WordAdapter(mWords);
         mBinding.setAdapter(mAdapter);
 
+        //监听
         mViewModel = ViewModelProviders.of(this).get(NoteBookPageViewModel.class);
         final Observer<List<Word>> listObserver = new Observer<List<Word>>() {
             @Override
@@ -65,16 +70,21 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
                 mWords = list;
                 mAdapter.setList(mWords);
                 mAdapter.notifyDataSetChanged();
+                //显示emptyView
+                if(list.size()>0){
+                    mBinding.bookPageEmptyView.setVisibility(View.GONE);
+                }else{
+                    mBinding.bookPageEmptyView.setVisibility(View.VISIBLE);
+                }
             }
         };
 
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        mViewModel.getCurrentName().observe(this, listObserver);
+        mViewModel.getCurrentWord(mBookId).observe(this, listObserver);
         initView();
     }
 
     public void initView() {
-        mBookName = (String) getArguments().get("bookName");
         //单词本名超长处理
         String shortName = ToolsUtils.getInstance().handleText(mBookName,19);
         mBinding.bookPageName.setText(shortName);

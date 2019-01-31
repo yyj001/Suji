@@ -102,7 +102,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         this.list = list;
     }
 
-
     @Override
     public int getItemCount() {
         if(list!=null){

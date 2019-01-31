@@ -7,8 +7,10 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.suji.ish.suji.bean.Word;
+import com.suji.ish.suji.model.WordModel;
 
-import java.util.ArrayList;
+import org.litepal.crud.callback.FindMultiCallback;
+
 import java.util.List;
 
 /**
@@ -18,12 +20,15 @@ public class NoteBookPageViewModel extends AndroidViewModel {
     private String TAG= "NoteBookPageViewModel";
 
     private MutableLiveData<List<Word>> mWords;
+    private WordModel mModel;
+    private int mbookId;
 
     public NoteBookPageViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Word>> getCurrentName() {
+    public LiveData<List<Word>> getCurrentWord(int bookId) {
+        mbookId = bookId;
         if (mWords == null) {
             mWords = new MutableLiveData<List<Word>>();
             loadWodrs();
@@ -32,14 +37,15 @@ public class NoteBookPageViewModel extends AndroidViewModel {
     }
 
     public void loadWodrs(){
-        List<Word> list = new ArrayList<>();
-        for(int i=0;i<20;++i){
-            Word word = new Word();
-            word.setSpell("apple");
-//            word.setWordType("n;");
-//            word.setTranslation("行为的魏晨魏晨魏晨魏晨魏晨；曹魏洧长城网");
-            list.add(word);
-        }
-        mWords.setValue(list);
+        mModel = new WordModel();
+
+        FindMultiCallback<Word> callback = new FindMultiCallback<Word>() {
+            @Override
+            public void onFinish(List<Word> list) {
+                mWords.setValue(list);
+            }
+        };
+
+       mModel.getAllWordForBook(mbookId,callback);
     }
 }
