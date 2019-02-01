@@ -45,7 +45,7 @@ public class MenuPopupWindow extends BasePopup<MenuPopupWindow>{
         mAddNoteBookBtn = findViewById(R.id.popup_add_notebook);
 
 
-        float dp = ToolsUtils.getInstance().dp2px(view.getContext(),333);
+        float dp = ToolsUtils.getInstance().dp2px(333);
         mAnimator1 = ObjectAnimator.ofFloat(mAddNoteBookBtn, "translationY",
                 dp, dp/5, -dp/10, dp/20, -dp/50, 0f);
         mAnimator1.setDuration(700);

@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.loopeer.shadow.ShadowView;
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.ItemWordBinding;
+import com.suji.ish.suji.utils.ToolsUtils;
 
 import java.util.List;
 
@@ -43,6 +45,34 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         }
         int pos = getRealPosition(holder);
         Word word = list.get(pos);
+
+        int marginLength = ToolsUtils.getInstance().dp2px(10);
+        if(pos==0 && headerBinding==null && list.size()>1){
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,marginLength,marginLength,0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(0);
+        }else if(pos==list.size()-1 && list.size()>1){
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,0,marginLength,marginLength);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(0);
+        }else if(list.size()==1) {
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,marginLength,marginLength,marginLength);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/2);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(marginLength/2);
+        }else{
+            ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,0,marginLength,0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusBR(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(0);
+            ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTR(0);
+        }
+
         ((ItemWordBinding) holder.getBinding()).setWord(word);
         holder.getBinding().executePendingBindings();
 

@@ -263,8 +263,8 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         PopupMenu popupMenu = new PopupMenu(wrapper, view, Gravity.CENTER);
         Menu menu = popupMenu.getMenu();
         for (int i = 0; i < noteBooks.size(); ++i) {
-            String bookName = ToolsUtils.getInstance().handleText(noteBooks.get(i).getBookName(),20);
-            menu.add(Menu.NONE, 0+ i, i, bookName);
+            String bookName = ToolsUtils.getInstance().handleText(noteBooks.get(i).getBookName(), 20);
+            menu.add(Menu.NONE, i, i, bookName);
         }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override

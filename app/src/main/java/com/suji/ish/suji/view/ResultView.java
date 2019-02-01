@@ -420,7 +420,7 @@ public class ResultView extends View {
      * @return
      */
     private int dp2px(float dpValue) {
-        return ToolsUtils.getInstance().dp2px(getContext(), dpValue);
+        return ToolsUtils.getInstance().dp2px(dpValue);
     }
 
     /**

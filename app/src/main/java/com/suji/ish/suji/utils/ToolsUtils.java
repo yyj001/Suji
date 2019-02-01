@@ -6,6 +6,8 @@ import android.content.res.Resources;
 import android.os.Vibrator;
 import android.text.TextUtils;
 
+import com.suji.ish.suji.SujiApplication;
+
 import java.text.SimpleDateFormat;
 
 /**
@@ -30,13 +32,13 @@ public class ToolsUtils {
         return instance;
     }
 
-    public int dp2px(Context context, float dpValue){
-        final float scale = context.getResources ().getDisplayMetrics ().density;
+    public int dp2px(float dpValue){
+        final float scale = SujiApplication.getInstance().getResources ().getDisplayMetrics ().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
-    public int px2dp(Context context,float pxValue){
-        final float scale = context.getResources ().getDisplayMetrics ().density;
+    public int px2dp(float pxValue){
+        final float scale = SujiApplication.getInstance().getResources ().getDisplayMetrics ().density;
         return (int) (pxValue / scale + 0.5f);
     }
 

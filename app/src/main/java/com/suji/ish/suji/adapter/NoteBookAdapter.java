@@ -51,7 +51,7 @@ public class NoteBookAdapter extends RecyclerView.Adapter<NoteBookAdapter.ViewHo
         }
         int pos = getRealPosition(holder);
         //设置首尾的样式
-        int marginLength = ToolsUtils.getInstance().dp2px(mActivity,15);
+        int marginLength = ToolsUtils.getInstance().dp2px(15);
         if(pos==0 && headerBinding==null && list.size()>1){
             ((ShadowView)(holder.getBinding().getRoot())).setShadowMargin(marginLength,marginLength,marginLength,0);
             ((ShadowView)(holder.getBinding().getRoot())).setCornerRadiusTL(marginLength/3);
