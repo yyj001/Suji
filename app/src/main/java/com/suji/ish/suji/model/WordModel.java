@@ -188,7 +188,7 @@ public class WordModel {
         noteBook.setEditTime(time);
         noteBook.setEditTimeString(timeStr);
         noteBook.setNoteNumber(noteBook.getNoteNumber() + 1);
-        new NoteBookModel().saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS);
+        new NoteBookModel().saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS,word);
     }
 
     /**

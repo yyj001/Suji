@@ -2,6 +2,7 @@ package com.suji.ish.suji.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,10 +10,15 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.view.ContextThemeWrapper;
+import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -22,11 +28,16 @@ import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.WordDetailFragmentBinding;
+import com.suji.ish.suji.global.SujiData;
+import com.suji.ish.suji.model.NoteBookModel;
 import com.suji.ish.suji.utils.ToolsUtils;
 import com.suji.ish.suji.view.ResultPopupWindow;
 import com.suji.ish.suji.view.ResultView;
 import com.suji.ish.suji.viewmodel.WordDetailViewModel;
 
+import org.litepal.LitePal;
+
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,21 +87,28 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
     private void initview() {
         mBinding.wordDetailCancel.setOnClickListener(this);
         mBinding.wordDetailAdd.setOnClickListener(this);
+        mBinding.wordDetailModifyBtn.setOnClickListener(this);
 
-        //应该判断是在哪个笔记本里面，否则就去数据库取第一个
+        //判断当前是否在单词本里面
+        if (SujiData.getInstance().getBookId() != 0) {
+            mSaveNoteBook = LitePal.find(NoteBook.class, SujiData.getInstance().getBookId());
+        }
+        //不在某个单词本里面，就去数据库取第一个
         if (mSaveNoteBook == null) {
             mSaveNoteBook = mViewModel.getFirstNoteBook();
         }
-        //数据库取出第一个为null,需要新建笔记本
+        //数据库没有笔记本,需要新建笔记本
         if (mSaveNoteBook == null) {
             long time = ToolsUtils.getInstance().getInstanceTime();
             String timeStr = ToolsUtils.getInstance().getDateFormat(time);
             mSaveNoteBook = new NoteBook(0, time, time, "新建单词本", timeStr, timeStr);
         } else {
-            mBinding.wordDetailNotebookName.setText(ToolsUtils.getInstance().handleText(mSaveNoteBook.getBookName(), 15));
+            mBinding.wordDetailNotebookName.setText(ToolsUtils.getInstance().handleText(mSaveNoteBook.getBookName(), 20));
         }
 
         addWordDisable();
+
+
     }
 
     public void setParts(Word word) {
@@ -184,6 +202,9 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
                 showAddWordResult();
                 break;
             }
+            case R.id.word_detail_modify_btn: {
+                showPopupMenu(view);
+            }
             default:
         }
     }
@@ -223,5 +244,42 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         }, 1200);
         resultPopupWindow.showPopupWindow();
         resultView.play();
+    }
+
+    /**
+     * 选择单词本弹窗
+     *
+     * @param view
+     */
+    private void showPopupMenu(View view) {
+        final List<NoteBook> noteBooks = new NoteBookModel().getAllNoteBooks();
+
+        //华为手机上popupmenu有问题
+        Context wrapper = getActivity();
+        if ("huawei".equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
+            wrapper = new ContextThemeWrapper(getActivity(), R.style.NoPopupAnimation);
+        }
+
+        PopupMenu popupMenu = new PopupMenu(wrapper, view, Gravity.CENTER);
+        Menu menu = popupMenu.getMenu();
+        for (int i = 0; i < noteBooks.size(); ++i) {
+            String bookName = ToolsUtils.getInstance().handleText(noteBooks.get(i).getBookName(),20);
+            menu.add(Menu.NONE, 0+ i, i, bookName);
+        }
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                mSaveNoteBook = noteBooks.get(item.getItemId());
+                mBinding.wordDetailNotebookName.setText(ToolsUtils.getInstance()
+                        .handleText(mSaveNoteBook.getBookName(), 20));
+                return false;
+            }
+        });
+        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu menu) {
+            }
+        });
+        popupMenu.show();
     }
 }

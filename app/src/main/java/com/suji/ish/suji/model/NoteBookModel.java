@@ -3,6 +3,7 @@ package com.suji.ish.suji.model;
 import android.util.Log;
 
 import com.suji.ish.suji.bean.NoteBook;
+import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.rxjava.DataBaseEvent;
 import com.suji.ish.suji.rxjava.RxBus;
 import com.suji.ish.suji.utils.ToolsUtils;
@@ -71,12 +72,12 @@ public class NoteBookModel {
      * 不开子线程创建笔记本
      * @param noteBook
      */
-    public void saveNoteBookMainThread(NoteBook noteBook,int state){
+    public void saveNoteBookMainThread(NoteBook noteBook, int state, Word word){
         noteBook.save();
-        notifyRxBus(noteBook,state);
+        notifyRxBus(noteBook,state,word);
     }
 
-    public void notifyRxBus(NoteBook noteBook,int state){
+    public void notifyRxBus(NoteBook noteBook,int state,Word word){
         DataBaseEvent<String> eventMsg = new DataBaseEvent<>();
 
         if(state==DataBaseEvent.INSERT_SUCCESS){
@@ -90,7 +91,8 @@ public class NoteBookModel {
         }
         else if(state==DataBaseEvent.ADD_WORD_SUCCESS){
             eventMsg.setEventCode(DataBaseEvent.ADD_WORD_SUCCESS);
-            eventMsg.setMsg("创建成功");
+            eventMsg.setMsg("添加成功");
+            eventMsg.setWord(word);
         }
         eventMsg.setNoteBook(noteBook);
         RxBus.getInstance().post(eventMsg);

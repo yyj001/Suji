@@ -5,19 +5,26 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.model.WordModel;
+import com.suji.ish.suji.rxjava.DataBaseEvent;
+import com.suji.ish.suji.rxjava.RxBus;
 
 import org.litepal.crud.callback.FindMultiCallback;
 
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+
 /**
  * @author ish
  */
 public class NoteBookPageViewModel extends AndroidViewModel {
-    private String TAG= "NoteBookPageViewModel";
+    private String TAG = "NoteBookPageViewModel";
 
     private MutableLiveData<List<Word>> mWords;
     private WordModel mModel;
@@ -36,7 +43,7 @@ public class NoteBookPageViewModel extends AndroidViewModel {
         return mWords;
     }
 
-    public void loadWodrs(){
+    public void loadWodrs() {
         mModel = new WordModel();
 
         FindMultiCallback<Word> callback = new FindMultiCallback<Word>() {
@@ -46,6 +53,45 @@ public class NoteBookPageViewModel extends AndroidViewModel {
             }
         };
 
-       mModel.getAllWordForBook(mbookId,callback);
+        mModel.getAllWordForBook(mbookId, callback);
+
+        //监听插入单词
+        RxBus.getInstance()
+                .toObservable()
+                .map(new Function<Object, DataBaseEvent>() {
+                    @Override
+                    public DataBaseEvent apply(Object o) throws Exception {
+                        return (DataBaseEvent) o;
+                    }
+                })
+                .subscribe(new Consumer<DataBaseEvent>() {
+                    @Override
+                    public void accept(DataBaseEvent eventMsg) throws Exception {
+                        if (eventMsg != null) {
+                            changeWithDataBaseChange(eventMsg);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 根据数据库变化刷新列表
+     */
+    private void changeWithDataBaseChange(DataBaseEvent event) {
+        Log.d(TAG, "changeWithDataBaseChange: ");
+        switch (event.getEventCode()) {
+            //插入单词
+            case DataBaseEvent.ADD_WORD_SUCCESS: {
+                NoteBook changedNoteBook = event.getNoteBook();
+                if(changedNoteBook.getId() == mbookId){
+                    Word addWord = event.getWord();
+                    List<Word> words = mWords.getValue();
+                    words.add(0,addWord);
+                    mWords.setValue(words);
+                }
+                break;
+            }
+            default:
+        }
     }
 }

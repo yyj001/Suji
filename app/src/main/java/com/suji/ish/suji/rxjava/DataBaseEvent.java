@@ -1,11 +1,16 @@
 package com.suji.ish.suji.rxjava;
 
 import com.suji.ish.suji.bean.NoteBook;
+import com.suji.ish.suji.bean.Word;
 
+/**
+ * @author ish
+ */
 public class DataBaseEvent<T> {
     private T msg;
     private int eventCode = -1;
     private NoteBook noteBook;
+    private Word word;
 
     public static final int INSERT_FAIL = 0;
     public static final int INSERT_SUCCESS = 1;
@@ -33,5 +38,13 @@ public class DataBaseEvent<T> {
 
     public void setNoteBook(NoteBook noteBook) {
         this.noteBook = noteBook;
+    }
+
+    public Word getWord() {
+        return word;
+    }
+
+    public void setWord(Word word) {
+        this.word = word;
     }
 }
