@@ -48,6 +48,12 @@ public class ToolsUtils {
         return color;
     }
 
+    public int getColor(int colorId){
+        Resources resources = SujiApplication.getInstance().getResources();
+        int color = resources.getColor(colorId);
+        return color;
+    }
+
     public float getDimension(Context context,int dimId){
         Resources resources = context.getResources();
         float dim = resources.getDimension(dimId);

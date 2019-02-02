@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#edeee7</color>
     <color name="colorPrimaryDark">#dfe0d1</color>
-    <color name="AlphaColorPrimaryDark">#ccdfe0d1</color>
+    <color name="AlphaColorPrimaryDark">#dddfe0d1</color>
     <color name="colorAccent">#66aaa6</color>
     <color name="greenPress">#5b9793</color>
     <color name="grey8">#888888</color>

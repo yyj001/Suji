@@ -115,18 +115,38 @@ public class NoteBookViewModel implements View.OnClickListener {
             //新建笔记更新
             case DataBaseEvent.ADD_WORD_SUCCESS: {
                 NoteBook changedNoteBook = event.getNoteBook();
-                Log.d(TAG, "changeWithDataBaseChange: " + changedNoteBook.getId());
                 for (int i = 0; i < mNoteBooks.size(); ++i) {
                     if(mNoteBooks.get(i).getId() == changedNoteBook.getId()){
                         mNoteBooks.get(i).setNoteNumber(changedNoteBook.getNoteNumber());
                         mNoteBooks.get(i).setEditTimeString(changedNoteBook.getEditTimeString());
                         mNoteBooks.get(i).setEditTime(changedNoteBook.getEditTime());
-                        Log.d(TAG, "changeWithDataBaseChange: " + i);
                         mNoteBookAdapter.notifyDataSetChanged();
                         break;
                     }
                 }
                 break;
+            }
+            //修改笔记本名字
+            case DataBaseEvent.CHANGE_BOOK_SUCCESS:{
+                NoteBook changedNoteBook = event.getNoteBook();
+                for (int i = 0; i < mNoteBooks.size(); ++i) {
+                    if(mNoteBooks.get(i).getId() == changedNoteBook.getId()){
+                        mNoteBooks.get(i).setBookName(changedNoteBook.getBookName());
+                        mNoteBookAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
+            }
+            //删除笔记本
+            case DataBaseEvent.DELETE_BOOK_SUCCESS:{
+                NoteBook changedNoteBook = event.getNoteBook();
+                for (int i = 0; i < mNoteBooks.size(); ++i) {
+                    if(mNoteBooks.get(i).getId() == changedNoteBook.getId()){
+                        mNoteBooks.remove(i);
+                        mNoteBookAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
             default:
         }

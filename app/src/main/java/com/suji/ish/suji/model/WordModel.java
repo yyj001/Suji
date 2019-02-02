@@ -188,7 +188,7 @@ public class WordModel {
         noteBook.setEditTime(time);
         noteBook.setEditTimeString(timeStr);
         noteBook.setNoteNumber(noteBook.getNoteNumber() + 1);
-        new NoteBookModel().saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS,word);
+        new NoteBookModel().saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS, word);
     }
 
     /**
@@ -199,5 +199,9 @@ public class WordModel {
      */
     public void getAllWordForBook(int bookId, FindMultiCallback<Word> callback) {
         LitePal.where("bookId = ?", "" + bookId).findAsync(Word.class).listen(callback);
+    }
+
+    public void deleteByBookId(int id) {
+        LitePal.deleteAll(Word.class, "bookId=?", id + "");
     }
 }

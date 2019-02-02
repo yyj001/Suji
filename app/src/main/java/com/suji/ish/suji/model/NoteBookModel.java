@@ -9,6 +9,7 @@ import com.suji.ish.suji.rxjava.RxBus;
 import com.suji.ish.suji.utils.ToolsUtils;
 
 import org.litepal.LitePal;
+import org.litepal.crud.callback.UpdateOrDeleteCallback;
 
 import java.util.List;
 
@@ -94,6 +95,14 @@ public class NoteBookModel {
             eventMsg.setMsg("添加成功");
             eventMsg.setWord(word);
         }
+        else if(state==DataBaseEvent.CHANGE_BOOK_SUCCESS){
+            eventMsg.setEventCode(DataBaseEvent.CHANGE_BOOK_SUCCESS);
+            eventMsg.setMsg("修改成功");
+        }
+        else if(state==DataBaseEvent.DELETE_BOOK_SUCCESS){
+            eventMsg.setEventCode(DataBaseEvent.DELETE_BOOK_SUCCESS);
+            eventMsg.setMsg("删除单词本成功");
+        }
         eventMsg.setNoteBook(noteBook);
         RxBus.getInstance().post(eventMsg);
     }
@@ -114,6 +123,23 @@ public class NoteBookModel {
     public NoteBook getFirstNoteBook(){
         NoteBook noteBook = LitePal.findFirst(NoteBook.class);
         return noteBook;
+    }
+
+    public void modifyBookName(int id, String name, UpdateOrDeleteCallback callback){
+        NoteBook noteBook = new NoteBook();
+        noteBook.setBookName(name);
+        noteBook.updateAsync(id).listen(callback);
+    }
+
+    public void deleteNoteBook(int id){
+        //删单词本
+        LitePal.delete(NoteBook.class,id);
+        //删所有单词
+        new WordModel().deleteByBookId(id);
+
+        NoteBook noteBook = new NoteBook();
+        noteBook.setId(id);
+        notifyRxBus(noteBook,DataBaseEvent.DELETE_BOOK_SUCCESS,null);
     }
 
 }

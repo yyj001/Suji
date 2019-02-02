@@ -21,7 +21,10 @@ public class NoteBook extends LitePalSupport implements Observable {
     private String editTimeString;
     private String createTimeString;
 
-    public NoteBook(int noteNumber, long createTime, long editTime, String bookName,String editTimeString,String createTimeString) {
+    public NoteBook() {
+    }
+
+    public NoteBook(int noteNumber, long createTime, long editTime, String bookName, String editTimeString, String createTimeString) {
         this.noteNumber = noteNumber;
         this.bookName = bookName;
         this.createTime = createTime;

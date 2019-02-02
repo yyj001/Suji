@@ -8,6 +8,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
     </style>
 
     <style name="SearchActivity" parent="AppTheme">
@@ -17,6 +18,7 @@
     <style name="NoPopupAnimation" parent="Widget.AppCompat.Light.PopupMenu">
         <item name="android:popupAnimationStyle">@null</item>
         <item name="android:duration">0</item>
+        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <!--ResultView-->
