@@ -23,6 +23,7 @@ import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.FragmentWordInfoBinding;
 import com.suji.ish.suji.model.WordModel;
+import com.suji.ish.suji.utils.AudioPlayer;
 import com.suji.ish.suji.utils.ToolsUtils;
 import com.suji.ish.suji.viewmodel.WordInfoViewModel;
 
@@ -70,6 +71,8 @@ public class WordInfoFragment extends Fragment implements View.OnClickListener{
 
         mBinding.wordInfoDelete.setOnClickListener(this);
         mBinding.wordInfoCancel.setOnClickListener(this);
+        mBinding.wordInfoEnHorn.setOnClickListener(this);
+        mBinding.wordInfoAmHorn.setOnClickListener(this);
     }
 
     public void setExchange(Word word) {
@@ -169,6 +172,15 @@ public class WordInfoFragment extends Fragment implements View.OnClickListener{
             }
             case R.id.word_info_cancel:{
                 getActivity().onBackPressed();
+                break;
+            }
+            case R.id.word_info_en_horn:{
+                AudioPlayer.getInstance().playAudio(mWord.getPhEnMp3());
+                break;
+            }
+            case R.id.word_info_am_horn:{
+                AudioPlayer.getInstance().playAudio(mWord.getPhAmMp3());
+                break;
             }
             default:
         }

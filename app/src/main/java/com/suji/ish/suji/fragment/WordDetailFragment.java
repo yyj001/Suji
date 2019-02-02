@@ -30,6 +30,7 @@ import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.WordDetailFragmentBinding;
 import com.suji.ish.suji.global.SujiData;
 import com.suji.ish.suji.model.NoteBookModel;
+import com.suji.ish.suji.utils.AudioPlayer;
 import com.suji.ish.suji.utils.ToolsUtils;
 import com.suji.ish.suji.view.ResultPopupWindow;
 import com.suji.ish.suji.view.ResultView;
@@ -88,6 +89,8 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         mBinding.wordDetailCancel.setOnClickListener(this);
         mBinding.wordDetailAdd.setOnClickListener(this);
         mBinding.wordDetailModifyBtn.setOnClickListener(this);
+        mBinding.wordDetailEnHorn.setOnClickListener(this);
+        mBinding.wordDetailAmHorn.setOnClickListener(this);
 
         //判断当前是否在单词本里面
         if (SujiData.getInstance().getBookId() != 0) {
@@ -204,6 +207,15 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
             }
             case R.id.word_detail_modify_btn: {
                 showPopupMenu(view);
+                break;
+            }
+            case R.id.word_detail_en_horn:{
+                AudioPlayer.getInstance().playAudio(mSaveword.getPhEnMp3());
+                break;
+            }
+            case R.id.word_detail_am_horn:{
+                AudioPlayer.getInstance().playAudio(mSaveword.getPhAmMp3());
+                break;
             }
             default:
         }
