@@ -1,5 +1,6 @@
 package com.suji.ish.suji.fragment;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -30,7 +31,7 @@ import com.suji.ish.suji.viewmodel.WordInfoViewModel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class WordInfoFragment extends Fragment implements View.OnClickListener{
+public class WordInfoFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "WordInfoFragment";
     private WordInfoViewModel mViewModel;
@@ -109,7 +110,7 @@ public class WordInfoFragment extends Fragment implements View.OnClickListener{
 
                 TextView enTv = new TextView(getActivity());
                 enTv.setTextColor(Color.BLACK);
-                enTv.setText(getHightLightSentence(enSentence,word.getSpell()));
+                enTv.setText(getHightLightSentence(enSentence, word.getSpell()));
 
                 TextView chTv = new TextView(getActivity());
                 chTv.setTextColor(ToolsUtils.getInstance().getColor(getActivity(), R.color.greya));
@@ -131,7 +132,7 @@ public class WordInfoFragment extends Fragment implements View.OnClickListener{
      * @param sourceStr
      * @return
      */
-    public SpannableString getHightLightSentence(String sourceStr,String spell) {
+    public SpannableString getHightLightSentence(String sourceStr, String spell) {
         SpannableString s = new SpannableString(sourceStr);
         //不区分大小写
         Pattern p = Pattern.compile(spell, Pattern.CASE_INSENSITIVE);
@@ -148,8 +149,15 @@ public class WordInfoFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.word_info_delete:{
+        switch (view.getId()) {
+            case R.id.word_info_delete: {
+                //垃圾桶动画
+                float angle = 90;
+                ObjectAnimator animator = ObjectAnimator.ofFloat(view, "rotation",
+                        angle-10, -angle / 2, angle / 4, 0);
+                animator.setDuration(700);
+                animator.start();
+
                 AlertDialog.Builder builder = builder = new AlertDialog
                         .Builder(getActivity())
                         .setIcon(R.mipmap.ic_launcher)
@@ -170,15 +178,15 @@ public class WordInfoFragment extends Fragment implements View.OnClickListener{
                 builder.create().show();
                 break;
             }
-            case R.id.word_info_cancel:{
+            case R.id.word_info_cancel: {
                 getActivity().onBackPressed();
                 break;
             }
-            case R.id.word_info_en_horn:{
+            case R.id.word_info_en_horn: {
                 AudioPlayer.getInstance().playAudio(mWord.getPhEnMp3());
                 break;
             }
-            case R.id.word_info_am_horn:{
+            case R.id.word_info_am_horn: {
                 AudioPlayer.getInstance().playAudio(mWord.getPhAmMp3());
                 break;
             }
