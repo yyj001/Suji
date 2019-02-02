@@ -19,6 +19,7 @@ import java.util.List;
 public class NoteBookModel {
 
     private static final String TAG = "NoteBookModel";
+
     /**
      * 通过笔记本名创建单词本
      *
@@ -32,7 +33,7 @@ public class NoteBookModel {
             eventMsg.setEventCode(DataBaseEvent.INSERT_FAIL);
             eventMsg.setMsg("已存在同名笔记本");
             RxBus.getInstance().post(eventMsg);
-            return ;
+            return;
         }
         //创建新笔记本
         long createTime = ToolsUtils.getInstance().getInstanceTime();
@@ -47,9 +48,10 @@ public class NoteBookModel {
 
     /**
      * 通过notebook变量保存
+     *
      * @param noteBook
      */
-    public void saveNoteBook(final NoteBook noteBook){
+    public void saveNoteBook(final NoteBook noteBook) {
 
         noteBook.saveAsync().listen(new org.litepal.crud.callback.SaveCallback() {
             @Override
@@ -71,46 +73,47 @@ public class NoteBookModel {
 
     /**
      * 不开子线程创建笔记本
+     *
      * @param noteBook
      */
-    public void saveNoteBookMainThread(NoteBook noteBook, int state, Word word){
+    public void saveNoteBookMainThread(NoteBook noteBook, int state, Word word) {
         noteBook.save();
-        notifyRxBus(noteBook,state,word);
+        notifyRxBus(noteBook, state, word);
     }
 
-    public void notifyRxBus(NoteBook noteBook,int state,Word word){
+    public void notifyRxBus(NoteBook noteBook, int state, Word word) {
         DataBaseEvent<String> eventMsg = new DataBaseEvent<>();
 
-        if(state==DataBaseEvent.INSERT_SUCCESS){
+        if (state == DataBaseEvent.INSERT_SUCCESS) {
             eventMsg.setEventCode(DataBaseEvent.INSERT_SUCCESS);
             eventMsg.setMsg("创建成功");
             eventMsg.setNoteBook(noteBook);
-        }
-        else if(state==DataBaseEvent.INSERT_FAIL){
+        } else if (state == DataBaseEvent.INSERT_FAIL) {
             eventMsg.setEventCode(DataBaseEvent.INSERT_FAIL);
             eventMsg.setMsg("创建失败");
-        }
-        else if(state==DataBaseEvent.ADD_WORD_SUCCESS){
+        } else if (state == DataBaseEvent.ADD_WORD_SUCCESS) {
             eventMsg.setEventCode(DataBaseEvent.ADD_WORD_SUCCESS);
             eventMsg.setMsg("添加成功");
             eventMsg.setWord(word);
-        }
-        else if(state==DataBaseEvent.CHANGE_BOOK_SUCCESS){
+        } else if (state == DataBaseEvent.CHANGE_BOOK_SUCCESS) {
             eventMsg.setEventCode(DataBaseEvent.CHANGE_BOOK_SUCCESS);
             eventMsg.setMsg("修改成功");
-        }
-        else if(state==DataBaseEvent.DELETE_BOOK_SUCCESS){
+        } else if (state == DataBaseEvent.DELETE_BOOK_SUCCESS) {
             eventMsg.setEventCode(DataBaseEvent.DELETE_BOOK_SUCCESS);
             eventMsg.setMsg("删除单词本成功");
+        } else if (state == DataBaseEvent.DELETE_WORD_SUCCESS) {
+            eventMsg.setEventCode(state);
+            eventMsg.setMsg("删除单词");
+            eventMsg.setWord(word);
         }
         eventMsg.setNoteBook(noteBook);
         RxBus.getInstance().post(eventMsg);
     }
 
     /**
-    * 笔记本不会很多，直接在主线程操作
+     * 笔记本不会很多，直接在主线程操作
      */
-    public List<NoteBook> getAllNoteBooks(){
+    public List<NoteBook> getAllNoteBooks() {
         List<NoteBook> list = LitePal.findAll(NoteBook.class);
         return list;
     }
@@ -120,26 +123,39 @@ public class NoteBookModel {
      *
      * @return
      */
-    public NoteBook getFirstNoteBook(){
+    public NoteBook getFirstNoteBook() {
         NoteBook noteBook = LitePal.findFirst(NoteBook.class);
         return noteBook;
     }
 
-    public void modifyBookName(int id, String name, UpdateOrDeleteCallback callback){
+    public void modifyBookName(int id, String name, UpdateOrDeleteCallback callback) {
         NoteBook noteBook = new NoteBook();
         noteBook.setBookName(name);
         noteBook.updateAsync(id).listen(callback);
     }
 
-    public void deleteNoteBook(int id){
+    public void deleteNoteBook(int id) {
         //删单词本
-        LitePal.delete(NoteBook.class,id);
+        LitePal.delete(NoteBook.class, id);
         //删所有单词
         new WordModel().deleteByBookId(id);
 
         NoteBook noteBook = new NoteBook();
         noteBook.setId(id);
-        notifyRxBus(noteBook,DataBaseEvent.DELETE_BOOK_SUCCESS,null);
+        notifyRxBus(noteBook, DataBaseEvent.DELETE_BOOK_SUCCESS, null);
+    }
+
+    public void deleteWord(Word word) {
+        int bookId = word.getBookId();
+        NoteBook noteBook = LitePal.find(NoteBook.class, bookId);
+        long editTime = ToolsUtils.getInstance().getInstanceTime();
+        String editTimeString = ToolsUtils.getInstance().getDateFormat(editTime);
+
+        noteBook.setEditTime(editTime);
+        noteBook.setEditTimeString(editTimeString);
+        noteBook.setNoteNumber(noteBook.getNoteNumber()-1);
+        noteBook.save();
+        notifyRxBus(noteBook,DataBaseEvent.DELETE_WORD_SUCCESS,word);
     }
 
 }

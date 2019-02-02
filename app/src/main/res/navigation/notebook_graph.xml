@@ -22,5 +22,18 @@
         android:id="@+id/noteBookPageFragment"
         android:name="com.suji.ish.suji.fragment.NoteBookPageFragment"
         android:label="note_book_page_fragment"
-        tools:layout="@layout/note_book_page_fragment"/>
+        tools:layout="@layout/note_book_page_fragment">
+        <action
+            android:id="@+id/action_noteBookPageFragment_to_wordInfoFragment"
+            app:destination="@id/wordInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment
+        android:id="@+id/wordInfoFragment"
+        android:name="com.suji.ish.suji.fragment.WordInfoFragment"
+        android:label="word_info_fragment"
+        tools:layout="@layout/word_info_fragment" />
 </navigation>

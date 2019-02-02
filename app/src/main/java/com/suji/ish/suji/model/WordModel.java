@@ -204,4 +204,14 @@ public class WordModel {
     public void deleteByBookId(int id) {
         LitePal.deleteAll(Word.class, "bookId=?", id + "");
     }
+
+    public Word getLocalWordById(int id){
+        return LitePal.find(Word.class,id);
+    }
+
+    public void deleteWord(Word word){
+        LitePal.delete(Word.class,word.getId());
+        //让单词本数目减一
+        new NoteBookModel().deleteWord(word);
+    }
 }

@@ -17,6 +17,7 @@ public class DataBaseEvent<T> {
     public static final int ADD_WORD_SUCCESS = 2;
     public static final int CHANGE_BOOK_SUCCESS = 3;
     public static final int DELETE_BOOK_SUCCESS = 4;
+    public static final int DELETE_WORD_SUCCESS = 5;
 
     public T getMsg() {
         return msg;

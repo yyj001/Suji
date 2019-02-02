@@ -91,6 +91,18 @@ public class NoteBookPageViewModel extends AndroidViewModel {
                 }
                 break;
             }
+            case DataBaseEvent.DELETE_WORD_SUCCESS: {
+                Word deleteWord = event.getWord();
+                List<Word> words = mWords.getValue();
+                for (int i = 0; i < words.size(); ++i) {
+                    if(words.get(i).getId() == deleteWord.getId()){
+                        words.remove(i);
+                        mWords.setValue(words);
+                        break;
+                    }
+                }
+                break;
+            }
             default:
         }
     }

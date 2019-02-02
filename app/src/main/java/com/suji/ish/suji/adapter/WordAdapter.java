@@ -2,6 +2,7 @@ package com.suji.ish.suji.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.suji.ish.suji.databinding.ItemWordBinding;
 import com.suji.ish.suji.utils.ToolsUtils;
 
 import java.util.List;
+
+import androidx.navigation.Navigation;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
@@ -76,14 +79,13 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         ((ItemWordBinding) holder.getBinding()).setWord(word);
         holder.getBinding().executePendingBindings();
 
-        //跳转笔记本页面
-//        Bundle bundle = new Bundle();
-//        bundle.putString("bookName", noteBook.getBookName());
-//        bundle.putInt("bookId", noteBook.getId());
-//        holder.getBinding().getRoot()
-//                .setOnClickListener(Navigation.createNavigateOnClickListener(
-//                        R.id.action_noteBookFragment_to_noteBookPageFragment,bundle)
-//                );
+//        跳转单词页面
+        Bundle bundle = new Bundle();
+        bundle.putInt("wordId", word.getId());
+        holder.getBinding().getRoot()
+                .setOnClickListener(Navigation.createNavigateOnClickListener(
+                        R.id.action_noteBookPageFragment_to_wordInfoFragment,bundle)
+                );
     }
 
 

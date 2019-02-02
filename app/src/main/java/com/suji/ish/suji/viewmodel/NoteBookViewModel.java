@@ -126,6 +126,20 @@ public class NoteBookViewModel implements View.OnClickListener {
                 }
                 break;
             }
+            //删除单词
+            case DataBaseEvent.DELETE_WORD_SUCCESS: {
+                NoteBook changedNoteBook = event.getNoteBook();
+                for (int i = 0; i < mNoteBooks.size(); ++i) {
+                    if(mNoteBooks.get(i).getId() == changedNoteBook.getId()){
+                        mNoteBooks.get(i).setNoteNumber(changedNoteBook.getNoteNumber());
+                        mNoteBooks.get(i).setEditTimeString(changedNoteBook.getEditTimeString());
+                        mNoteBooks.get(i).setEditTime(changedNoteBook.getEditTime());
+                        mNoteBookAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
+                break;
+            }
             //修改笔记本名字
             case DataBaseEvent.CHANGE_BOOK_SUCCESS:{
                 NoteBook changedNoteBook = event.getNoteBook();
@@ -148,6 +162,7 @@ public class NoteBookViewModel implements View.OnClickListener {
                     }
                 }
             }
+
             default:
         }
     }
