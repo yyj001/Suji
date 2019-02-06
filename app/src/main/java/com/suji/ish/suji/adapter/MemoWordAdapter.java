@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -35,7 +34,6 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
     private static final int TYPE_ITEM = 1;
     private static ViewDataBinding headerBinding;
     private Context mActivity;
-    private FragmentManager manager;
 
 
     public MemoWordAdapter(List<Word> list, Context context) {
@@ -67,8 +65,6 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
 
 //        //清空所有
         ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.removeAllViews();
-//        //再设置例句
-//        setSentence((ItemMemoWordBinding) holder.getBinding(), word);
 
         View frameLayout = FrameLayout.inflate(mActivity, R.layout.layout_memo_empty, null);
         ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.addView(frameLayout);
