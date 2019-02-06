@@ -171,7 +171,10 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
 
                 TextView enTv = new TextView(mActivity);
                 enTv.setTextColor(Color.BLACK);
-                enTv.setText(getHightLightSentence(enSentence, word.getSpell()));
+
+                SpannableString spannableString = ToolsUtils.getInstance().getHightLightSentence(enSentence,word);
+//                enTv.setText(getHightLightSentence(enSentence, word.getSpell()));
+                enTv.setText(spannableString);
 
                 TextView chTv = new TextView(mActivity);
                 chTv.setTextColor(ToolsUtils.getInstance().getColor(mActivity, R.color.greya));

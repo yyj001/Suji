@@ -78,7 +78,7 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
                 mBinding.setWord(word);
                 setParts(word);
                 setExchange(word);
-                setSentence(word.getSentence());
+                setSentence(word);
             }
         };
         mViewModel.getCurrentWord(mSpell).observe(this, listObserver);
@@ -140,7 +140,8 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         return false;
     }
 
-    public void setSentence(String sentence) {
+    public void setSentence(Word word) {
+        String sentence = word.getSentence();
         //分割成一组
         if (judgeEmpty(sentence)) {
             mBinding.wordDetailSentenceShadowview.setVisibility(View.GONE);
@@ -157,7 +158,10 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
 
                 TextView enTv = new TextView(getActivity());
                 enTv.setTextColor(Color.BLACK);
-                enTv.setText(getHightLightSentence(enSentence));
+                SpannableString spannableString = ToolsUtils.getInstance().getHightLightSentence(enSentence,word);
+
+                enTv.setText(spannableString);
+//                enTv.setText(getHightLightSentence(enSentence));
 
                 TextView chTv = new TextView(getActivity());
                 chTv.setTextColor(ToolsUtils.getInstance().getColor(getActivity(), R.color.greya));

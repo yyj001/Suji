@@ -110,7 +110,10 @@ public class WordInfoFragment extends Fragment implements View.OnClickListener {
 
                 TextView enTv = new TextView(getActivity());
                 enTv.setTextColor(Color.BLACK);
-                enTv.setText(getHightLightSentence(enSentence, word.getSpell()));
+
+                SpannableString spannableString = ToolsUtils.getInstance().getHightLightSentence(enSentence,word);
+                enTv.setText(spannableString);
+//                enTv.setText(getHightLightSentence(enSentence, word.getSpell()));
 
                 TextView chTv = new TextView(getActivity());
                 chTv.setTextColor(ToolsUtils.getInstance().getColor(getActivity(), R.color.greya));

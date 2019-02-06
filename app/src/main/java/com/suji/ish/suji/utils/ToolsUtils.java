@@ -4,17 +4,25 @@ import android.app.Service;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Vibrator;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 
+import com.suji.ish.suji.R;
 import com.suji.ish.suji.SujiApplication;
+import com.suji.ish.suji.bean.Word;
 
 import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 各种工具集合类
  * @author ish
  */
 public class ToolsUtils {
+    private static final String TAG = "ToolsUtils";
 
     private volatile static ToolsUtils instance = null;
 
@@ -112,5 +120,109 @@ public class ToolsUtils {
         }
 
     }
+
+    /**
+     * 高亮单词
+     * @param sourceStr
+     * @param word
+     * @return
+     */
+    public SpannableString getHightLightSentence(String sourceStr, Word word) {
+
+        SpannableString s = new SpannableString(sourceStr);
+        if(word.getSpell()==null){
+            return null;
+        }
+
+        //不区分大小写
+        Pattern p = Pattern.compile(word.getSpell(), Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(s);
+        matcherStr(s,m);
+        //pl
+        if(word.getWordPl()!=null){
+            p = Pattern.compile(word.getWordPl(), Pattern.CASE_INSENSITIVE);
+            m = p.matcher(s);
+            matcherStr(s,m);
+        }
+
+        //past
+        if(word.getWordPast()!=null) {
+            p = Pattern.compile(word.getWordPast(), Pattern.CASE_INSENSITIVE);
+            m = p.matcher(s);
+            matcherStr(s, m);
+        }
+
+        if(word.getWordDone()!=null) {
+            p = Pattern.compile(word.getWordDone(), Pattern.CASE_INSENSITIVE);
+            m = p.matcher(s);
+            matcherStr(s, m);
+        }
+
+        if(word.getWordIng()!=null) {
+            p = Pattern.compile(word.getWordIng(), Pattern.CASE_INSENSITIVE);
+            m = p.matcher(s);
+            matcherStr(s, m);
+        }
+
+        if(word.getWordThird()!=null) {
+            p = Pattern.compile(word.getWordThird(), Pattern.CASE_INSENSITIVE);
+            m = p.matcher(s);
+            matcherStr(s, m);
+        }
+
+        if(word.getWordEr()!=null) {
+            p = Pattern.compile(word.getWordEr(), Pattern.CASE_INSENSITIVE);
+            m = p.matcher(s);
+            matcherStr(s, m);
+        }
+
+        if(word.getWordEst()!=null) {
+            p = Pattern.compile(word.getWordEst(), Pattern.CASE_INSENSITIVE);
+            m = p.matcher(s);
+            matcherStr(s, m);
+        }
+        return s;
+    }
+
+    /**
+     * 判断单词前后是否为字母
+     * 格式统一，句首必须是一个空格
+     * @param s
+     * @param m
+     */
+    private void matcherStr(SpannableString s,Matcher m){
+        while (m.find()) {
+            int start = m.start();
+            int end = m.end();
+
+            //格式:第一个字母不能为字母
+            if(start==0){
+                if(!judgeLegal(s.charAt(end))) {
+                    continue;
+                }
+            }
+            else if(end>=s.length()-1){
+            }
+            else if(!(judgeLegal(s.charAt(start-1)) && judgeLegal(s.charAt(end)))){
+                continue;
+            }
+            s.setSpan(new ForegroundColorSpan(ToolsUtils.getInstance().getColor(R.color.colorAccent)),
+                    start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+    }
+
+    /**
+     * 如果是字母，就不合法
+     */
+    private boolean judgeLegal(char c) {
+        // 大写
+        if ((int) c >= 65 && (int) c <= 90) {
+            return false;
+        }else if ((int) c >= 97 && (int) c <= 122){
+            return false;
+        }
+        return true;
+    }
+
 
 }
