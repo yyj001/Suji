@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.suji.ish.suji.fragment.MemoryFragment;
+import com.suji.ish.suji.fragment.MemoryBlankFragment;
 import com.suji.ish.suji.fragment.NoteBookBlankFragment;
 import com.suji.ish.suji.fragment.StatisticFragment;
 import com.suji.ish.suji.fragment.UserFragment;
@@ -30,7 +30,7 @@ public class TabPageIndicatorAdapter extends FragmentPagerAdapter {
                 fragment = new NoteBookBlankFragment();
                 break;
             case 1:
-                fragment = new MemoryFragment();
+                fragment = new MemoryBlankFragment();
                 break;
             case 2:
                 fragment = new StatisticFragment();

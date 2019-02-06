@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.adapter.TabPageIndicatorAdapter;
@@ -103,17 +102,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mNavgraphId = R.id.nav_host_notebook;
                 break;
             case R.id.navbtn2:
-                Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
                 setSelectBtn(1);
                 mViewPager.setCurrentItem(1);
                 break;
             case R.id.navbtn3:
-                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
                 setSelectBtn(2);
                 mViewPager.setCurrentItem(2);
                 break;
             case R.id.navbtn4:
-                Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
                 setSelectBtn(3);
                 mViewPager.setCurrentItem(3);
                 break;

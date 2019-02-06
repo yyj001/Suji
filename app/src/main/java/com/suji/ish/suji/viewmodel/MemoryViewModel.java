@@ -1,42 +1,38 @@
 package com.suji.ish.suji.viewmodel;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
 
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.model.WordModel;
-import com.suji.ish.suji.rxjava.InternetEvent;
-import com.suji.ish.suji.rxjava.InternetRxBus;
 
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
+import org.litepal.crud.callback.FindMultiCallback;
+
+import java.util.List;
 
 public class MemoryViewModel extends ViewModel {
 
     private static final String TAG = "MemoryViewModel";
     public WordModel mWordModel;
+    private MutableLiveData<List<Word>> mWords;
 
-    public void loadData(){
+    public LiveData<List<Word>> getCurrentWord() {
         mWordModel = new WordModel();
-        mWordModel.getWordFromInternet("she's");
-        InternetRxBus.getInstance()
-                .toObservable()
-                .map(new Function<Object, InternetEvent>() {
-                    @Override
-                    public InternetEvent apply(Object o) throws Exception {
-                        return (InternetEvent) o;
-                    }
-                })
-                .subscribe(new Consumer<InternetEvent>() {
-                    @Override
-                    public void accept(InternetEvent eventMsg) throws Exception {
-                        if (eventMsg != null) {
-                            if(eventMsg.getCode()==1){
-                                Word word = eventMsg.getWord();
-                                Log.d(TAG, "accept: " + word.getParts() + "\n" + word.getSentence());
-                            }
-                        }
-                    }
-                });
+        if (mWords == null) {
+            mWords = new MutableLiveData<List<Word>>();
+            loadWodrs();
+        }
+        return mWords;
+    }
+
+    public void loadWodrs() {
+        FindMultiCallback<Word> callback = new FindMultiCallback<Word>() {
+            @Override
+            public void onFinish(List<Word> list) {
+                mWords.setValue(list);
+            }
+        };
+        mWordModel.getAllWordForBook(1, callback);
     }
 }
