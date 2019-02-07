@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
 
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.SujiApplication;
@@ -19,50 +20,70 @@ import java.util.regex.Pattern;
 
 /**
  * 各种工具集合类
+ *
  * @author ish
  */
-public class ToolsUtils {
+public class ToolsUtils{
     private static final String TAG = "ToolsUtils";
 
     private volatile static ToolsUtils instance = null;
 
-    private ToolsUtils(){
+    private int mScreemWidth;
+    private int mScreemHeight;
+
+    private ToolsUtils() {
     }
 
-    public static ToolsUtils getInstance(){
-        if(instance == null){
-            synchronized (ToolsUtils.class){
-                if(instance == null){
+    public static ToolsUtils getInstance() {
+        if (instance == null) {
+            synchronized (ToolsUtils.class) {
+                if (instance == null) {
                     instance = new ToolsUtils();
+
+
                 }
             }
         }
         return instance;
     }
 
-    public int dp2px(float dpValue){
-        final float scale = SujiApplication.getInstance().getResources ().getDisplayMetrics ().density;
+    public void initScreemSize() {
+        DisplayMetrics dm = SujiApplication.getInstance().getResources().getDisplayMetrics();
+        this.mScreemHeight = px2dp(dm.heightPixels);
+        this.mScreemWidth = px2dp(dm.widthPixels);
+    }
+
+    public int getmScreemWidth() {
+        return mScreemWidth;
+    }
+
+    public int getmScreemHeight() {
+        return mScreemHeight;
+    }
+
+    public int dp2px(float dpValue) {
+        final float scale = SujiApplication.getInstance().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
-    public int px2dp(float pxValue){
-        final float scale = SujiApplication.getInstance().getResources ().getDisplayMetrics ().density;
+    public int px2dp(float pxValue) {
+        final float scale = SujiApplication.getInstance().getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public int getColor(Context context,int colorId){
+    public int getColor(Context context, int colorId) {
         Resources resources = context.getResources();
         int color = resources.getColor(colorId);
         return color;
     }
 
-    public int getColor(int colorId){
+    public int getColor(int colorId) {
         Resources resources = SujiApplication.getInstance().getResources();
         int color = resources.getColor(colorId);
         return color;
     }
 
-    public float getDimension(Context context,int dimId){
+    public float getDimension(Context context, int dimId) {
         Resources resources = context.getResources();
         float dim = resources.getDimension(dimId);
         return dim;
@@ -71,26 +92,27 @@ public class ToolsUtils {
     /**
      * 获取时间戳
      */
-    public long getInstanceTime(){
+    public long getInstanceTime() {
         return System.currentTimeMillis();
     }
 
     /**
      * 时间戳转string日期
      */
-    public String getDateFormat(long time){
+    public String getDateFormat(long time) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(time);
     }
 
-    public void viberate(Context context,int time){
-        Vibrator vibrator = (Vibrator)context.getSystemService(Service.VIBRATOR_SERVICE);
-        long [] pattern = {0,time};   // 停止 开启 停止 开启
-        vibrator.vibrate(pattern,-1);
+    public void viberate(Context context, int time) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
+        long[] pattern = {0, time};   // 停止 开启 停止 开启
+        vibrator.vibrate(pattern, -1);
     }
 
     /**
      * 限制字长
+     *
      * @param str
      * @param maxLen
      * @return
@@ -100,7 +122,7 @@ public class ToolsUtils {
             return str;
         }
         int count = 0;
-        int endIndex=0;
+        int endIndex = 0;
         for (int i = 0; i < str.length(); i++) {
             char item = str.charAt(i);
             if (item < 128) {
@@ -108,8 +130,8 @@ public class ToolsUtils {
             } else {
                 count = count + 2;
             }
-            if(maxLen==count || (item>=128 && maxLen+1==count)){
-                endIndex=i;
+            if (maxLen == count || (item >= 128 && maxLen + 1 == count)) {
+                endIndex = i;
             }
         }
         if (count <= maxLen) {
@@ -123,6 +145,7 @@ public class ToolsUtils {
 
     /**
      * 高亮单词
+     *
      * @param sourceStr
      * @param word
      * @return
@@ -130,53 +153,53 @@ public class ToolsUtils {
     public SpannableString getHightLightSentence(String sourceStr, Word word) {
 
         SpannableString s = new SpannableString(sourceStr);
-        if(word.getSpell()==null){
+        if (word.getSpell() == null) {
             return null;
         }
 
         //不区分大小写
         Pattern p = Pattern.compile(word.getSpell(), Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(s);
-        matcherStr(s,m);
+        matcherStr(s, m);
         //pl
-        if(word.getWordPl()!=null){
+        if (word.getWordPl() != null) {
             p = Pattern.compile(word.getWordPl(), Pattern.CASE_INSENSITIVE);
             m = p.matcher(s);
-            matcherStr(s,m);
+            matcherStr(s, m);
         }
 
         //past
-        if(word.getWordPast()!=null) {
+        if (word.getWordPast() != null) {
             p = Pattern.compile(word.getWordPast(), Pattern.CASE_INSENSITIVE);
             m = p.matcher(s);
             matcherStr(s, m);
         }
 
-        if(word.getWordDone()!=null) {
+        if (word.getWordDone() != null) {
             p = Pattern.compile(word.getWordDone(), Pattern.CASE_INSENSITIVE);
             m = p.matcher(s);
             matcherStr(s, m);
         }
 
-        if(word.getWordIng()!=null) {
+        if (word.getWordIng() != null) {
             p = Pattern.compile(word.getWordIng(), Pattern.CASE_INSENSITIVE);
             m = p.matcher(s);
             matcherStr(s, m);
         }
 
-        if(word.getWordThird()!=null) {
+        if (word.getWordThird() != null) {
             p = Pattern.compile(word.getWordThird(), Pattern.CASE_INSENSITIVE);
             m = p.matcher(s);
             matcherStr(s, m);
         }
 
-        if(word.getWordEr()!=null) {
+        if (word.getWordEr() != null) {
             p = Pattern.compile(word.getWordEr(), Pattern.CASE_INSENSITIVE);
             m = p.matcher(s);
             matcherStr(s, m);
         }
 
-        if(word.getWordEst()!=null) {
+        if (word.getWordEst() != null) {
             p = Pattern.compile(word.getWordEst(), Pattern.CASE_INSENSITIVE);
             m = p.matcher(s);
             matcherStr(s, m);
@@ -187,23 +210,22 @@ public class ToolsUtils {
     /**
      * 判断单词前后是否为字母
      * 格式统一，句首必须是一个空格
+     *
      * @param s
      * @param m
      */
-    private void matcherStr(SpannableString s,Matcher m){
+    private void matcherStr(SpannableString s, Matcher m) {
         while (m.find()) {
             int start = m.start();
             int end = m.end();
 
             //格式:第一个字母不能为字母
-            if(start==0){
-                if(!judgeLegal(s.charAt(end))) {
+            if (start == 0) {
+                if (!judgeLegal(s.charAt(end))) {
                     continue;
                 }
-            }
-            else if(end>=s.length()-1){
-            }
-            else if(!(judgeLegal(s.charAt(start-1)) && judgeLegal(s.charAt(end)))){
+            } else if (end >= s.length() - 1) {
+            } else if (!(judgeLegal(s.charAt(start - 1)) && judgeLegal(s.charAt(end)))) {
                 continue;
             }
             s.setSpan(new ForegroundColorSpan(ToolsUtils.getInstance().getColor(R.color.colorAccent)),
@@ -218,11 +240,10 @@ public class ToolsUtils {
         // 大写
         if ((int) c >= 65 && (int) c <= 90) {
             return false;
-        }else if ((int) c >= 97 && (int) c <= 122){
+        } else if ((int) c >= 97 && (int) c <= 122) {
             return false;
         }
         return true;
     }
-
 
 }

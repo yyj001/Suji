@@ -6,6 +6,7 @@
     <data>
 
         <import type="com.suji.ish.suji.utils.Converter" />
+        <import type="com.suji.ish.suji.utils.ToolsUtils" />
 
         <import type="android.view.View" />
 
@@ -86,7 +87,7 @@
                 tools:ignore="MissingConstraints" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/memo_play_voice"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="8dp"

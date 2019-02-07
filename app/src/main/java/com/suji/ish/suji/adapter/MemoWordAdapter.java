@@ -8,18 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.FragmentMemoContentBinding;
 import com.suji.ish.suji.databinding.ItemMemoWordBinding;
+import com.suji.ish.suji.utils.AudioPlayer;
 import com.suji.ish.suji.utils.ToolsUtils;
 
 import java.util.List;
@@ -60,7 +61,6 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
         }
         int pos = getRealPosition(holder);
         final Word word = list.get(pos);
-        Log.d(TAG, "onBindViewHolder: ");
         ((ItemMemoWordBinding) holder.getBinding()).setWord(word);
 
 //        //清空所有
@@ -68,12 +68,34 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
 
         View frameLayout = FrameLayout.inflate(mActivity, R.layout.layout_memo_empty, null);
         ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.addView(frameLayout);
+
+        //点击替换
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //移除原有的
-                //将内容显示
                 showContent(holder, word);
+            }
+        });
+
+        //发音
+        ((ItemMemoWordBinding) holder.getBinding()).memoPlayVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(word.getPhEnMp3()==null || word.getPhEnMp3().equals("")){
+                    Toast.makeText(mActivity, "获取发音失败", Toast.LENGTH_SHORT).show();
+                }else{
+                    AudioPlayer.getInstance().playAudio(word.getPhEnMp3());
+                }
+            }
+        });
+        ((ItemMemoWordBinding) holder.getBinding()).memoPh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(word.getPhEnMp3()==null || word.getPhEnMp3().equals("")){
+                    Toast.makeText(mActivity, "获取发音失败", Toast.LENGTH_SHORT).show();
+                }else{
+                    AudioPlayer.getInstance().playAudio(word.getPhEnMp3());
+                }
             }
         });
 
