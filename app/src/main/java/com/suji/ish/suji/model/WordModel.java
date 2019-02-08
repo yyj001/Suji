@@ -186,9 +186,6 @@ public class WordModel {
         //初始化记忆参数
         word.initMemoInfo();
 
-        word.save();
-        Log.d(TAG, "insertWordToDb: " + word.getId());
-
         NoteBookModel noteBookModel = new NoteBookModel();
         //当前还没有笔记本或者笔记本不存在
         NoteBook checkNoteBook = LitePal.find(NoteBook.class, word.getBookId());
@@ -200,6 +197,11 @@ public class WordModel {
         noteBook.setEditTimeString(timeStr);
         noteBook.setNoteNumber(noteBook.getNoteNumber() + 1);
         noteBookModel.saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS, word);
+
+        //如果目前没有笔记本，那么得等到新建笔记本插入后再保存笔记，id才是对的
+        word.setBookId(noteBook.getId());
+        word.save();
+
     }
 
     /**
