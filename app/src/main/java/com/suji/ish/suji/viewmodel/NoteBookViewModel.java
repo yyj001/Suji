@@ -98,15 +98,16 @@ public class NoteBookViewModel implements View.OnClickListener {
      * 根据数据库变化刷新列表
      */
     private void changeWithDataBaseChange(DataBaseEvent event) {
-        Log.d(TAG, "changeWithDataBaseChange: ");
+        Log.d(TAG, "changeWithDataBaseChange: " + event.getEventCode());
         switch (event.getEventCode()) {
             case DataBaseEvent.INSERT_SUCCESS: {
                 NoteBook newNoteBook = event.getNoteBook();
+
                 int pos = 0;
                 if (mNoteBookAdapter.hasHeader()) {
                     pos = 1;
                 }
-                mNoteBooks.add(0, newNoteBook);
+                mNoteBooks.add(pos, newNoteBook);
                 mNoteBookAdapter.notifyDataSetChanged();
                 //别忘了刷新stubView
                 showViewStub();
@@ -158,6 +159,7 @@ public class NoteBookViewModel implements View.OnClickListener {
                     if(mNoteBooks.get(i).getId() == changedNoteBook.getId()){
                         mNoteBooks.remove(i);
                         mNoteBookAdapter.notifyDataSetChanged();
+                        showViewStub();
                         break;
                     }
                 }

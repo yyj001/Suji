@@ -174,21 +174,32 @@ public class WordModel {
         });
     }
 
-    public void insertWordToDb(Word word) {
+    /**
+     * 本地数据库部分
+     */
+
+    public void insertWordToDb(Word word, NoteBook noteBook) {
         long time = ToolsUtils.getInstance().getInstanceTime();
         String timeStr = ToolsUtils.getInstance().getDateFormat(time);
         word.setAddTime(time);
         word.setAddTimeString(timeStr);
+        //初始化记忆参数
+        word.initMemoInfo();
 
         word.save();
         Log.d(TAG, "insertWordToDb: " + word.getId());
 
+        NoteBookModel noteBookModel = new NoteBookModel();
+        //当前还没有笔记本或者笔记本不存在
+        NoteBook checkNoteBook = LitePal.find(NoteBook.class, word.getBookId());
+        if (checkNoteBook == null) {
+            noteBookModel.saveNoteBookMainThread(noteBook, DataBaseEvent.INSERT_SUCCESS, word);
+        }
         //将笔记本数目+1
-        NoteBook noteBook = LitePal.find(NoteBook.class, word.getBookId());
         noteBook.setEditTime(time);
         noteBook.setEditTimeString(timeStr);
         noteBook.setNoteNumber(noteBook.getNoteNumber() + 1);
-        new NoteBookModel().saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS, word);
+        noteBookModel.saveNoteBookMainThread(noteBook, DataBaseEvent.ADD_WORD_SUCCESS, word);
     }
 
     /**
@@ -205,12 +216,12 @@ public class WordModel {
         LitePal.deleteAll(Word.class, "bookId=?", id + "");
     }
 
-    public Word getLocalWordById(int id){
-        return LitePal.find(Word.class,id);
+    public Word getLocalWordById(int id) {
+        return LitePal.find(Word.class, id);
     }
 
-    public void deleteWord(Word word){
-        LitePal.delete(Word.class,word.getId());
+    public void deleteWord(Word word) {
+        LitePal.delete(Word.class, word.getId());
         //让单词本数目减一
         new NoteBookModel().deleteWord(word);
     }

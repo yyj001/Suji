@@ -72,7 +72,7 @@ public class WordDetailViewModel extends AndroidViewModel {
     public void addWordToDb(NoteBook noteBook, final Word word) {
         word.setBookId(noteBook.getId());
         word.setAddType(Word.TYPE_AUTHORITY);
-        mModel.insertWordToDb(word);
+        mModel.insertWordToDb(word,noteBook);
     }
 
 }
