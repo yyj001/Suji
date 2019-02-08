@@ -18,6 +18,7 @@ import com.suji.ish.suji.R;
 import com.suji.ish.suji.adapter.MemoWordAdapter;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.FragmentMemoryBinding;
+import com.suji.ish.suji.view.ScrollSpeedLinearLayoutManger;
 import com.suji.ish.suji.viewmodel.MemoryViewModel;
 
 import java.util.List;
@@ -52,14 +53,15 @@ public class MemoryFragment extends Fragment {
     }
 
     private void initView() {
+        //设置recyclerView
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mBinding.memoRecyclerview);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        ScrollSpeedLinearLayoutManger linearLayoutManager = new ScrollSpeedLinearLayoutManger(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mBinding.memoRecyclerview.setLayoutManager(linearLayoutManager);
 
-        mAdapter = new MemoWordAdapter(mWords,getActivity());
+        mAdapter = new MemoWordAdapter(mWords,getActivity(),this);
         mBinding.setAdapter(mAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(MemoryViewModel.class);
@@ -76,6 +78,17 @@ public class MemoryFragment extends Fragment {
         };
 
         mViewModel.getCurrentWord().observe(this, listObserver);
+
+    }
+
+    /**
+     * @param word
+     * @param pos 当前位置
+     */
+    public void nextWord(Word word,int pos){
+        if(pos<mWords.size()-1){
+            mBinding.memoRecyclerview.smoothScrollToPosition(pos+1);
+        }
     }
 
 

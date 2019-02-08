@@ -20,6 +20,7 @@ import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.FragmentMemoContentBinding;
 import com.suji.ish.suji.databinding.ItemMemoWordBinding;
+import com.suji.ish.suji.fragment.MemoryFragment;
 import com.suji.ish.suji.utils.AudioPlayer;
 import com.suji.ish.suji.utils.ToolsUtils;
 
@@ -35,11 +36,13 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
     private static final int TYPE_ITEM = 1;
     private static ViewDataBinding headerBinding;
     private Context mActivity;
+    private MemoryFragment mFragment;
 
 
-    public MemoWordAdapter(List<Word> list, Context context) {
+    public MemoWordAdapter(List<Word> list, Context context,MemoryFragment fragment) {
         this.list = list;
         this.mActivity = context;
+        this.mFragment = fragment;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
         if (getItemViewType(position) == TYPE_HEADER) {
             return;
         }
-        int pos = getRealPosition(holder);
+        final int pos = getRealPosition(holder);
         final Word word = list.get(pos);
         ((ItemMemoWordBinding) holder.getBinding()).setWord(word);
 
@@ -96,6 +99,13 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
                 }else{
                     AudioPlayer.getInstance().playAudio(word.getPhEnMp3());
                 }
+            }
+        });
+
+        ((ItemMemoWordBinding) holder.getBinding()).memoRemember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFragment.nextWord(word,pos);
             }
         });
 

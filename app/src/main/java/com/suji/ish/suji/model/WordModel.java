@@ -179,6 +179,9 @@ public class WordModel {
      */
 
     public void insertWordToDb(Word word, NoteBook noteBook) {
+        //先设置一次id 如果笔记本为空bookId会为0
+        word.setBookId(noteBook.getId());
+
         long time = ToolsUtils.getInstance().getInstanceTime();
         String timeStr = ToolsUtils.getInstance().getDateFormat(time);
         word.setAddTime(time);

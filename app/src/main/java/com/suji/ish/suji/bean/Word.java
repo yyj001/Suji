@@ -66,6 +66,7 @@ public class Word extends LitePalSupport implements Observable {
         }
 
         //金山词霸后台接口没有类型判断
+        // TODO 变形是个数组，可能有多种变形，以后这里得改
         if ((wordJson.getExchange().getWord_pl() instanceof List)) {
             this.wordPl = ((List<String>) wordJson.getExchange().getWord_pl()).get(0);
         }

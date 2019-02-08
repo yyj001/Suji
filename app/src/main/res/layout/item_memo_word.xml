@@ -43,6 +43,24 @@
                 tools:layout_editor_absoluteY="16dp">
             </FrameLayout>
 
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/gradient_bg"
+                android:rotation="180"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/gradient_bg"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
             <TextView
                 android:id="@+id/memo_word_spell"
                 android:layout_width="wrap_content"
@@ -106,8 +124,8 @@
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="20dp"
                 android:src="@drawable/affirm"
+                android:layout_margin="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,8 +137,8 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="20dp"
                 android:src="@drawable/error"
+                android:layout_margin="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/memo_content_container"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -132,6 +150,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
+
+
+
 
         </android.support.constraint.ConstraintLayout>
     </com.loopeer.shadow.ShadowView>
