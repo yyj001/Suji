@@ -30,7 +30,7 @@
             android:paddingBottom="50dp"
             android:orientation="vertical">
 
-            <TextViewo9
+            <TextView
                 android:id="@+id/memo_parts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

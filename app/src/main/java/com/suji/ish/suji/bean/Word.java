@@ -25,6 +25,7 @@ public class Word extends LitePalSupport implements Observable {
     private int rate;//设置记忆度0-5
     private long nextTime;//下一次出现的时间
     private float er; //记忆系数
+    private String updateTimeStr; //用来判断一天之内是否有重复单词,只有点击熟悉后才会写回
 
     private String spell;
     private String wordPl; //复数
@@ -137,6 +138,14 @@ public class Word extends LitePalSupport implements Observable {
     public void setAddTime(long addTime) {
         this.addTime = addTime;
         mRegistry.notifyChange(this, BR.addTime);
+    }
+
+    public String getUpdateTimeStr() {
+        return updateTimeStr;
+    }
+
+    public void setUpdateTimeStr(String updateTimeStr) {
+        this.updateTimeStr = updateTimeStr;
     }
 
     @Bindable

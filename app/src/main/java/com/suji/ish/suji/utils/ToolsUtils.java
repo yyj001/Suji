@@ -96,6 +96,9 @@ public class ToolsUtils{
         return System.currentTimeMillis();
     }
 
+    public String getInstanceTimeStr(){
+        return getDateFormat(getInstanceTime());
+    }
     /**
      * 时间戳转string日期
      */
@@ -109,6 +112,7 @@ public class ToolsUtils{
         long[] pattern = {0, time};   // 停止 开启 停止 开启
         vibrator.vibrate(pattern, -1);
     }
+
 
     /**
      * 限制字长

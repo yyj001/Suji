@@ -16,6 +16,8 @@ import com.suji.ish.suji.utils.ToolsUtils;
 import org.litepal.LitePal;
 import org.litepal.crud.callback.FindMultiCallback;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -229,5 +231,31 @@ public class WordModel {
         LitePal.delete(Word.class, word.getId());
         //让单词本数目减一
         new NoteBookModel().deleteWord(word);
+    }
+
+    /**
+     * 获取记忆词汇
+     * @return
+     */
+    public long getMinRememberDate(){
+        return LitePal.min(Word.class, "nextTime", long.class);
+    }
+
+    public long getMaxRememberDate(){
+        return LitePal.max(Word.class, "nextTime", long.class);
+    }
+
+    /**
+     * 获取指定长度的单词
+     * @param size
+     * @param currentTime
+     * @return
+     */
+    public List<Word> getMemoWords(int size, String currentTime,int offset){
+        return LitePal.where("updateTimeStr is not ?", currentTime)
+                .order("nextTime")
+                .limit(size)
+                .offset(offset)
+                .find(Word.class);
     }
 }

@@ -91,5 +91,15 @@ public class MemoryFragment extends Fragment {
         }
     }
 
+    public void preWord(Word word,int pos){
+        if(pos>0){
+            mBinding.memoRecyclerview.smoothScrollToPosition(pos-1);
+        }
+    }
+
+    public void forgetWord(Word word){
+        mViewModel.addWordToBack(word);
+    }
+
 
 }

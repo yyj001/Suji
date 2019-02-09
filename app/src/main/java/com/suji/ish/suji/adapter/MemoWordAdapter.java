@@ -109,6 +109,20 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
             }
         });
 
+        ((ItemMemoWordBinding) holder.getBinding()).memoForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFragment.forgetWord(word);
+            }
+        });
+
+        ((ItemMemoWordBinding) holder.getBinding()).memoPageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFragment.preWord(word,pos);
+            }
+        });
+
         holder.getBinding().executePendingBindings();
 
     }
