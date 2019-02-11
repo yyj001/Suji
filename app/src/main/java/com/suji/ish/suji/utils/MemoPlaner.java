@@ -41,13 +41,19 @@ public class MemoPlaner {
     /**
      * 获取记忆的单词
      * 规则，获取
+     *
      * @return
      */
-    public List<Word> getMemoword(){
-        List<Word> words = mWordModel.getMemoWords(maxSize,mCurrentDateStr,mOffSet);
-        Log.d(TAG, "getMemoword: " + words.size()
-        );
+    public List<Word> getMemoWord() {
+        List<Word> words = mWordModel.getMemoWords(maxSize, mCurrentDateStr, mOffSet);
+        Log.d(TAG, "getMemoword: " + words.size());
         return words;
+    }
+
+    public long getNextRememberTime(int rate, float er) {
+        int days = (int) Math.pow(er, rate);
+        Log.d(TAG, "getNextRememberTime: 下一次" + days + "天后");
+        return ToolsUtils.getInstance().getInstanceTime() + days * 24 * 3600;
     }
 
 }

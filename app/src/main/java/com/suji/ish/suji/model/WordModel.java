@@ -258,4 +258,8 @@ public class WordModel {
                 .offset(offset)
                 .find(Word.class);
     }
+
+    public void update(Word word){
+        word.save();
+    }
 }

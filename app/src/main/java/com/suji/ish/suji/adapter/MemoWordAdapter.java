@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
     private MemoryFragment mFragment;
 
 
-    public MemoWordAdapter(List<Word> list, Context context,MemoryFragment fragment) {
+    public MemoWordAdapter(List<Word> list, Context context, MemoryFragment fragment) {
         this.list = list;
         this.mActivity = context;
         this.mFragment = fragment;
@@ -84,9 +85,9 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
         ((ItemMemoWordBinding) holder.getBinding()).memoPlayVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(word.getPhEnMp3()==null || word.getPhEnMp3().equals("")){
+                if (word.getPhEnMp3() == null || word.getPhEnMp3().equals("")) {
                     Toast.makeText(mActivity, "获取发音失败", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     AudioPlayer.getInstance().playAudio(word.getPhEnMp3());
                 }
             }
@@ -94,9 +95,9 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
         ((ItemMemoWordBinding) holder.getBinding()).memoPh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(word.getPhEnMp3()==null || word.getPhEnMp3().equals("")){
+                if (word.getPhEnMp3() == null || word.getPhEnMp3().equals("")) {
                     Toast.makeText(mActivity, "获取发音失败", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     AudioPlayer.getInstance().playAudio(word.getPhEnMp3());
                 }
             }
@@ -105,21 +106,29 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
         ((ItemMemoWordBinding) holder.getBinding()).memoRemember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mFragment.nextWord(word,pos);
+                mFragment.rememberWord(word, pos);
             }
         });
 
+
+
+        //恢复为未点击状态，为了保证滚动动画不卡顿，放在下一次进行
+        if(!holder.isForgetClick()){
+            ((ItemMemoWordBinding) holder.getBinding()).memoForget.setImageResource(R.drawable.error);
+        }
+        //两次点击不一样用holder里的变量标识，否则第一次点击后会刷新item
         ((ItemMemoWordBinding) holder.getBinding()).memoForget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mFragment.forgetWord(word);
-            }
-        });
-
-        ((ItemMemoWordBinding) holder.getBinding()).memoPageBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFragment.preWord(word,pos);
+                if(!holder.isForgetClick()){
+                    ((ImageView) view).setImageResource(R.drawable.next);
+                    mFragment.forgetWord(word);
+                    showContent(holder, word);
+                    holder.setForgetClick(true);
+                }else{
+                    holder.setForgetClick(false);
+                    mFragment.nextWord(word, pos);
+                }
             }
         });
 
@@ -136,7 +145,7 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
                 false);
         contentBinding.setWord(word);
 
-        setSentence(contentBinding,word);
+        setSentence(contentBinding, word);
         ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.addView(contentBinding.getRoot());
 
     }
@@ -218,7 +227,7 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
                 TextView enTv = new TextView(mActivity);
                 enTv.setTextColor(Color.BLACK);
 
-                SpannableString spannableString = ToolsUtils.getInstance().getHightLightSentence(enSentence,word);
+                SpannableString spannableString = ToolsUtils.getInstance().getHightLightSentence(enSentence, word);
 //                enTv.setText(getHightLightSentence(enSentence, word.getSpell()));
                 enTv.setText(spannableString);
 
@@ -258,6 +267,8 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private boolean forgetClick = false;
+
         private ViewDataBinding binding;
 
         public ViewHolder(ViewDataBinding binding) {
@@ -273,6 +284,13 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
             this.binding = binding;
         }
 
+        public boolean isForgetClick() {
+            return forgetClick;
+        }
+
+        public void setForgetClick(boolean forgetClick) {
+            this.forgetClick = forgetClick;
+        }
     }
 
 }

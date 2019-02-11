@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class MemoryFragment extends Fragment {
     private MemoryViewModel mViewModel;
     private MemoWordAdapter mAdapter;
     private List<Word> mWords;
+    private ScrollSpeedLinearLayoutManger mLinearLayoutManager;
 
     public MemoryFragment() {
     }
@@ -57,9 +59,10 @@ public class MemoryFragment extends Fragment {
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mBinding.memoRecyclerview);
 
-        ScrollSpeedLinearLayoutManger linearLayoutManager = new ScrollSpeedLinearLayoutManger(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mBinding.memoRecyclerview.setLayoutManager(linearLayoutManager);
+        mLinearLayoutManager = new ScrollSpeedLinearLayoutManger(getActivity());
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mBinding.memoRecyclerview.setLayoutManager(mLinearLayoutManager);
+        mBinding.memoRecyclerview.addOnScrollListener(new MemoRvScrollListener());
 
         mAdapter = new MemoWordAdapter(mWords,getActivity(),this);
         mBinding.setAdapter(mAdapter);
@@ -72,7 +75,8 @@ public class MemoryFragment extends Fragment {
             public void onChanged(@Nullable List<Word> list) {
                 mWords = list;
                 mAdapter.setList(mWords);
-                Log.d(TAG, "onChanged: " + mWords.size());
+                Log.d(TAG, "记忆页面单词改变成" + mWords.size() + "，刷新页面");
+                //Todo 优化，不必刷新整个列表
                 mAdapter.notifyDataSetChanged();
             }
         };
@@ -82,6 +86,7 @@ public class MemoryFragment extends Fragment {
     }
 
     /**
+     * 执行这个方法适合不能和其它复杂操作一起进行，否则滚动动画将卡顿
      * @param word
      * @param pos 当前位置
      */
@@ -97,8 +102,31 @@ public class MemoryFragment extends Fragment {
         }
     }
 
+    public void rememberWord(Word word,int pos){
+        nextWord(word,pos);
+    }
+
     public void forgetWord(Word word){
-        mViewModel.addWordToBack(word);
+        mViewModel.forgetWord(word);
+    }
+
+    public void loadMore(int pos){
+        if(pos==mWords.size()-1){
+            mViewModel.loadWodrs();
+        }
+    }
+
+    /**
+     * 滚动监听 ，滚到最后一个时候自动加载更多单词
+     */
+    public class MemoRvScrollListener extends RecyclerView.OnScrollListener {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if(!recyclerView.canScrollHorizontally(1)){
+                mViewModel.loadWodrs();
+            }
+        }
     }
 
 
