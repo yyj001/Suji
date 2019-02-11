@@ -110,6 +110,7 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
         });
 
         mBinding.bookPageMore.setOnClickListener(this);
+        mBinding.notebookPageBack.setOnClickListener(this);
     }
 
     @Override
@@ -164,6 +165,10 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
             case R.id.setting_book_cancel: {
                 mWindow.dismiss();
                 hideKeyboard(view);
+                break;
+            }
+            case R.id.notebook_page_back:{
+                getActivity().onBackPressed();
                 break;
             }
             default:

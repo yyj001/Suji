@@ -30,17 +30,30 @@
                 android:layout_height="160dp"
                 android:minHeight="50dp"
                 app:expandedTitleMarginBottom="100dp"
-                android:paddingLeft="20dp">
+                android:paddingLeft="10dp">
 
-                <TextView
-                    android:id="@+id/book_page_name"
-                    android:transitionName="notebook_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:maxLines="1" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/notebook_page_back"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/back"
+                        android:layout_marginTop="12dp"/>
+
+                    <TextView
+                        android:id="@+id/book_page_name"
+                        android:transitionName="notebook_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:maxLines="1" />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
