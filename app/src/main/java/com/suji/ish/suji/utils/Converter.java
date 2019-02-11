@@ -7,12 +7,18 @@ public class Converter {
         if (phEn == null ) {
             return null;
         }
+        if(phEn.length()==0){
+            return "暂无音标";
+        }
         return "英[" + phEn + "]";
     }
 
     public static String amPhToText(String phEn) {
         if (phEn == null ) {
             return null;
+        }
+        if(phEn.length()==0){
+            return "暂无音标";
         }
         return "美[" + phEn + "]";
     }

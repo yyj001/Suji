@@ -252,7 +252,8 @@ public class WordModel {
      * @return
      */
     public List<Word> getMemoWords(int size, String currentTime,int offset){
-        return LitePal.where("updateTimeStr is not ?", currentTime)
+        return LitePal
+                .where("updateTimeStr is not ?", currentTime)
                 .order("nextTime")
                 .limit(size)
                 .offset(offset)

@@ -1,6 +1,7 @@
 package com.suji.ish.suji.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,11 +69,12 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
         final Word word = list.get(pos);
         ((ItemMemoWordBinding) holder.getBinding()).setWord(word);
 
-//        //清空所有
-        ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.removeAllViews();
-
         View frameLayout = FrameLayout.inflate(mActivity, R.layout.layout_memo_empty, null);
-        ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.addView(frameLayout);
+//        //第一次加载，清空所有
+        if (!holder.isForgetClick()) {
+            ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.removeAllViews();
+            ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.addView(frameLayout);
+        }
 
         //点击替换
         frameLayout.setOnClickListener(new View.OnClickListener() {
@@ -107,36 +110,39 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 mFragment.rememberWord(word, pos);
+                mFragment.nextWord(word, pos);
             }
         });
 
 
-
         //恢复为未点击状态，为了保证滚动动画不卡顿，放在下一次进行
-        if(!holder.isForgetClick()){
+        if (!holder.isForgetClick()) {
             ((ItemMemoWordBinding) holder.getBinding()).memoForget.setImageResource(R.drawable.error);
         }
         //两次点击不一样用holder里的变量标识，否则第一次点击后会刷新item
         ((ItemMemoWordBinding) holder.getBinding()).memoForget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!holder.isForgetClick()){
+                if (!holder.isForgetClick()) {
                     ((ImageView) view).setImageResource(R.drawable.next);
+
                     mFragment.forgetWord(word);
                     showContent(holder, word);
                     holder.setForgetClick(true);
-                }else{
+                } else {
                     holder.setForgetClick(false);
                     mFragment.nextWord(word, pos);
                 }
             }
         });
 
+        Log.d(TAG, "onBindViewHolder: ");
         holder.getBinding().executePendingBindings();
 
     }
 
     private void showContent(ViewHolder holder, Word word) {
+        Log.d(TAG, "showContent: ");
         ((ItemMemoWordBinding) holder.getBinding()).memoContentContainer.removeAllViews();
 
         FragmentMemoContentBinding contentBinding = DataBindingUtil.inflate(LayoutInflater.from(mActivity),
@@ -263,6 +269,18 @@ public class MemoWordAdapter extends RecyclerView.Adapter<MemoWordAdapter.ViewHo
                     start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return s;
+    }
+
+    private ColorStateList getColorStateListTest(int colorRes) {
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_enabled}, // enabled
+                new int[]{-android.R.attr.state_enabled}, // disabled
+                new int[]{-android.R.attr.state_checked}, // unchecked
+                new int[]{android.R.attr.state_pressed}  // pressed
+        };
+        int color = ToolsUtils.getInstance().getColor(colorRes);
+        int[] colors = new int[]{color, color, color, color};
+        return new ColorStateList(states, colors);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

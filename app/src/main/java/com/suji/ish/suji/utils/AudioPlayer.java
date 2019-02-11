@@ -1,6 +1,9 @@
 package com.suji.ish.suji.utils;
 
 import android.media.MediaPlayer;
+import android.widget.Toast;
+
+import com.suji.ish.suji.SujiApplication;
 
 import java.io.IOException;
 
@@ -24,6 +27,9 @@ public class AudioPlayer {
     }
 
     public void playAudio(String source) {
+        if(source==null || source.length()==0){
+            Toast.makeText(SujiApplication.getInstance().getApplicationContext(), "暂无发音", Toast.LENGTH_SHORT).show();
+        }
         try {
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.stop();

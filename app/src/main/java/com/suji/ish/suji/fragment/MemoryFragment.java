@@ -103,7 +103,7 @@ public class MemoryFragment extends Fragment {
     }
 
     public void rememberWord(Word word,int pos){
-        nextWord(word,pos);
+        mViewModel.rememberWord(word,pos);
     }
 
     public void forgetWord(Word word){

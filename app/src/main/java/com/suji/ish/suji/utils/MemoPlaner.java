@@ -19,6 +19,10 @@ public class MemoPlaner {
     //还剩
     private int mOffSet = 0;
 
+    private static final String EMPTY_WORD= "0";
+    private static final String FI_WORD= "1";
+
+
     private volatile static MemoPlaner instance = null;
 
     private MemoPlaner() {
@@ -46,7 +50,6 @@ public class MemoPlaner {
      */
     public List<Word> getMemoWord() {
         List<Word> words = mWordModel.getMemoWords(maxSize, mCurrentDateStr, mOffSet);
-        Log.d(TAG, "getMemoword: " + words.size());
         return words;
     }
 

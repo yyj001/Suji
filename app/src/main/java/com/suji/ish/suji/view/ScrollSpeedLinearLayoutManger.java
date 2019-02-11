@@ -11,7 +11,7 @@ import android.util.DisplayMetrics;
  * 控制滑动速度的LinearLayoutManager
  */
 public class ScrollSpeedLinearLayoutManger extends LinearLayoutManager {
-    private float MILLISECONDS_PER_INCH = 0.5f;
+    private float MILLISECONDS_PER_INCH = 0.6f;
     private Context contxt;
 
     public ScrollSpeedLinearLayoutManger(Context context) {

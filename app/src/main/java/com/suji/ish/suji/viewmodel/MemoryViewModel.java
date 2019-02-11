@@ -50,9 +50,9 @@ public class MemoryViewModel extends ViewModel {
     }
 
     public void forgetWord(Word word) {
+        Log.d(TAG, "forgetWord: " + word.getSpell());
         //忘记该单词，将rate重新设为0，修改记忆时间
         word.setRate(0);
-        word.setUpdateTimeStr(ToolsUtils.getInstance().getInstanceTimeStr());
         word.setNextTime(memoPlaner.getNextRememberTime(word.getRate(), word.getEr()));
         word.setUpdateTimeStr(ToolsUtils.getInstance().getInstanceTimeStr());
         mWordModel.update(word);
@@ -61,7 +61,14 @@ public class MemoryViewModel extends ViewModel {
     }
 
     public void rememberWord(Word word, int pos) {
-        List<Word> list = mWords.getValue();
-
+        Log.d(TAG, "rememberWord: " + word.getSpell());
+        word.setNextTime(memoPlaner.getNextRememberTime(word.getRate(), word.getEr()));
+        word.setUpdateTimeStr(ToolsUtils.getInstance().getInstanceTimeStr());
+        //记住该单词，和遗忘该词顺序相反，先设置下一次时间，如果为0，设置第二天继续背单词，再设置时间，保证第二天还能继续见到该单词
+        //否则将变成两天后再见到该单词
+        if (word.getRate() < 5) {
+            word.setRate(word.getRate() + 1);
+        }
+        mWordModel.update(word);
     }
 }
