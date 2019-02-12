@@ -11,13 +11,20 @@ import com.suji.ish.suji.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * @author ish
  */
-public class UserFragment extends Fragment {
+public class UserBlankFragment extends Fragment {
+
+
+    public UserBlankFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_user_blank, container, false);
     }
 
 }

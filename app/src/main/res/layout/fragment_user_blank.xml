@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.NoteBookBlankFragment">
+    tools:context=".fragment.UserBlankFragment">
 
     <fragment
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:id="@+id/nav_host_notebook"
+        android:id="@+id/nav_host_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/notebook_graph" />
+        app:navGraph="@navigation/user_graph" />
 
 </FrameLayout>

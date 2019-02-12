@@ -246,19 +246,36 @@ public class WordModel {
     }
 
     /**
-     * 获取指定长度的单词
+     * 获取指定长度的单词，按计划时间逆序来排行
+     * 取出的单词为已经背过单词
      * @param size
      * @param currentTime
      * @return
      */
     public List<Word> getMemoWords(int size, String currentTime,int offset){
         return LitePal
-                .where("updateTimeStr is not ?", currentTime)
+                //今天没有背过并且，
+                .where("updateTimeStr is not ? and updateTimeStr is not null", currentTime)
                 .order("nextTime")
                 .limit(size)
                 .offset(offset)
                 .find(Word.class);
     }
+
+    /**
+     * 获取没背过的单词
+     * @param size
+     * @return
+     */
+    public List<Word> getUnRememberWord(int size){
+        return LitePal
+                .where("updateTimeStr is null")
+                .order("nextTime")
+                .limit(size)
+                .find(Word.class);
+    }
+
+
 
     public void update(Word word){
         word.save();

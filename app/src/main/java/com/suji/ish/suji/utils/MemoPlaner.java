@@ -15,7 +15,7 @@ public class MemoPlaner {
     private WordModel mWordModel;
     private String mCurrentDateStr;
     //一次最多取出单词数目
-    private int maxSize = 5;
+    private int maxSize = 8;
     //还剩
     private int mOffSet = 0;
 
@@ -45,11 +45,14 @@ public class MemoPlaner {
     /**
      * 获取记忆的单词
      * 规则，获取
+     * 一半是已经记过单词，一半是新词
      *
      * @return
      */
     public List<Word> getMemoWord() {
         List<Word> words = mWordModel.getMemoWords(maxSize, mCurrentDateStr, mOffSet);
+        List<Word> unRememberWord = mWordModel.getUnRememberWord(maxSize);
+        words.addAll(unRememberWord);
         return words;
     }
 

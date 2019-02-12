@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.suji.ish.suji.fragment.MemoryBlankFragment;
 import com.suji.ish.suji.fragment.NoteBookBlankFragment;
 import com.suji.ish.suji.fragment.StatisticFragment;
-import com.suji.ish.suji.fragment.UserFragment;
+import com.suji.ish.suji.fragment.UserBlankFragment;
 
 /**
  * @author ish
@@ -36,7 +36,7 @@ public class TabPageIndicatorAdapter extends FragmentPagerAdapter {
                 fragment = new StatisticFragment();
                 break;
             case 3:
-                fragment = new UserFragment();
+                fragment = new UserBlankFragment();
                 break;
             default:
         }

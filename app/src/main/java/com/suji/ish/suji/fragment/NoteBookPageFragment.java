@@ -102,13 +102,7 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
         //单词本名超长处理
         String shortName = ToolsUtils.getInstance().handleText(mBookName, 19);
         mBinding.bookPageName.setText(shortName);
-        mBinding.bookPageCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewModel.loadWodrs();
-            }
-        });
-
+        mBinding.bookPageCamera.setOnClickListener(this);
         mBinding.bookPageMore.setOnClickListener(this);
         mBinding.notebookPageBack.setOnClickListener(this);
     }
