@@ -263,4 +263,33 @@ public class WordModel {
     public void update(Word word){
         word.save();
     }
+
+    public int getWordNum(){
+        return LitePal.count(Word.class);
+    }
+
+    /**
+     * 还未记忆过的单词数目
+     * @return
+     */
+    public int getUnRememberWordNum(){
+        return LitePal.where("updateTimeStr is null").count(Word.class);
+    }
+
+    /**
+     * 记过但是rate为0单词数
+     * @return
+     */
+    public int getUnClearWordNum(){
+        int zeroNum = LitePal.where("rate = 0").count(Word.class);
+        return zeroNum - getUnRememberWordNum();
+    }
+
+    public int getKnowWordNum(){
+        return LitePal.where("rate > 0 and rate < 4").count(Word.class);
+    }
+
+    public int getFamiliarWordNum(){
+        return LitePal.where("rate > 4").count(Word.class);
+    }
 }

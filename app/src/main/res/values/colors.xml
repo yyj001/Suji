@@ -17,8 +17,10 @@
     <color name="red">#CD5C5C</color>
 
     <color name="green">#71C177</color>
+    <color name="darkGreen">#99A3A4</color>
     <color name="trans_grey">#cccccc</color>
     <color name="oringe">#FF9D00</color>
+
 
     <color name="darkBrown">#5C4f56</color>
     <color name="brown">#B8AA9E</color>

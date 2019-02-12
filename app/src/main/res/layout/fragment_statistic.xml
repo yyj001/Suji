@@ -1,14 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.StatisticFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.StatisticFragment"
+    android:background="@color/themeColor">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:minHeight="51dp"
+            app:expandedTitleMarginBottom="100dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.suji.ish.suji.view.TitleBehavior">
+
+        <TextView
+            android:id="@+id/statistic_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="统计"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <ImageView
+            android:id="@+id/statistic_more_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/more" />
+    </LinearLayout>
+
+    <com.loopeer.shadow.ShadowView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="d" />
+        android:layout_marginBottom="1dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cornerRadius="10dp"
+        app:shadowColor="@color/trans_grey"
+        app:shadowMargin="20dp"
+        app:shadowRadius="18dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/statistic_pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            />
 
-</FrameLayout>
+    </com.loopeer.shadow.ShadowView>
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -44,6 +44,9 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
     //按钮
 //    implementation 'com.github.niniloveyou:StateButton:v1.0.0'
+    //画图
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+
 
     //引入rxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
