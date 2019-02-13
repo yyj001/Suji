@@ -1,14 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.UserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
+        app:layout_behavior="com.yuruiyin.appbarlayoutbehavior.AppBarLayoutBehavior">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:minHeight="50dp"
+            app:expandedTitleMarginBottom="100dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
     <TextView
+        android:id="@+id/user_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:text="我的"
+        android:textColor="@color/black"
+        android:textSize="32sp" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="d" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-</FrameLayout>
+            <com.loopeer.shadow.ShadowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:shadowColor="@color/trans_grey"
+                app:shadowMargin="15dp"
+                app:shadowRadius="15dp"
+                app:cornerRadius="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp">
+
+                    <ImageView
+                        android:id="@+id/user_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/mine"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/user_login_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="未登录"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/user_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.01999998" />
+
+                    <TextView
+                        android:id="@+id/user_login_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="25dp"
+                        android:text="登录以使用更多功能"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/user_login_name"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.gc.materialdesign.views.ProgressBarDeterminate
+                        android:id="@+id/user_progressbar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@color/colorAccent"
+                        android:maxHeight="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.523"
+                        app:layout_constraintStart_toEndOf="@+id/user_icon"
+                        app:layout_constraintTop_toBottomOf="@+id/user_login_name" />
+
+
+                </android.support.constraint.ConstraintLayout>
+            </com.loopeer.shadow.ShadowView>
+
+            <com.loopeer.shadow.ShadowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:shadowColor="@color/trans_grey"
+                app:shadowMarginTop="15dp"
+                app:shadowMarginRight="15dp"
+                app:shadowMarginLeft="15dp"
+                app:shadowRadius="15dp"
+                app:cornerRadiusTL="10dp"
+                app:cornerRadiusTR="10dp"
+                android:layout_marginBottom="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/cloud"
+                        android:layout_margin="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="备份"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+            </com.loopeer.shadow.ShadowView>
+
+            <com.loopeer.shadow.ShadowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:shadowColor="@color/trans_grey"
+                app:shadowMarginLeft="15dp"
+                app:shadowMarginRight="15dp"
+                app:shadowRadius="15dp"
+                android:layout_marginBottom="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/about"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关于"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+            </com.loopeer.shadow.ShadowView>
+
+            <com.loopeer.shadow.ShadowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:shadowColor="@color/trans_grey"
+                app:shadowMarginLeft="15dp"
+                app:shadowMarginRight="15dp"
+                app:shadowRadius="15dp"
+                android:layout_marginBottom="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/mail"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="反馈"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+            </com.loopeer.shadow.ShadowView>
+
+            <com.loopeer.shadow.ShadowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:shadowColor="@color/trans_grey"
+                app:shadowMarginBottom="15dp"
+                app:shadowMarginRight="15dp"
+                app:shadowMarginLeft="15dp"
+                app:shadowRadius="15dp"
+                app:cornerRadiusBL="10dp"
+                app:cornerRadiusBR="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/cup"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请喝咖啡"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+            </com.loopeer.shadow.ShadowView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>
