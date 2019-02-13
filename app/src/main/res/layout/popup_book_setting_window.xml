@@ -10,15 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <!--<TextView-->
+            <!--android:id="@+id/setting_book_cancel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="取消"-->
+            <!--android:textColor="@color/colorAccent"-->
+            <!--android:textSize="20sp" />-->
+
+        <ImageView
             android:id="@+id/setting_book_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="取消"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/back"
+            />
 
         <TextView
             android:id="@+id/setting_book_save"
@@ -26,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="15dp"
             android:clickable="false"
             android:text="保存"
             android:textColor="@color/grey8"

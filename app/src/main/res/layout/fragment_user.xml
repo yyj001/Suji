@@ -51,7 +51,7 @@
                 app:shadowColor="@color/trans_grey"
                 app:shadowMargin="15dp"
                 app:shadowRadius="15dp"
-                app:cornerRadius="10dp"
+                app:cornerRadius="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -127,8 +127,8 @@
                 app:shadowMarginRight="15dp"
                 app:shadowMarginLeft="15dp"
                 app:shadowRadius="15dp"
-                app:cornerRadiusTL="10dp"
-                app:cornerRadiusTR="10dp"
+                app:cornerRadiusTL="5dp"
+                app:cornerRadiusTR="5dp"
                 android:layout_marginBottom="1dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -141,7 +141,8 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/cloud"
-                        android:layout_margin="10dp"/>
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center_vertical"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -167,7 +168,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical">
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -225,8 +227,8 @@
                 app:shadowMarginRight="15dp"
                 app:shadowMarginLeft="15dp"
                 app:shadowRadius="15dp"
-                app:cornerRadiusBL="10dp"
-                app:cornerRadiusBR="10dp"
+                app:cornerRadiusBL="5dp"
+                app:cornerRadiusBR="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">

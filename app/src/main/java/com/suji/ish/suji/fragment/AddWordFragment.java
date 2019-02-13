@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
 
     private MaterialEditText materialEditText;
     private LinearLayout mOCRView;
-    private TextView mCancelTv;
+    private ImageView mCancelTv;
     private TextView mSearchTv;
     private int maxWordNum = 40;
     private View mWiew;

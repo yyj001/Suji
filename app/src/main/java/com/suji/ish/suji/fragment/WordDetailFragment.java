@@ -42,6 +42,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author ish
+ */
 public class WordDetailFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "WordDetailFragment";
@@ -161,7 +164,6 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
                 SpannableString spannableString = ToolsUtils.getInstance().getHightLightSentence(enSentence,word);
 
                 enTv.setText(spannableString);
-//                enTv.setText(getHightLightSentence(enSentence));
 
                 TextView chTv = new TextView(getActivity());
                 chTv.setTextColor(ToolsUtils.getInstance().getColor(getActivity(), R.color.greya));
@@ -255,7 +257,7 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                getActivity().finish();
+                getActivity().onBackPressed();
             }
         }, 1200);
         resultPopupWindow.showPopupWindow();

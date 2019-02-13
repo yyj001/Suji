@@ -58,7 +58,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        app:cornerRadius="10dp"
+        app:cornerRadius="8dp"
         app:shadowColor="@color/trans_grey"
         app:shadowMargin="20dp"
         app:shadowRadius="18dp"

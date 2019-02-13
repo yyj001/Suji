@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.suji.ish.suji.R;
@@ -178,7 +179,7 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
 
         TextView deleteTv = mWindow.getDeleteTv();
         deleteTv.setOnClickListener(this);
-        TextView cancelTv = mWindow.getCancelTv();
+        ImageView cancelTv = mWindow.getCancelTv();
         cancelTv.setOnClickListener(this);
         TextView saveTv = mWindow.getSaveTv();
         saveTv.setOnClickListener(this);

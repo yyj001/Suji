@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -27,7 +28,7 @@ import io.reactivex.functions.Function;
  */
 public class AddNoteBookActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
-    private TextView mCancelTx;
+    private ImageView mCancelTx;
     private TextView mCreateTx;
     private MaterialEditText mEditText;
     private int maxWordNum = 30;

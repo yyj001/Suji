@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -17,7 +18,7 @@ public class BookSettingWindow extends BasePopupWindow implements TextWatcher {
 
     private TextView saveTv;
     private MaterialEditText editText;
-    private TextView cancelTv;
+    private ImageView cancelTv;
     private TextView deleteTv;
     public BookSettingWindow(Context context) {
         super(context);
@@ -92,11 +93,11 @@ public class BookSettingWindow extends BasePopupWindow implements TextWatcher {
         this.editText = editText;
     }
 
-    public TextView getCancelTv() {
+    public ImageView getCancelTv() {
         return cancelTv;
     }
 
-    public void setCancelTv(TextView cancelTv) {
+    public void setCancelTv(ImageView cancelTv) {
         this.cancelTv = cancelTv;
     }
 
