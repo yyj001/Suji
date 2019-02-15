@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.FeedbackActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="20dp">
+
+        <ImageView
+            android:id="@+id/feedback_cancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/feedback_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/feedback_cancel"
+            android:text="反馈"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:transitionName="userTitle" />
+
+        <TextView
+            android:id="@+id/feedback_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:text="提交"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/feedback_contact_edtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="联系方式(选填)"
+                app:met_floatingLabel="normal"
+                app:met_underlineColor="@color/colorAccent"
+                app:met_primaryColor="@color/colorAccent"
+                />
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/feedback_advice_edtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="您的意见和建议"
+                app:met_floatingLabel="normal"
+                app:met_underlineColor="@color/colorAccent"
+                app:met_primaryColor="@color/colorAccent"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

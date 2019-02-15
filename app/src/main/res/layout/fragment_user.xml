@@ -146,9 +146,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="备份"
+                        android:text="备份与还原"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </com.loopeer.shadow.ShadowView>
@@ -181,12 +181,13 @@
                         android:layout_height="wrap_content"
                         android:text="关于"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </com.loopeer.shadow.ShadowView>
 
             <com.loopeer.shadow.ShadowView
+                android:id="@+id/user_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -213,8 +214,8 @@
                         android:layout_height="wrap_content"
                         android:text="反馈"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:layout_gravity="center_vertical"/>
+                        android:textSize="16sp"
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
             </com.loopeer.shadow.ShadowView>
 
@@ -247,7 +248,7 @@
                         android:layout_height="wrap_content"
                         android:text="请喝咖啡"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </com.loopeer.shadow.ShadowView>

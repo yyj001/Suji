@@ -15,9 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.AddWordActivity">
-
-        </activity>
+        <activity android:name=".activity.FeedbackActivity"></activity>
+        <activity android:name=".activity.AddWordActivity"></activity>
         <activity android:name=".activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +27,7 @@
         <activity
             android:name=".activity.SearchActivity"
             android:theme="@style/SearchActivity" />
-
-        <activity android:name=".activity.AddNoteBookActivity"></activity>
+        <activity android:name=".activity.AddNoteBookActivity" />
     </application>
 
 </manifest>

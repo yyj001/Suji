@@ -34,6 +34,6 @@
     <fragment
         android:id="@+id/wordInfoFragment"
         android:name="com.suji.ish.suji.fragment.WordInfoFragment"
-        android:label="word_info_fragment"
-        tools:layout="@layout/word_info_fragment" />
+        android:label="fragment_word_info"
+        tools:layout="@layout/fragment_word_info" />
 </navigation>
