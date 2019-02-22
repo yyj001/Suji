@@ -21,6 +21,8 @@ import org.litepal.crud.callback.FindMultiCallback;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.BiFunction;
@@ -44,10 +46,11 @@ public class WordModel {
      * 先去自己库查
      * 查不到单词就去金山查和自己例句库查
      * 最后将结果插回数据库
+     *
      * @param spell
      */
     @SuppressLint("CheckResult")
-    public void getWordFromInternet(String spell) {
+    public void getWordFromInternet(final String spell) {
         final InternetEvent event = new InternetEvent();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -57,7 +60,27 @@ public class WordModel {
                 .build();
         WordService wordService = retrofit.create(WordService.class);
 
+        //本地查词
+        Observable<SujiJsonBean<Word>> observable0 = Observable.create(new ObservableOnSubscribe<SujiJsonBean<Word>>() {
+            @Override
+            public void subscribe(ObservableEmitter<SujiJsonBean<Word>> emitter) throws Exception {
+                Word word = getWordWithSpell(spell);
+                if (word != null) {
+                    InternetRxBus.getInstance().post(event);
+                    Log.d(TAG, "在本地数据库中查到单词" + word.getSentence());
+                    SujiJsonBean<Word> sujiJsonBean = new SujiJsonBean<Word>();
+                    sujiJsonBean.setCode(InternetEvent.SUCESS);
+                    sujiJsonBean.setResult(word);
+                    emitter.onNext(sujiJsonBean);
+                } else {
+                    emitter.onComplete();
+                }
+            }
+        });
+
+        //自己云端数据库表1查词
         Observable<SujiJsonBean<Word>> observable1 = wordService.getInSujiDb(spell);
+        //金山查词
         final Observable<WordJson> observable2 = wordService.getJinShanWord("json", spell, Api.jinShanKey);
         final Observable<SujiJsonBean<String>> observable3 = wordService.getSentenceInSujiDb(spell);
         //金山接口和自己接口合并
@@ -71,8 +94,8 @@ public class WordModel {
         });
 
 
-        //先去自己库查
-        observable1.subscribeOn(Schedulers.io())
+        Observable.concat(observable0, observable1)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<SujiJsonBean<Word>>() {
                     @Override
@@ -80,7 +103,7 @@ public class WordModel {
                         if (wordSujiJsonBean.getCode() == InternetEvent.SUCESS) {
                             Log.d(TAG, "ob1 sucess");
                             Word word = wordSujiJsonBean.getResult();
-                            event.setCode(1);
+                            event.setCode(InternetEvent.SUCESS);
                             event.setMessage("success");
                             event.setWord(word);
                             InternetRxBus.getInstance().post(event);
@@ -428,6 +451,9 @@ public class WordModel {
         return zeroNum - getUnRememberWordNum();
     }
 
+    public Word getWordWithSpell(String spell) {
+        return LitePal.where("spell = ?", spell).findFirst(Word.class);
+    }
 
     public int getKnowWordNum() {
         return LitePal.where("rate > 0 and rate < 4").count(Word.class);
