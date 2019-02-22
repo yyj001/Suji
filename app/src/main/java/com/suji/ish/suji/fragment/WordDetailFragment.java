@@ -68,9 +68,8 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+    public void onResume() {
+        super.onResume();
         mSpell = getArguments().getString("spell");
 
         mViewModel = ViewModelProviders.of(this).get(WordDetailViewModel.class);
@@ -86,6 +85,13 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         };
         mViewModel.getCurrentWord(mSpell).observe(this, listObserver);
         initview();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
     }
 
     private void initview() {

@@ -4,6 +4,7 @@ import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.json.SujiJsonBean;
 import com.suji.ish.suji.json.WordJson;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -17,18 +18,18 @@ import retrofit2.http.Query;
 public interface WordService {
 
     @FormUrlEncoded
-    @POST("search_word.php")
-    Call<SujiJsonBean<Word>> getInSujiDb(@Field("word") String word);
+    @POST("http://www.isssh.cn/suji/search_word.php")
+    Observable<SujiJsonBean<Word>> getInSujiDb(@Field("word") String word);
 
-    @GET("dictionary.php")
-    Call<WordJson> getJinShanWord(@Query("type") String type, @Query("w")String word,@Query("key")String key);
-
-    @FormUrlEncoded
-    @POST("get_sentence.php")
-    Call<SujiJsonBean<String>> getSentenceInSujiDb(@Field("word") String word);
+    @GET("http://dict-co.iciba.com/api/dictionary.php")
+    Observable<WordJson> getJinShanWord(@Query("type") String type, @Query("w")String word,@Query("key")String key);
 
     @FormUrlEncoded
-    @POST("insert_to_dic.php")
+    @POST("http://www.isssh.cn/suji/get_sentence.php")
+    Observable<SujiJsonBean<String>> getSentenceInSujiDb(@Field("word") String word);
+
+    @FormUrlEncoded
+    @POST("http://www.isssh.cn/suji/insert_to_dic.php")
     Call<SujiJsonBean<Integer>> insertInDb(@Field("spell") String spell,@Field("wordPast") String wordPast,
                                            @Field("wordDone") String wordDone,@Field("wordIng") String wordIng,
                                            @Field("wordPl") String wordPl,@Field("wordThird") String wordThird,
