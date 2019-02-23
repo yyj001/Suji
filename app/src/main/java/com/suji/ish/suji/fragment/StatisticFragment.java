@@ -1,6 +1,7 @@
 package com.suji.ish.suji.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -16,10 +17,15 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.model.WordModel;
+import com.suji.ish.suji.rxjava.DataBaseEvent;
+import com.suji.ish.suji.rxjava.RxBus;
 import com.suji.ish.suji.utils.ToolsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,12 +44,32 @@ public class StatisticFragment extends Fragment {
     }
 
 
+    @SuppressLint("CheckResult")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
         mPieChart = view.findViewById(R.id.statistic_pie_chart);
         mPieChart.setNoDataText("");
+
+        //一旦数据库改变将刷新页面
+        RxBus.getInstance()
+                .toObservable()
+                .map(new Function<Object, DataBaseEvent>() {
+                    @Override
+                    public DataBaseEvent apply(Object o) throws Exception {
+                        return (DataBaseEvent) o;
+                    }
+                })
+                .subscribe(new Consumer<DataBaseEvent>() {
+                    @Override
+                    public void accept(DataBaseEvent eventMsg) throws Exception {
+                        if (eventMsg != null) {
+                            isFinishData = false;
+                        }
+                    }
+                });
+
         mModel = new WordModel();
         return view;
     }
@@ -78,7 +104,6 @@ public class StatisticFragment extends Fragment {
         mPieChart.setUsePercentValues(true);
         mPieChart.setDescription(null);
         mPieChart.animateXY(800,800);
-
     }
 
     @Override

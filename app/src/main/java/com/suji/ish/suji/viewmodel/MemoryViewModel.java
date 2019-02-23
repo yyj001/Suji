@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.model.WordModel;
+import com.suji.ish.suji.rxjava.DataBaseEvent;
+import com.suji.ish.suji.rxjava.RxBus;
 import com.suji.ish.suji.utils.MemoPlaner;
 import com.suji.ish.suji.utils.ToolsUtils;
 
@@ -19,6 +21,7 @@ public class MemoryViewModel extends ViewModel {
     public WordModel mWordModel;
     public MemoPlaner memoPlaner;
     private MutableLiveData<List<Word>> mWords;
+    DataBaseEvent dataBaseEvent;
 
     public LiveData<List<Word>> getCurrentWord() {
         mWordModel = new WordModel();
@@ -28,6 +31,8 @@ public class MemoryViewModel extends ViewModel {
             mWords.setValue(list);
             memoPlaner = MemoPlaner.getInstance();
             loadWodrs();
+
+            dataBaseEvent = new DataBaseEvent();
         }
         return mWords;
     }
@@ -58,6 +63,9 @@ public class MemoryViewModel extends ViewModel {
         mWordModel.update(word);
         //將该单词插到队尾
         addWordToBack(word);
+
+        RxBus.getInstance().post(dataBaseEvent);
+
     }
 
     public void rememberWord(Word word, int pos) {
@@ -70,5 +78,7 @@ public class MemoryViewModel extends ViewModel {
             word.setRate(word.getRate() + 1);
         }
         mWordModel.update(word);
+
+        RxBus.getInstance().post(dataBaseEvent);
     }
 }

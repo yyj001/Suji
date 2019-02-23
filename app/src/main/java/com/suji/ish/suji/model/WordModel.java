@@ -66,8 +66,7 @@ public class WordModel {
             public void subscribe(ObservableEmitter<SujiJsonBean<Word>> emitter) throws Exception {
                 Word word = getWordWithSpell(spell);
                 if (word != null) {
-                    InternetRxBus.getInstance().post(event);
-                    Log.d(TAG, "在本地数据库中查到单词" + word.getSentence());
+                    Log.d(TAG, "在本地数据库中查到单词" + spell);
                     SujiJsonBean<Word> sujiJsonBean = new SujiJsonBean<Word>();
                     sujiJsonBean.setCode(InternetEvent.SUCESS);
                     sujiJsonBean.setResult(word);
@@ -460,6 +459,6 @@ public class WordModel {
     }
 
     public int getFamiliarWordNum() {
-        return LitePal.where("rate > 4").count(Word.class);
+        return LitePal.where("rate >= 4").count(Word.class);
     }
 }
