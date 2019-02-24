@@ -16,24 +16,28 @@
 
     </data>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/colorPrimary">
 
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="20dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <!--<TextView-->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="20dp">
+
+                    <!--<TextView-->
                     <!--android:id="@+id/word_detail_cancel"-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
@@ -42,361 +46,368 @@
                     <!--android:textColor="@color/colorAccent"-->
                     <!--android:textSize="20sp" />-->
 
-                <ImageView
-                    android:id="@+id/word_detail_cancel"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="12dp"
-                    android:src="@drawable/back"
-                    />
-
-                <TextView
-                    android:id="@+id/word_detail_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
-                    android:text="添加"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20sp" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:visibility="@{word.parts.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="添加至：" />
-
-                <TextView
-                    android:id="@+id/word_detail_notebook_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="新建单词本"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/word_detail_modify_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="修改"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginLeft="5dp"/>
-            </LinearLayout>
-
-            <com.loopeer.shadow.ShadowView
-                android:id="@+id/word_detail_parts_shadowview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:visibility="gone"
-                app:cornerRadius="5dp"
-                app:shadowColor="@color/trans_grey"
-                app:shadowMarginLeft="12dp"
-                app:shadowMarginRight="12dp"
-                app:shadowMarginTop="12dp"
-                app:shadowRadius="12dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/word_detail_spell"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.spell}"
-                            android:textColor="@color/black"
-                            android:textSize="25sp" />
-
-                        <TextView
-                            android:id="@+id/word_detail_error"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end|center_vertical"
-                            android:text="报错"
-                            android:textColor="@color/greya"
-                            android:textSize="14sp" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
-
-                        <TextView
-                            android:id="@+id/word_detail_en"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@{Converter.enPhToText(word.phEn)}"
-                            android:textColor="@color/grey8" />
-
-                        <ImageView
-                            android:id="@+id/word_detail_en_horn"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/systemprompt"
-                            android:visibility="@{word.phEnMp3!=null ? View.VISIBLE : View.GONE}" />
-
-                        <TextView
-                            android:id="@+id/word_detail_am"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:text="@{Converter.amPhToText(word.phAm)}"
-                            android:textColor="@color/grey8" />
-
-                        <ImageView
-                            android:id="@+id/word_detail_am_horn"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginRight="20dp"
-                            android:src="@drawable/systemprompt"
-                            android:visibility="@{word.phAmMp3!=null ? View.VISIBLE : View.GONE}" />
-
-
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/word_detail_cancel"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/back" />
 
                     <TextView
-                        android:id="@+id/word_detail_parts"
-                        android:layout_width="match_parent"
+                        android:id="@+id/word_detail_add"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:lineSpacingExtra="5dp"
-                        android:text="@{word.parts}"
+                        android:text="添加"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20sp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:visibility="@{word.parts.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="添加至：" />
+
+                    <TextView
+                        android:id="@+id/word_detail_notebook_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新建单词本"
                         android:textColor="@color/black" />
-                </LinearLayout>
-            </com.loopeer.shadow.ShadowView>
-
-            <com.loopeer.shadow.ShadowView
-                android:id="@+id/word_detail_exchange_shadowview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                android:padding="10dp"
-                android:visibility="gone"
-                app:cornerRadius="5dp"
-                app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior"
-                app:shadowColor="@color/trans_grey"
-                app:shadowMarginLeft="12dp"
-                app:shadowMarginRight="12dp"
-                app:shadowMarginTop="12dp"
-                app:shadowRadius="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/word_detail_exchange_title"
+                        android:id="@+id/word_detail_modify_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="单词变形"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <!--pl-->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{word.wordPl.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="复数： "
-                            android:textColor="@color/grey8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.wordPl}"
-                            android:textColor="@color/colorAccent" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{word.wordThird.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="第三人称单数： "
-                            android:textColor="@color/grey8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.wordThird}"
-                            android:textColor="@color/colorAccent" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{word.wordPast.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="过去式： "
-                            android:textColor="@color/grey8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.wordPast}"
-                            android:textColor="@color/colorAccent" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{word.wordDone.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="过去分词： "
-                            android:textColor="@color/grey8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.wordDone}"
-                            android:textColor="@color/colorAccent" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{word.wordIng.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="现在分词： "
-                            android:textColor="@color/grey8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.wordIng}"
-                            android:textColor="@color/colorAccent" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{word.wordEr.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="比较级： "
-                            android:textColor="@color/grey8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.wordEr}"
-                            android:textColor="@color/colorAccent" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{word.wordEst.length()!=0 ? View.VISIBLE : View.GONE}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="最高级： "
-                            android:textColor="@color/grey8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{word.wordEst}"
-                            android:textColor="@color/colorAccent" />
-                    </LinearLayout>
-
-
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        android:text="修改"
+                        android:textColor="@color/colorAccent" />
                 </LinearLayout>
-            </com.loopeer.shadow.ShadowView>
 
-            <com.loopeer.shadow.ShadowView
-                android:id="@+id/word_detail_sentence_shadowview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:visibility="gone"
-                app:cornerRadius="5dp"
-                app:shadowColor="@color/trans_grey"
-                app:shadowMarginBottom="12dp"
-                app:shadowMarginLeft="12dp"
-                app:shadowMarginRight="12dp"
-                app:shadowMarginTop="12dp"
-                app:shadowRadius="12dp">
-
-
-                <LinearLayout
-                    android:id="@+id/word_detail_sentence_container"
+                <com.loopeer.shadow.ShadowView
+                    android:id="@+id/word_detail_parts_shadowview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:visibility="gone"
+                    app:cornerRadius="5dp"
+                    app:shadowColor="@color/trans_grey"
+                    app:shadowMarginLeft="12dp"
+                    app:shadowMarginRight="12dp"
+                    app:shadowMarginTop="12dp"
+                    app:shadowRadius="12dp">
 
-                    <TextView
-                        android:id="@+id/word_detail_sentence_title"
-                        android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="例句"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:orientation="vertical">
 
-                </LinearLayout>
-            </com.loopeer.shadow.ShadowView>
-        </LinearLayout>
-    </ScrollView>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/word_detail_spell"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.spell}"
+                                android:textColor="@color/black"
+                                android:textSize="25sp" />
+
+                            <TextView
+                                android:id="@+id/word_detail_error"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end|center_vertical"
+                                android:text="报错"
+                                android:textColor="@color/greya"
+                                android:textSize="14sp" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/word_detail_en"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@{Converter.enPhToText(word.phEn)}"
+                                android:textColor="@color/grey8" />
+
+                            <ImageView
+                                android:id="@+id/word_detail_en_horn"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/systemprompt"
+                                android:visibility="@{word.phEnMp3!=null ? View.VISIBLE : View.GONE}" />
+
+                            <TextView
+                                android:id="@+id/word_detail_am"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:text="@{Converter.amPhToText(word.phAm)}"
+                                android:textColor="@color/grey8" />
+
+                            <ImageView
+                                android:id="@+id/word_detail_am_horn"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/systemprompt"
+                                android:visibility="@{word.phAmMp3!=null ? View.VISIBLE : View.GONE}" />
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/word_detail_parts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:lineSpacingExtra="5dp"
+                            android:text="@{word.parts}"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+                </com.loopeer.shadow.ShadowView>
+
+                <com.loopeer.shadow.ShadowView
+                    android:id="@+id/word_detail_exchange_shadowview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    app:cornerRadius="5dp"
+                    app:layout_behavior="com.suji.ish.suji.view.SearchBarBehavior"
+                    app:shadowColor="@color/trans_grey"
+                    app:shadowMarginLeft="12dp"
+                    app:shadowMarginRight="12dp"
+                    app:shadowMarginTop="12dp"
+                    app:shadowRadius="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/word_detail_exchange_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text="单词变形"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <!--pl-->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{word.wordPl.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="复数： "
+                                android:textColor="@color/grey8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.wordPl}"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{word.wordThird.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="第三人称单数： "
+                                android:textColor="@color/grey8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.wordThird}"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{word.wordPast.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="过去式： "
+                                android:textColor="@color/grey8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.wordPast}"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{word.wordDone.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="过去分词： "
+                                android:textColor="@color/grey8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.wordDone}"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{word.wordIng.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="现在分词： "
+                                android:textColor="@color/grey8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.wordIng}"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{word.wordEr.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="比较级： "
+                                android:textColor="@color/grey8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.wordEr}"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{word.wordEst.length()!=0 ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="最高级： "
+                                android:textColor="@color/grey8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{word.wordEst}"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </com.loopeer.shadow.ShadowView>
+
+                <com.loopeer.shadow.ShadowView
+                    android:id="@+id/word_detail_sentence_shadowview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:visibility="gone"
+                    app:cornerRadius="5dp"
+                    app:shadowColor="@color/trans_grey"
+                    app:shadowMarginBottom="12dp"
+                    app:shadowMarginLeft="12dp"
+                    app:shadowMarginRight="12dp"
+                    app:shadowMarginTop="12dp"
+                    app:shadowRadius="12dp">
+
+
+                    <LinearLayout
+                        android:id="@+id/word_detail_sentence_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/word_detail_sentence_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text="例句"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+                </com.loopeer.shadow.ShadowView>
+            </LinearLayout>
+        </ScrollView>
+
+        <com.suji.ish.suji.view.SearchLoadingView
+            android:id="@+id/word_detail_loading_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center">
+        </com.suji.ish.suji.view.SearchLoadingView>
+    </FrameLayout>
 </layout>

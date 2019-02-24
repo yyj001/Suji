@@ -1,5 +1,6 @@
 package com.suji.ish.suji.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
@@ -24,7 +25,9 @@ public class WordDetailViewModel extends AndroidViewModel {
     private MutableLiveData<Word> mWord;
     private String mSpell;
     private WordModel mModel;
+    private MutableLiveData<InternetEvent> mInternetEvent;
 
+    @SuppressLint("CheckResult")
     public WordDetailViewModel(@NonNull Application application) {
         super(application);
 
@@ -41,8 +44,13 @@ public class WordDetailViewModel extends AndroidViewModel {
                     @Override
                     public void accept(InternetEvent eventMsg) throws Exception {
                         if (eventMsg != null) {
-                            if (eventMsg.getCode() == 1 && mWord != null) {
+                            if (eventMsg.getCode() == InternetEvent.SUCESS && mWord != null) {
                                 mWord.setValue(eventMsg.getWord());
+                            }
+                            else if(eventMsg.getCode() == InternetEvent.FAIL_NO_NETWORK){
+                                mInternetEvent.setValue(eventMsg);
+                            }else if(eventMsg.getCode() == InternetEvent.FAIL_NO_RESOURCE){
+                                mInternetEvent.setValue(eventMsg);
                             }
                         }
                     }
@@ -58,6 +66,13 @@ public class WordDetailViewModel extends AndroidViewModel {
             searchWord();
         }
         return mWord;
+    }
+
+    public LiveData<InternetEvent> getInternetEvent() {
+        if (mInternetEvent == null) {
+            mInternetEvent = new MutableLiveData<InternetEvent>();
+        }
+        return mInternetEvent;
     }
 
     public void searchWord() {

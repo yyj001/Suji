@@ -1,5 +1,6 @@
 package com.suji.ish.suji.fragment;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -30,8 +31,10 @@ import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.WordDetailFragmentBinding;
 import com.suji.ish.suji.global.SujiData;
 import com.suji.ish.suji.model.NoteBookModel;
+import com.suji.ish.suji.rxjava.InternetEvent;
 import com.suji.ish.suji.utils.AudioPlayer;
 import com.suji.ish.suji.utils.ToolsUtils;
+import com.suji.ish.suji.view.NetWorkAlertDialog;
 import com.suji.ish.suji.view.ResultPopupWindow;
 import com.suji.ish.suji.view.ResultView;
 import com.suji.ish.suji.viewmodel.WordDetailViewModel;
@@ -53,6 +56,9 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
     private String mSpell;
     private NoteBook mSaveNoteBook;
     private Word mSaveword;
+    private NetWorkAlertDialog mPopupWindow;
+
+    private boolean mIsShowAlertDialog = false;
 
     public static WordDetailFragment newInstance() {
         return new WordDetailFragment();
@@ -67,9 +73,11 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         return mBinding.getRoot();
     }
 
+
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mSpell = getArguments().getString("spell");
 
         mViewModel = ViewModelProviders.of(this).get(WordDetailViewModel.class);
@@ -81,19 +89,26 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
                 setParts(word);
                 setExchange(word);
                 setSentence(word);
+                mBinding.wordDetailLoadingView.cancelAnimation();
+                mBinding.wordDetailLoadingView.setVisibility(View.GONE);
             }
         };
         mViewModel.getCurrentWord(mSpell).observe(this, listObserver);
         initview();
+
+        //监听网络搜索结果
+        final Observer<InternetEvent> internetEventObserver = new Observer<InternetEvent>() {
+            @Override
+            public void onChanged(@Nullable InternetEvent internetEvent) {
+                showAlertDialog(internetEvent);
+                mBinding.wordDetailLoadingView.cancelAnimation();
+                mBinding.wordDetailLoadingView.setVisibility(View.GONE);
+            }
+        };
+        mViewModel.getInternetEvent().observe(this, internetEventObserver);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-    }
-
+    @SuppressLint("CheckResult")
     private void initview() {
         mBinding.wordDetailCancel.setOnClickListener(this);
         mBinding.wordDetailAdd.setOnClickListener(this);
@@ -117,7 +132,6 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         } else {
             mBinding.wordDetailNotebookName.setText(ToolsUtils.getInstance().handleText(mSaveNoteBook.getBookName(), 20));
         }
-
         addWordDisable();
 
 
@@ -305,5 +319,14 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
             }
         });
         popupMenu.show();
+    }
+
+    private void showAlertDialog(InternetEvent event) {
+        mPopupWindow = new NetWorkAlertDialog(getActivity());
+        mPopupWindow.setBackground(0);
+        mPopupWindow.setView(event);
+//        mPopupWindow.setBlurBackgroundEnable(true);
+//        mPopupWindow.setBackgroundColor(ToolsUtils.getInstance().getColor(getActivity(), R.color.AlphaColorPrimaryDark));
+        mPopupWindow.showPopupWindow();
     }
 }

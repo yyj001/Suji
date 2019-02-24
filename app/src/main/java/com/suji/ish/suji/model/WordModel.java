@@ -3,22 +3,24 @@ package com.suji.ish.suji.model;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.global.Api;
 import com.suji.ish.suji.json.SujiJsonBean;
 import com.suji.ish.suji.json.WordJson;
+import com.suji.ish.suji.network.RetrofitManager;
 import com.suji.ish.suji.network.WordService;
 import com.suji.ish.suji.rxjava.DataBaseEvent;
 import com.suji.ish.suji.rxjava.InternetEvent;
 import com.suji.ish.suji.rxjava.InternetRxBus;
+import com.suji.ish.suji.utils.NetWorkUtils;
 import com.suji.ish.suji.utils.ToolsUtils;
 
 import org.litepal.LitePal;
 import org.litepal.crud.callback.FindMultiCallback;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -53,11 +55,7 @@ public class WordModel {
     public void getWordFromInternet(final String spell) {
         final InternetEvent event = new InternetEvent();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.sujiApi)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = RetrofitManager.getRetrofit();
         WordService wordService = retrofit.create(WordService.class);
 
         //本地查词
@@ -72,7 +70,16 @@ public class WordModel {
                     sujiJsonBean.setResult(word);
                     emitter.onNext(sujiJsonBean);
                 } else {
-                    emitter.onComplete();
+                    //再判断是否连接网络
+                    if (NetWorkUtils.isNetworkConnected()) {
+                        emitter.onComplete();
+                    } else {
+                        //显示没网络状态
+                        SujiJsonBean<Word> sujiJsonBean = new SujiJsonBean<Word>();
+                        sujiJsonBean.setCode(InternetEvent.FAIL_NO_NETWORK);
+                        sujiJsonBean.setResult(word);
+                        emitter.onNext(sujiJsonBean);
+                    }
                 }
             }
         });
@@ -94,11 +101,13 @@ public class WordModel {
 
 
         Observable.concat(observable0, observable1)
+                .delay(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<SujiJsonBean<Word>>() {
                     @Override
                     public void accept(SujiJsonBean<Word> wordSujiJsonBean) throws Exception {
+                        //处理本地和网络查词的结果
                         if (wordSujiJsonBean.getCode() == InternetEvent.SUCESS) {
                             Log.d(TAG, "ob1 sucess");
                             Word word = wordSujiJsonBean.getResult();
@@ -106,8 +115,12 @@ public class WordModel {
                             event.setMessage("success");
                             event.setWord(word);
                             InternetRxBus.getInstance().post(event);
-                        } else {
-                            Log.d(TAG, "ob1 fail");
+                        } else if (wordSujiJsonBean.getCode() == InternetEvent.FAIL_NO_NETWORK) {
+                            Log.d(TAG, "无网络");
+                            event.setCode(InternetEvent.FAIL_NO_NETWORK);
+                            event.setMessage("无网络连接");
+                            event.setWord(new Word());
+                            InternetRxBus.getInstance().post(event);
                         }
                     }
                 })
@@ -117,8 +130,9 @@ public class WordModel {
                 .flatMap(new Function<SujiJsonBean<Word>, ObservableSource<Word>>() {
                     @Override
                     public ObservableSource<Word> apply(SujiJsonBean<Word> wordSujiJsonBean) throws Exception {
-                        if (wordSujiJsonBean.getCode() == 1) {
-                            //不再进行后续请求
+                        if (wordSujiJsonBean.getCode() == InternetEvent.FAIL_NO_NETWORK
+                                || wordSujiJsonBean.getCode() == InternetEvent.SUCESS) {
+                            //不再进行后续请求,
                             return Observable.empty();
                         }
                         return observableZip;
@@ -129,15 +143,25 @@ public class WordModel {
                 .subscribe(new Consumer<Word>() {
                     @Override
                     public void accept(Word word) throws Exception {
-                        event.setCode(InternetEvent.SUCESS);
-                        event.setWord(word);
-                        Log.d(TAG, "merge word: sucess!" + word.getSentence());
-                        //新词插回自己服务器
-                        insertInSujiDb(word);
-                        InternetRxBus.getInstance().post(event);
+                        if (word != null && word.getSpell() != null) {
+                            event.setCode(InternetEvent.SUCESS);
+                            event.setWord(word);
+                            InternetRxBus.getInstance().post(event);
+                            Log.d(TAG, "merge word: sucess!" + word.getSentence());
+                            //新词插回自己服务器
+                            insertInSujiDb(word);
+                        } else {
+                            event.setCode(InternetEvent.FAIL_NO_RESOURCE);
+                            event.setWord(word);
+                            event.setMessage("查不到该词：" + spell);
+                            InternetRxBus.getInstance().post(event);
+                            Log.d(TAG, "查不到该词：" + spell);
+                        }
+
                     }
                 });
     }
+
 
     /**
      * 通过Rxbus来传递查询结果
@@ -350,7 +374,6 @@ public class WordModel {
         //如果目前没有笔记本，那么得等到新建笔记本插入后再保存笔记，id才是对的
         word.setBookId(noteBook.getId());
         word.save();
-
     }
 
     /**

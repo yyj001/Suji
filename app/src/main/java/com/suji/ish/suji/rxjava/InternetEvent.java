@@ -10,7 +10,8 @@ public class InternetEvent {
     private String message;
     private Word word;
     public final static int SUCESS = 1;
-    public final static int FAIL = 0;
+    public final static int FAIL_NO_NETWORK = 2;
+    public final static int FAIL_NO_RESOURCE = 3;
 
     public int getCode() {
         return code;

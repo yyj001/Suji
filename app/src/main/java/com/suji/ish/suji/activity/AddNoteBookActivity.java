@@ -1,5 +1,6 @@
 package com.suji.ish.suji.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +38,7 @@ public class AddNoteBookActivity extends BaseActivity implements View.OnClickLis
     private Handler mHandler;
     private NoteBookModel mNoteBookModel;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
