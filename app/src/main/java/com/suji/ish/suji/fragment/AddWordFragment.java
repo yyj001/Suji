@@ -73,9 +73,24 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
             case R.id.add_word_search: {
                 hideKeyboard(view);
 
+                String spell = materialEditText.getText().toString();
                 Bundle bundle = new Bundle();
-                bundle.putString("spell", materialEditText.getText().toString());
-                Navigation.findNavController(view).navigate(R.id.action_addWordFragment_to_wordDetailFragment, bundle);
+                bundle.putString("spell", spell);
+
+                //检查是否含有中文
+                boolean flag = true;
+                for (int num = 0; num < spell.length(); ++num) {
+                    if (!judgeLegal(spell.charAt(num))) {
+                        flag = false;
+                        break;
+                    }
+                }
+                //英文搜索
+                if (flag) {
+                    Navigation.findNavController(view).navigate(R.id.action_addWordFragment_to_wordDetailFragment, bundle);
+                }else{
+                    Navigation.findNavController(view).navigate(R.id.action_addWordFragment_to_chineseSearchResultFragment, bundle);
+                }
                 break;
             }
             case R.id.add_word_ocr: {
@@ -101,19 +116,19 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
             createNoteDisable();
         }
 
-        //检查是否含有中文
-        boolean flag = true;
-        for (int num = 0; num < size; ++num) {
-            if (!judgeLegal(charSequence.toString().charAt(num))) {
-                createNoteDisable();
-                flag = false;
-                break;
-            }
-        }
-        //todo 应该给这里添加错误提示，还没有时间做
-        if (!flag) {
-            createNoteDisable();
-        }
+//        //检查是否含有中文
+//        boolean flag = true;
+//        for (int num = 0; num < size; ++num) {
+//            if (!judgeLegal(charSequence.toString().charAt(num))) {
+//                createNoteDisable();
+//                flag = false;
+//                break;
+//            }
+//        }
+//        //todo 应该给这里添加错误提示，还没有时间做
+//        if (!flag) {
+//            createNoteDisable();
+//        }
     }
 
     /**
@@ -124,7 +139,6 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
      */
     private boolean judgeLegal(char c) {
         if ((int) c > 0 && (int) c < 256) {
-            Log.d("dwdwed", "judgeLegal: legal");
             return true;
         }
         return false;

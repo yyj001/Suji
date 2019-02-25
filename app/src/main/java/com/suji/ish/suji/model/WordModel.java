@@ -3,6 +3,7 @@ package com.suji.ish.suji.model;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.suji.ish.suji.bean.ChineseWord;
 import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.global.Api;
@@ -43,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WordModel {
 
     private static final String TAG = "WordModel";
+    final InternetEvent event = new InternetEvent();
 
     /**
      * 先去自己库查
@@ -53,7 +55,6 @@ public class WordModel {
      */
     @SuppressLint("CheckResult")
     public void getWordFromInternet(final String spell) {
-        final InternetEvent event = new InternetEvent();
 
         Retrofit retrofit = RetrofitManager.getRetrofit();
         WordService wordService = retrofit.create(WordService.class);
@@ -157,9 +158,39 @@ public class WordModel {
                             InternetRxBus.getInstance().post(event);
                             Log.d(TAG, "查不到该词：" + spell);
                         }
-
                     }
                 });
+    }
+
+    /**
+     * 中文的查词
+     *
+     * @param spell
+     */
+    @SuppressLint("CheckResult")
+    public void getChineseWordFromInternet(final String spell) {
+        Retrofit retrofit = RetrofitManager.getRetrofit();
+        WordService wordService = retrofit.create(WordService.class);
+        final Observable<ChineseWord> chineseObservable = wordService.getYoudaoChineseWord(spell);
+        chineseObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ChineseWord>() {
+                    @Override
+                    public void accept(ChineseWord chineseWord) throws Exception {
+                        if (chineseWord != null && chineseWord.getBasic() != null) {
+                            event.setCode(InternetEvent.CHINESE_SUCESS);
+                            event.setChineseWord(chineseWord);
+                            InternetRxBus.getInstance().post(event);
+                        } else {
+                            event.setCode(InternetEvent.FAIL_NO_RESOURCE);
+                            event.setChineseWord(chineseWord);
+                            event.setMessage("查不到该词：" + spell);
+                            InternetRxBus.getInstance().post(event);
+                            Log.d(TAG, "查不到该词：" + spell);
+                        }
+                    }
+                });
+
     }
 
 

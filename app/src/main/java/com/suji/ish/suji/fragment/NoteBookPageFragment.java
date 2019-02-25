@@ -24,6 +24,7 @@ import com.suji.ish.suji.bean.NoteBook;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.NoteBookPageFragmentBinding;
 import com.suji.ish.suji.global.SujiData;
+import com.suji.ish.suji.listener.OnItemClickListener;
 import com.suji.ish.suji.model.NoteBookModel;
 import com.suji.ish.suji.rxjava.DataBaseEvent;
 import com.suji.ish.suji.utils.ToolsUtils;
@@ -33,6 +34,8 @@ import com.suji.ish.suji.viewmodel.NoteBookPageViewModel;
 import org.litepal.crud.callback.UpdateOrDeleteCallback;
 
 import java.util.List;
+
+import androidx.navigation.Navigation;
 
 /**
  * @author ish
@@ -76,6 +79,21 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
         mBinding.wordRecyclerview.setLayoutManager(linearLayoutManager);
 
         mAdapter = new WordAdapter(mWords);
+
+        mAdapter.setmOnClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, Word word) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("wordId", word.getId());
+                Navigation.findNavController(view).navigate(R.id.action_noteBookPageFragment_to_wordInfoFragment, bundle);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position, Word word) {
+
+            }
+        });
+
         mBinding.setAdapter(mAdapter);
 
         //监听
@@ -162,7 +180,7 @@ public class NoteBookPageFragment extends Fragment implements View.OnClickListen
                 hideKeyboard(view);
                 break;
             }
-            case R.id.notebook_page_back:{
+            case R.id.notebook_page_back: {
                 getActivity().onBackPressed();
                 break;
             }

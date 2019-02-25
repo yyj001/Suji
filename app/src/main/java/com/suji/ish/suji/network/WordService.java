@@ -1,5 +1,6 @@
 package com.suji.ish.suji.network;
 
+import com.suji.ish.suji.bean.ChineseWord;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.json.SujiJsonBean;
 import com.suji.ish.suji.json.WordJson;
@@ -38,4 +39,7 @@ public interface WordService {
                                            @Field("phOther") String phOther,@Field("phEnMp3") String phEnMp3,
                                            @Field("phAmMp3") String phAmMp3,@Field("phTtsMp3") String phTtsMp3,
                                            @Field("parts") String parts,@Field("sentence") String sentence);
+
+    @GET("http://fanyi.youdao.com/fanyiapi.do?keyfrom=webtranslation&key=1676309795&type=data&doctype=json&version=1.1")
+    Observable<ChineseWord> getYoudaoChineseWord(@Query("q")String word);
 }

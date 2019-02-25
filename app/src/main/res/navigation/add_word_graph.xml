@@ -18,10 +18,23 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+            android:id="@+id/action_addWordFragment_to_chineseSearchResultFragment"
+            app:destination="@id/chineseSearchResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/wordDetailFragment"
         android:name="com.suji.ish.suji.fragment.WordDetailFragment"
         android:label="word_detail_fragment"
         tools:layout="@layout/word_detail_fragment" />
+    <fragment
+        android:id="@+id/chineseSearchResultFragment"
+        android:name="com.suji.ish.suji.fragment.ChineseSearchResultFragment"
+        android:label="fragment_chinese_search_result"
+        tools:layout="@layout/fragment_chinese_search_result" >
+        <action
+            android:id="@+id/action_chineseSearchResultFragment_to_wordDetailFragment"
+            app:destination="@id/wordDetailFragment" />
+    </fragment>
+
 </navigation>

@@ -2,20 +2,19 @@ package com.suji.ish.suji.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.loopeer.shadow.ShadowView;
 import com.suji.ish.suji.R;
 import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.ItemWordBinding;
+import com.suji.ish.suji.listener.OnItemClickListener;
 import com.suji.ish.suji.utils.ToolsUtils;
 
 import java.util.List;
-
-import androidx.navigation.Navigation;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
@@ -23,6 +22,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static ViewDataBinding headerBinding;
+    private OnItemClickListener mOnClickListener;
 
 
     public WordAdapter(List<Word> list) {
@@ -42,12 +42,12 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_HEADER) {
             return;
         }
-        int pos = getRealPosition(holder);
-        Word word = list.get(pos);
+        final int pos = getRealPosition(holder);
+        final Word word = list.get(pos);
 
         int marginLength = ToolsUtils.getInstance().dp2px(10);
         if(pos==0 && headerBinding==null && list.size()>1){
@@ -80,14 +80,24 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         holder.getBinding().executePendingBindings();
 
 //        跳转单词页面
-        Bundle bundle = new Bundle();
-        bundle.putInt("wordId", word.getId());
-        holder.getBinding().getRoot()
-                .setOnClickListener(Navigation.createNavigateOnClickListener(
-                        R.id.action_noteBookPageFragment_to_wordInfoFragment,bundle)
-                );
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("wordId", word.getId());
+//        holder.getBinding().getRoot()
+//                .setOnClickListener(Navigation.createNavigateOnClickListener(
+//                        R.id.action_noteBookPageFragment_to_wordInfoFragment,bundle)
+//                );
+        holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnClickListener.onItemClick(view,pos,word);
+            }
+        });
+
     }
 
+    public void setmOnClickListener(OnItemClickListener mOnClickListener) {
+        this.mOnClickListener = mOnClickListener;
+    }
 
     public int getRealPosition(RecyclerView.ViewHolder holder) {
         int position = holder.getLayoutPosition();
@@ -155,6 +165,8 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
             return this.binding;
         }
     }
+
+
 
 }
 

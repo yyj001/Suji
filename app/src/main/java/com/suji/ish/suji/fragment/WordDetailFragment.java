@@ -96,7 +96,7 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         mViewModel.getCurrentWord(mSpell).observe(this, listObserver);
         initview();
 
-        //监听网络搜索结果
+        //监听网络搜索出错结果
         final Observer<InternetEvent> internetEventObserver = new Observer<InternetEvent>() {
             @Override
             public void onChanged(@Nullable InternetEvent internetEvent) {
