@@ -46,9 +46,13 @@ public class ChineseSearchResultViewModel extends AndroidViewModel {
                                 mWord.setValue(eventMsg.getChineseWord());
                             }
                             else if(eventMsg.getCode() == InternetEvent.FAIL_NO_NETWORK){
-                                mInternetEvent.setValue(eventMsg);
+                                if(eventMsg.getChineseWord()!=null){
+                                    mInternetEvent.setValue(eventMsg);
+                                }
                             }else if(eventMsg.getCode() == InternetEvent.FAIL_NO_RESOURCE){
-                                mInternetEvent.setValue(eventMsg);
+                                if(eventMsg.getChineseWord()!=null){
+                                    mInternetEvent.setValue(eventMsg);
+                                }
                             }
                         }
                     }

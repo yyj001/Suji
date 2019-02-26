@@ -58,8 +58,6 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
     private Word mSaveword;
     private NetWorkAlertDialog mPopupWindow;
 
-    private boolean mIsShowAlertDialog = false;
-
     public static WordDetailFragment newInstance() {
         return new WordDetailFragment();
     }
@@ -325,8 +323,6 @@ public class WordDetailFragment extends Fragment implements View.OnClickListener
         mPopupWindow = new NetWorkAlertDialog(getActivity());
         mPopupWindow.setBackground(0);
         mPopupWindow.setView(event);
-//        mPopupWindow.setBlurBackgroundEnable(true);
-//        mPopupWindow.setBackgroundColor(ToolsUtils.getInstance().getColor(getActivity(), R.color.AlphaColorPrimaryDark));
         mPopupWindow.showPopupWindow();
     }
 }

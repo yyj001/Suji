@@ -19,6 +19,7 @@ import com.suji.ish.suji.bean.Word;
 import com.suji.ish.suji.databinding.FragmentChineseSearchResultBinding;
 import com.suji.ish.suji.listener.OnItemClickListener;
 import com.suji.ish.suji.rxjava.InternetEvent;
+import com.suji.ish.suji.view.NetWorkAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class ChineseSearchResultFragment extends Fragment {
     private FragmentChineseSearchResultBinding mBinding;
     private WordAdapter mAdapter;
     private List<Word> mWords;
+    private NetWorkAlertDialog mPopupWindow;
 
 
     public static ChineseSearchResultFragment newInstance() {
@@ -102,12 +104,26 @@ public class ChineseSearchResultFragment extends Fragment {
         final Observer<InternetEvent> internetEventObserver = new Observer<InternetEvent>() {
             @Override
             public void onChanged(@Nullable InternetEvent internetEvent) {
-//                showAlertDialog(internetEvent);
+                showAlertDialog(internetEvent);
                 mBinding.chineseWordDetailLoadingView.cancelAnimation();
                 mBinding.chineseWordDetailLoadingView.setVisibility(View.GONE);
             }
         };
         mViewModel.getInternetEvent().observe(this, internetEventObserver);
+
+        mBinding.chineseWordDetailCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
+    private void showAlertDialog(InternetEvent event) {
+        mPopupWindow = new NetWorkAlertDialog(getActivity());
+        mPopupWindow.setBackground(0);
+        mPopupWindow.setView(event);
+        mPopupWindow.showPopupWindow();
     }
 
 }
