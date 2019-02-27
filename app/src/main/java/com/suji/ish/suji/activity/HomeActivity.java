@@ -1,5 +1,6 @@
 package com.suji.ish.suji.activity;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,9 +15,6 @@ import com.suji.ish.suji.adapter.TabPageIndicatorAdapter;
 import com.suji.ish.suji.utils.ToolsUtils;
 import com.suji.ish.suji.view.HomeViewPager;
 import com.suji.ish.suji.view.MenuPopupWindow;
-import com.zyyoona7.popup.EasyPopup;
-import com.zyyoona7.popup.XGravity;
-import com.zyyoona7.popup.YGravity;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,15 +41,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private HomeViewPager mViewPager;
 
-    private EasyPopup mCirclePop;
-
     private MenuPopupWindow mMenuPopupWindow;
     //navigation fragment id 默认是笔记本页面;
     private int mNavgraphId = R.id.nav_host_notebook;
 
     LinearLayout mAddNoteBtn;
     LinearLayout mAddNoteBookBtn;
-
 
 
     @Override
@@ -114,19 +109,28 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mViewPager.setCurrentItem(3);
                 break;
             case R.id.navbtn5:
-                ToolsUtils.getInstance().viberate(this,10);
+                ToolsUtils.getInstance().viberate(this, 10);
                 showPopupMenu(view);
                 break;
             default:
         }
     }
 
-    public void showPopupMenu(View view){
-        mMenuPopupWindow = MenuPopupWindow.create(this)
-                .apply();
-        mMenuPopupWindow.showAtAnchorView(view, YGravity.ABOVE, XGravity.CENTER, 0,0);
+    public void showPopupMenu(View view) {
+
+        mMenuPopupWindow = new MenuPopupWindow(HomeActivity.this);
+        mMenuPopupWindow.setBackground(0);
+        mMenuPopupWindow.setBlurBackgroundEnable(true);
+        mMenuPopupWindow.setBackgroundColor(ToolsUtils.getInstance().getColor(HomeActivity.this,
+                R.color.AlphaColorPrimaryDark));
+
+        ObjectAnimator mAnimator1;
+        ObjectAnimator mAnimator2;
+
         FloatingActionButton addNotebookFbtn = mMenuPopupWindow.findViewById(R.id.add_notebook_btn);
         FloatingActionButton addWordFbtn = mMenuPopupWindow.findViewById(R.id.add_word_btn);
+        mAddNoteBtn = mMenuPopupWindow.findViewById(R.id.popup_add_note);
+        mAddNoteBookBtn = mMenuPopupWindow.findViewById(R.id.popup_add_notebook);
 
         addNotebookFbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,15 +146,31 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 goTo(new AddWordActivity());
             }
         });
-  }
+
+
+        float dp = ToolsUtils.getInstance().dp2px(333);
+        mAnimator1 = ObjectAnimator.ofFloat(mAddNoteBookBtn, "translationY",
+                dp, dp / 5, -dp / 10, dp / 20, -dp / 50, 0f);
+        mAnimator1.setDuration(700);
+
+        mAnimator2 = ObjectAnimator.ofFloat(mAddNoteBtn, "translationY",
+                dp, dp / 5, -dp / 10, dp / 20, -dp / 50, 0f);
+        mAnimator2.setDuration(800);
+
+        mAnimator2.start();
+        mAnimator1.start();
+        mMenuPopupWindow.showPopupWindow();
+        //弹性动画
+
+
+    }
 
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         NavController navController = (NavController) Navigation
                 .findNavController(HomeActivity.this, mNavgraphId);
-        if(!navController.popBackStack()){
+        if (!navController.popBackStack()) {
             super.onBackPressed();
         }
     }

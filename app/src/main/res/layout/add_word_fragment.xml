@@ -89,8 +89,7 @@
             app:met_hideUnderline="false"
             app:met_maxCharacters="40"
             app:met_underlineColor="@color/colorPrimary"
-            app:met_floatingLabelText="添加单词(非中文)"/>
+            app:met_floatingLabelText="添加单词"/>
     </RelativeLayout>
-
 
 </LinearLayout>
