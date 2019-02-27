@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,6 +55,36 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
 
             mOCRView = mWiew.findViewById(R.id.add_word_ocr);
             mOCRView.setOnClickListener(this);
+
+            //搜索键按钮
+            materialEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                    if(i== EditorInfo.IME_ACTION_SEARCH){
+                        hideKeyboard(materialEditText);
+
+                        String spell = materialEditText.getText().toString();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("spell", spell);
+
+                        //检查是否含有中文
+                        boolean flag = true;
+                        for (int num = 0; num < spell.length(); ++num) {
+                            if (!judgeLegal(spell.charAt(num))) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        //英文搜索
+                        if (flag) {
+                            Navigation.findNavController(materialEditText).navigate(R.id.action_addWordFragment_to_wordDetailFragment, bundle);
+                        }else{
+                            Navigation.findNavController(materialEditText).navigate(R.id.action_addWordFragment_to_chineseSearchResultFragment, bundle);
+                        }
+                    }
+                    return false;
+                }
+            });
         }
         return mWiew;
     }
@@ -169,4 +201,6 @@ public class AddWordFragment extends Fragment implements View.OnClickListener, T
                 (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+
 }

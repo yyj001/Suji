@@ -181,6 +181,7 @@ public class WordModel {
                             event.setCode(InternetEvent.CHINESE_SUCESS);
                             event.setChineseWord(chineseWord);
                             InternetRxBus.getInstance().post(event);
+                            Log.d(TAG, "查到该词：" + spell);
                         } else {
                             event.setCode(InternetEvent.FAIL_NO_RESOURCE);
                             event.setChineseWord(chineseWord);
